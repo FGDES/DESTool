@@ -12,32 +12,32 @@ Further information
 
 ## Build Process
 
-To build DESTool, you wull need a copieslibFAUDES and LibVIODES and have them
-compiled first to the following folder layout:
+To build DESTool, you wull need get and compile  copieslibFAUDES and LibVIODES. We recommend the following
+folder layout:
 
     -> whereever + -> libFAUDES
                  + -> libVIODES
                  + -> DESTool
 
-Within the DESTool folder run the following commands.
+The build process is then organised in 4 stages.
 
-- build the install tool 
+1. build the install tool 
 
         cd wherever/DESTool/dstinstall
         qmake dstinstall.pro
         make
 
-- copy libFAUDES and libVIODES essentials    
+2. copy libFAUDES and libVIODES essentials    
 
         cd wherever/DESTool
         . ./copyfaudes.sh
 
-- build the documentation
+3. build the documentation
 
         cd wherever/DESTool/doc
         make 
 
-- build DESTool
+4. build DESTool
 
         cd wherever/DESTool
         qmake destool.pro
