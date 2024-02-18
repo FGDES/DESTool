@@ -21,23 +21,23 @@ folder layout:
 
 The build process is then organised in 4 stages.
 
-1. build the install tool 
+1. copy libFAUDES and libVIODES essentials (executables and shared objects)   
+
+        cd wherever/DESTool
+        . ./copyfaudes.sh
+
+2. build the install tool  `dstinstall`
 
         cd wherever/DESTool/dstinstall
         qmake dstinstall.pro
         make
 
-2. copy libFAUDES and libVIODES essentials    
-
-        cd wherever/DESTool
-        . ./copyfaudes.sh
-
-3. build the documentation
+3. build the documentation (requires libFAUDES essentials and dstinstall)
 
         cd wherever/DESTool/doc
         make 
 
-4. build DESTool
+4. finally build DESTool
 
         cd wherever/DESTool
         qmake destool.pro
@@ -47,8 +47,8 @@ The build process is then organised in 4 stages.
 ## Copyright/Authors/License
 
 DESTool is distributed under terms of the GLP vession 3; for details see the provided
-LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits a number of studemt
-projects and externa contributions. A list of authors is generated on the About-Page. 
+LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits a number of student
+projects and external contributions. A list of authors is generated on the About-Page. 
 
 
 Copyright (C) 2011-2024 Thomas Moor
