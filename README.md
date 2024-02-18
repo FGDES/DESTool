@@ -47,7 +47,7 @@ The build process is then organised in 4 stages.
 ## Copyright/Authors/License
 
 DESTool is distributed under terms of the GLP vession 3; for details see the provided
-LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits a number of student
+LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits from a various student
 projects and external contributions. A list of authors is generated on the About-Page. 
 
 
