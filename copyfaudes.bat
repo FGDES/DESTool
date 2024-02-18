@@ -1,4 +1,4 @@
-REM ================================== copy all destool libs
+REM ================================== copy all destool libs (Qt4 version)
 
 
 

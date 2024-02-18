@@ -228,8 +228,8 @@ macx {
 
 # mac: copy doc to bundle 
 macx { 
-  DocFiles.files = doc/html/
-  DocFiles.path = Contents/Resources/doc/destool_html
+  DocFiles.files = doc/destool_html/
+  DocFiles.path = Contents/Resources/doc/destool_html/
   QMAKE_BUNDLE_DATA += DocFiles
 }
 

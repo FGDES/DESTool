@@ -1,11 +1,9 @@
-echo ==================== Deployment script viodes/destool Mac OS X
-echo ==================== libfaudes build in libviodes/libfaudes_for_viodes required  
+echo ==================== Deployment script DESTool  Mac OS X
 
-read
 
 # build all viodes and destool from scratch
-#CLEAN=true
 CLEAN=false
+#CLEAN=true
 
 # manually set qt: Trolltech precompiled package
 #export QTOOLS=/Developer/Tools/Qt
@@ -14,13 +12,21 @@ CLEAN=false
 #export QPLUGINS=/Developer/Applications/Qt/plugins
 
 # manually set qt: self build LPGL 4.8.7
-export QTOOLS=/usr/local/qt-4.8.7-osx11/bin
-export QAPPS=$QTOOLS
-export QFRAMEWORKS=/usr/local/qt-4.8.7-osx11/lib
-export QPLUGINS=/usr/local/qt-4.8.7-osx11/plugins
+#export QTOOLS=/usr/local/qt-4.8.7-osx11/bin
+#export QAPPS=$QTOOLS
+#export QFRAMEWORKS=/usr/local/qt-4.8.7-osx11/lib
+#export QPLUGINS=/usr/local/qt-4.8.7-osx11/plugins
+
+# manually set qt: Qt Project precompiled package
+export QTOOLS=~/Qt/6.6.2/macos/bin
+export QTOOLSX=~/Qt/6.6.2/macos/libexec
+export QFRAMEWORKS=~/Qt/6.6.2/macos/lib
+export PATH=$QTOOLS:$PATH
+export PATH=$QTOOLSX:$PATH
 
 # record source dirs
-VIODES_BASE=$(pwd)/../libviodes
+VIODES_BASE=$(pwd)/../libVIODES
+FAUDES_BASE=$(pwd)/../libVIODES/libFAUDES_for_VIODES
 DESTOOL_BASE=$(pwd)
 
 # retrieve version an pass to qmake
@@ -40,66 +46,89 @@ echo ==================== building version ${VIODES_VERSION_MAJOR}.${VIODES_VERS
 echo ==================== using viogen $VIODES_BASE
 echo ==================== using destool $DESTOOL_BASE
 echo ==================== using bundle $BUNDLE
-echo ==================== qmake version
-qmake -v
+echo ==================== qt  $(which qmake)
+echo press return to proceed
+read
 
+############################################################################
+# some consistency tests
+if [ ! -d $VIODES_BASE/viocore ]; then
+    echo "error: libviodes incomplete: abort"
+    return
+fi
+if [ ! -f $VIODES_BASE/viodes.pro ]; then
+    echo "error: libVIODESA incomplete: abort"
+    return
+fi
+if [ ! -f $DESTOOL_BASE/destool.pro ]; then
+    echo "error: DESTool incomplete: abort"
+    return
+fi
+if [ ! -d $DESTOOL_BASE/../libFAUDES ]; then
+    echo "error: libFAUDES incomplete: abort"
+    return
+fi
 
 echo ==================== compile - prepare
 
+# minimal clean (my binaries)
 rm -rf $DESTOOL_BASE/DESTool.app 
-rm -rf $DESTOOL_BASE/dstinstall/dstinstall
+rm -rf $DESTOOL_BASE/bin/dstinstall
 
 if test $CLEAN = true ; then  
 # clean viodes
+echo cd $VIODES_BASE
 cd $VIODES_BASE
 . ./distclean.sh
+. ./copyfaudes.sh
 qmake "CONFIG-=debug" viodes.pro
 make clean
-cd $DESTOOL_BASE
 # clean destool
+echo cd $DESTOOL_BASE
+cd $DESTOOL_BASE
 . ./distclean.sh
 qmake "CONFIG-=debug" destool.pro
 make clean
 # clean dstsintall
+echo cd $DESTOOL_BASE/dstinstall
 cd $DESTOOL_BASE/dstinstall
 qmake "CONFIG-=debug" dstinstall.pro
 make clean
-cd $DESTOOL_BASE
-# clean doc
-make -C $DESTOOL_BASE/doc dist-clean
 fi
+
 
 # dstsintall (depends on nothing)
 echo ==================== compile - dstinstall 
-make -C dstinstall
+echo cd $DESTOOL_BASE
+cd $DESTOOL_BASE
+make -C $DESTOOL_BASE/dstinstall
 
 # viodes (required by destool)
 echo ==================== compile - viodes
-make -C $VIODES_BASE
+cd $DESTOOL_BASE
+make -j 20 -C $VIODES_BASE
+. ./copyfaudes.sh
 
 # doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
 echo ==================== compile - doc 
-cp $VIODES_BASE/libfaudes_for_viodes/bin/* ./bin
-cp $VIODES_BASE/libfaudes_for_viodes/include/libfaudes.rti ./lib
+echo cd $DESTOOL_BASE
+cd $DESTOOL_BASE
 make -C doc
 
 # destool (requires viodes to link, copies dstinstall to bundle, copies doc to bundle)
 echo ==================== compile - destool 
-make 
+cd $DESTOOL_BASE
+make   ## tricky build issue
+make -j20
 
-
-
-echo ==================== copy bins and libs to bundle destination
-
+echo ==================== copy my bins and libs to bundle destination
 cd $DESTOOL_BASE
 rm -rf $DEST
 mkdir $DEST
 cp -R DESTool.app $BUNDLE
-cp $VIODES_BASE/libfaudes_for_viodes/bin/* $BUNDLEEXE
 
 echo ==================== run deploy tool
-
-macdeployqt $BUNDLE
+macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall
 
 
 echo ==================== fix my plugins
@@ -115,73 +144,72 @@ CHANGE_NET="-change QtNetwork.framework/Versions/4/QtNetwork @executable_path/..
 
 
 # set frameworks to libvio*
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEEXE/libviodes.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviogen.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviohio.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviomtc.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviodiag.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviosim.dylib
-install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviolua.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEEXE/libviodes.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviogen.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviohio.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviomtc.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviodiag.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviosim.dylib
+#install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviolua.dylib
  
 # set framework for dstinstall 
-install_name_tool $CHANGE_CORE $BUNDLEEXE/dstinstall
-install_name_tool -change @executable_path/../../libviodes/libfaudes_for_viodes/libfaudes.dylib \
-  @executable_path/libfaudes.dylib  $BUNDLEEXE/dstinstall
+#install_name_tool $CHANGE_CORE $BUNDLEEXE/dstinstall
+#install_name_tool -change @executable_path/../../libVIODES/libFAUDES_for_VIODES/libfaudes.dylib \
+#  @executable_path/libfaudes.dylib  $BUNDLEEXE/dstinstall
 
-echo ==================== have assistant A copy
+#echo ==================== have assistant A copy
 
-cd $DESTOOL_BASE
-cp -R -L $QAPPS/Assistant.app $BUNDLE
+#cd $DESTOOL_BASE
+#cp -R -L $QAPPS/Assistant.app $BUNDLE
 
-echo ==================== have assistant B abuse deploy tool
+#echo ==================== have assistant B abuse deploy tool
 
-macdeployqt $BUNDLE/Assistant.app
+#macdeployqt $BUNDLE/Assistant.app
 
-echo ==================== have assistant C copy extra frameworks
+#echo ==================== have assistant C copy extra frameworks
 
-cp $BUNDLE/Assistant.app/Contents/MacOS/Assistant $BUNDLEEXE
-cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtHelp.framework $BUNDLE/Contents/Frameworks 
-cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtWebKit.framework $BUNDLE/Contents/Frameworks
-cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtSql.framework $BUNDLE/Contents/Frameworks 
-cp -R $BUNDLE/Assistant.app/Contents/Frameworks/libQtCLucene.4.dylib $BUNDLE/Contents/Frameworks 
-cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtNetwork.framework $BUNDLE/Contents/Frameworks 
+#cp $BUNDLE/Assistant.app/Contents/MacOS/Assistant $BUNDLEEXE
+#cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtHelp.framework $BUNDLE/Contents/Frameworks 
+#cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtWebKit.framework $BUNDLE/Contents/Frameworks
+#cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtSql.framework $BUNDLE/Contents/Frameworks 
+#cp -R $BUNDLE/Assistant.app/Contents/Frameworks/libQtCLucene.4.dylib $BUNDLE/Contents/Frameworks 
+#cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtNetwork.framework $BUNDLE/Contents/Frameworks 
 # used on early Qt mac os 10.4
 #cp -R $BUNDLE/Assistant.app/Contents/Frameworks/phonon.framework $BUNDLE/Contents/Frameworks
 #cp -R $BUNDLE/Assistant.app/Contents/Frameworks/QtXmlPatterns.framework $BUNDLE/Contents/Frameworks
 
 
-echo ==================== have assistant D copy and fix sql driver
+#echo ==================== have assistant D copy and fix sql driver
 
-mkdir $BUNDLE/Contents/plugins/sqldrivers
-cp -R $QPLUGINS/sqldrivers/libqsqlite.dylib $BUNDLE/Contents/plugins/sqldrivers
+#mkdir $BUNDLE/Contents/plugins/sqldrivers
+#cp -R $QPLUGINS/sqldrivers/libqsqlite.dylib $BUNDLE/Contents/plugins/sqldrivers
 
 # tell dyn lib where frameworks are: sqlite depends on core and sql
-ACHANGE_SQL="-change $QFRAMEWORKS/QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtSql.framework/Versions/4/QtSql" 
-ACHANGE_CORE="-change $QFRAMEWORKS/QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore" 
-install_name_tool $ACHANGE_CORE $ACHANGE_SQL $BUNDLE/Contents/plugins/sqldrivers/libqsqlite.dylib
+#ACHANGE_SQL="-change $QFRAMEWORKS/QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtSql.framework/Versions/4/QtSql" 
+#ACHANGE_CORE="-change $QFRAMEWORKS/QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore" 
+#install_name_tool $ACHANGE_CORE $ACHANGE_SQL $BUNDLE/Contents/plugins/sqldrivers/libqsqlite.dylib
 
 
-rm -rf $BUNDLE/Assistant.app
+#rm -rf $BUNDLE/Assistant.app
 
 echo ==================== have qhelp tools A copy
 
 cd $DESTOOL_BASE
-cp -R -L $QTOOLS/qhelpgenerator $BUNDLEEXE
-cp -R -L $QTOOLS/qcollectiongenerator $BUNDLEEXE
+cp -R -L $QTOOLSX/qhelpgenerator $BUNDLEEXE
 
 echo ==================== have qhelp tools b fix
 
 # tell qhelpgenerator where frameworks are
-install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qhelpgenerator
+#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qhelpgenerator
 
 # tell qcollectiongenerator where frameworks are
-install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qcollectiongenerator
+#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qcollectiongenerator
 
 
 echo ==================== copy other vio
-cp -v $DESTOOL_BASE/README.txt  $DEST
-cp -v $DESTOOL_BASE/LICENSE.txt $DEST
-cp -Rv $DESTOOL_BASE/tutorial/distsave $DEST/Examples
+cp -v $DESTOOL_BASE/README.md  $DEST
+cp -v $DESTOOL_BASE/LICENSE $DEST
+cp -Rv $DESTOOL_BASE/tutorial $DEST/Examples
 cp -v $VIODES_BASE/vioedit/data/distsave/vioconfig.txt  $DEST/Examples
 
 
@@ -193,4 +221,5 @@ hdiutil create -srcfolder $DEST -volname $DEST $DEST.dmg
 
 echo ======================================== done
 cd $DESTOOL_BASE
+
 
