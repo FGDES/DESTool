@@ -24,7 +24,7 @@ faudes_destool*
 *.pro.user
 *.pro.user.*
 *.Debug
-Makefile
+./Makefile
 .qmake.stash
 
 
