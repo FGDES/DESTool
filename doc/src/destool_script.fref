@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE ReferencePage SYSTEM "referencepage.dtd">
+
+<ReferencePage chapter="scripts" section="none" title="DESTool: Scripts">
+
+
+<h1> Scripts </h1>
+
+<div class="screen_r300">
+<img class="screen" src="images/destool_snap_script_75.png"></img>
+</div>
+				   
+<p>
+A <em>DESTool script</em> is a list of libFAUDES functions 
+to operate on <a href="destool_variables.html">DESTool variables</a>. 
+Built-in functions are documented in the 
+<a fhref="FAUDES_REGISTRY/index.html">libFAUDES user-reference</a>; 
+see also <a href="#extensions">extending DESTool</a>.
+</p>
+
+<p>
+To set up a DESTool script, you can
+<ul class="l2">
+<li><p>
+insert operations via the context menu;
+</p></li>
+<li><p>
+choose a signature from the pull-down menu;
+</p></li>
+<li><p>
+and set the operand and result variables, either from the pull-down menu
+or by entering a new variable name.
+</p></li>
+</ul>
+</p>
+
+<p>
+To execute a DESTool script, use the <em>Init.</em>, <em>Step</em> or <em>Exec.</em> button
+from the controls section. DESTool tries to figure which operation it can perform
+and indicates its guess by a colour:
+<ul class="l2">
+<li><p>
+green, when input data is available;
+</p></li>
+<li><p>
+yellow, when input data requires another operation to be executed
+</p></li>
+<li><p>
+red, when operands/results could not be allocated or an error occurred
+during execution; in the latter case, the context menu of the 
+status field gives more details.
+</p></li>
+<li><p>
+grey, when the operation has been performed successfully.
+</p></li>
+</ul>
+</p>
+
+
+<p>
+The screen-shot shows two operations with details hidden and one with
+details exposed. The first operation uses two operands that are linked to
+files and, hence, is ready for execution. The third operation uses the result
+of the first operation as operand and, hence, is not yet ready for execution.
+</p>  
+
+
+<div style="clear:both;"/>
+
+<!-- ---------------------------------------------------- -->
+<!-- ---------------------------------------------------- -->
+
+<h2 id="extensions">Advanced Topic: Extending DESTool</h2>
+
+<div class="screen_r300">
+<img class="screen" src="images/destool_snap_luaextension_75.png"></img>
+</div>
+
+
+
+<p>
+There are multiple paths to extend DESTool by additional functions,
+either using C++ plug-ins or the scripting language 
+in <a href="http://www.lua.org">Lua</a>. 
+</p>
+
+<ul class="l1">
+<li><p>
+A <em>Lua-script</em> can be defined local to a DESTool project 
+by the <i>New Lua Script</i> entry from the <i>Insert Lua Code</i> 
+menu in the script-tab. This will insert an (empty) Lua script, 
+which can be edited/inspected via its context menu. To execute
+the Lua script, either use the <em>Evaluate</em> entry from
+it's <em>Edit</em> menu, or run the DESTool script from the project
+browser. On execution, the DESTool error console
+(see <i>Windows</i> menu) will show debugging output 
+generated with <tt>print()</tt> or <tt>faudes.Print()</tt>.
+</p>
+<p>
+Lua scripts do not have signatures to pass parameters.
+However, you can access DESTool variables via the <tt>workspace</tt> field; 
+see also <a href="destool_variables.html#extensions">DESTool variables</a>.
+General information on Lua can be found on the <a href="http://www.lua.org">Lua site</a>. 
+libFAUDES related functions are illustrated by the 
+<a fhref="FAUDES_ONLINE/luafaudes">luafaudes tutorials</a>.
+</p>
+</li>
+<li><p>
+A <em>Lua function</em> can be defined local to a DESTool project 
+by the <i>New Lua Function</i> entry from the <i>Insert Operation</i> menu
+in the script-tab. It is similar to a Lua script, except that
+a Lua function must be equipped with at least one signature to pass parameters.
+Lua functions register themself with the run-time-interface and can
+be accessed from DESTool scripts in the same way as built-in functions.
+On initialisation from within the project browser,
+Lua functions are also installed to DESTool's global Lua state, and can thus
+be accessed from other Lua functions, from Lua scripts and from the error console.
+</p>
+<p>
+For a DESTool project with a simple Lua function see the
+example <tt>Machines/BigBuffer.pro</tt>, which
+uses Lua to generate a buffer with configurable size.
+</p>
+</li>
+<li><p>
+Lua-extension files (<tt>*.flx</tt>) package a set of
+Lua functions together with documentation and/or
+examples. To integrate a lua-extension with
+your DESTool installation,
+start DESTool with the command-line switch <tt>-x</tt>, i.e.,
+</p>
+<pre>
+~/destool$ ./bin/destool -x
+</pre>
+<p>
+This will invoke the extension manager to import, 
+delete, enable or disable individual lua-extensions.
+Examples for extensions are distributed with the libFAUDES
+<a fhref="FAUDES_ONLINE/luafaudes">luabindings plug-in</a>.
+</p></li>
+<li><p>
+You can extend libFAUDES directly via the C++ API using its
+plug-in mechanism. The standard libFAUDES distribution
+provides an example plug-in and step-by-step introductions.
+After development of your plug-in, you can install your 
+extended version of libFAUDES to DESTool by the command-line
+tool <tt>dstinstall</tt>:
+</p>
+<pre>
+~/destool$ ./bin/dstinstall -lib ../libfaudes_with_extra_plugin -dst ./
+</pre>
+<p>
+Here, <tt>libfaudes_with_extra_plugin</tt> specifies the path of
+your extended version of libFAUDES and <tt>./</tt> is the path of
+the DESTool installation.
+</p>
+<p>
+<strong>Restrictions apply:</strong>
+you must base your extension on the same version of libFAUDES as
+the one of the original DESTool distribution (as shown by <i>About</i>); you must
+compile your customized libFAUDES as a shared object in 64-bit, and,
+for MS Windows environments with the same compiler as used for DESTool
+(which at the time of writing is MS Visual C++ 2015 with the compiler
+reporting version 19.00); you must at least include the plug-ins 
+<i>Simulator</i>,
+<i>Timed</i>,
+<i>IoDevice</i>
+and <i>LuaBindings</i> 
+from the standard distribution.
+</p></li>
+</ul>
+
+<p>
+From experiences gathered so far, project embedded 
+Lua scripts are the easiest way to extend DESTool,
+while libFAUDES C++ plug-ins can be quite involved.
+We are aware of the fact that the above documentation
+on DESTool extension is rather compressed and in some aspects 
+incomplete. Please do not hesitate to contact us if you experience 
+problems when integrating your extensions with DESTool.
+</p>
+
+
+<div style="clear:both;"/>
+
+</ReferencePage>
+

@@ -1,0 +1,42 @@
+% Example configuration of the simplenet device
+
+% We configure the device to provide events
+% that go with the tow simple machines A and B
+% * alpha and lambda are subscribed from localhost:40001
+% * beta and mue are provided to whoever connects
+
+
+<SimplenetDevice>
+
+% id of this node
+
+"machinesab"       % node id
+1000               % ms/ftu 
+"localhost:40000"  % server tcp port of this node
+"simpleloopab"     % network id
+
+% set of all nodes
+
+<Network>           
+"machinesab"
+"supervisorab"
+</Network>
+
+% device events
+
+<EventConfiguration>
+
+"alpha_a"  <Input> </Input>
+"beta_a"   <Output> </Output>
+"mue_a"    <Output> </Output>
+"lambda_a" <Input> </Input>
+
+"alpha_b"  <Input> </Input>
+"beta_b"   <Output> </Output>
+"mue_b"    <Output> </Output>
+"lambda_b" <Input> </Input>
+
+</EventConfiguration>
+
+</SimplenetDevice>
+

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE ReferencePage SYSTEM "referencepage.dtd">
+
+<ReferencePage chapter="projects" section="none" title="DESTool: Projects">
+
+<h1> Projects </h1>
+
+
+
+<p>
+The top-level entities in DESTool are so called <em>Projects</em>
+that perform a particular DES design or analysis task. 
+A DESTool project consists of 
+</p>
+<ul  class="l2">
+<li><p>
+input and output data
+organised in <a href="destool_variables.html">Variables</a>, e.g.
+of faudes-type <em>System</em> or <em>Alphabet</em>; 
+</p></li>
+<li><p>
+a list of operations, organized as a <a href="destool_script.html">Script</a>; and
+</p></li>
+<li><p>
+a <a href="destool_animation.html">Simulator</a> to inspect the outcome of the design.
+</p></li>
+</ul>
+
+<p>
+To access individual items within a project, DESTool provides a
+<em>Project Browser</em>. It comes with three tabs, one each for
+variables, the script and the simulator.
+</p>
+
+<p>
+<img class="screen" src="images/destool_gimp_project.png"/>
+</p>  
+
+<p>
+Projects can be saved to and opened from disk via the <em>File</em> Menu. In order
+to make sure that DESTool keeps all relevant data in a particular folder, you 
+should save the project to that folder before you populate the script 
+or variable pool.
+</p>
+
+
+
+<h2>Example</h2>
+
+
+<p> 
+We give step-by-step instructions on how-to investigate 
+the simple machine scenario by a DESTool project.
+</p> 
+
+<p> 
+Our plant consists of two 
+machines <em>MachineA</em> and <em>MachineB</em>, that process 
+one workpiece at a time. <em>MachineA</em> on command takes a workpiece form
+an unlimited source, processes it, and then drops in
+into the buffer <em>BufferAB</em>, which can hold one workpiece.
+<em>MachineB</em> on command fetches a workpiece 
+from the <em>BufferAB</em>, processes it, and delivers it to 
+an unlimited sink. Both machines may fail in processing the
+workpiece. In this case, the workpiece will be removed
+and the machine needs to be repaired. The goal is to synthesise
+a supervisor that controls both machines to prevent a buffer overflow.
+</p> 
+
+
+<p>
+To prepare a DESTool project, first create an empty folder (e.g. ~/Machines).
+Then start DESTool, and use <em>Save</em> from the <em>File</em> menu to
+save the empty project to a project file inside the newly created folder
+(e.g. ~/Machines/Machines.pro). 
+</p>
+
+
+<h3>Plant Components</h3>
+
+<p> 
+The two machines are formally considered as the plant, referring to the
+events
+</p> 
+<ul class="l1">
+<li>
+<p><tt>alpha_a</tt>, <tt>alpha_b</tt>: machine A/B to take a workpiece</p> 
+</li>
+<li>
+<p><tt>beta_a</tt>, <tt>beta_b</tt>: machine A/B to complete processing a workpiece</p> 
+</li>
+<li>
+<p><tt>mue_a</tt>, <tt>mue_b</tt>: machine A/B to fail</p>
+</li>
+<li>
+<p><tt>lambda_a</tt>, <tt>lambda_b</tt>: machine A/B to be repaired</p>
+</li>
+</ul>
+
+
+<p>
+To create one variable of faudes-type <em>System</em> for each machine, 
+you may use the <em>Variables</em> tab of the project browser:
+</p>
+<ol>
+<li><p>
+use <em>New Variable</em> from the <em>File</em> menu to create a new variable;
+</p></li>
+<li><p>
+inspect the properties section to ensure the type is <em>System</em> and 
+to set the variable name to <em>MachineA</em>;
+</p></li>
+<li><p>
+make sure that the variable is tagged <em>Persistent</em>, <em>Plant Model</em>
+and <em>Visual Representation</em>.
+</p></li>
+</ol>
+
+<p>
+<img class="screen" src="images/destool_snap_variablesab_75.png"></img>
+</p>
+
+
+<p>
+To show the variables value (an empty generator) in a window,
+use the context menu of in the variable list.
+You can now graphically enter the plant model. Use the <tt>Shift</tt> key to
+insert states and transitions, use the context menu to edit
+state and event attributes (e.g. names and controllability flags).
+</p>
+
+<p>
+<img class="screen" src="images/destool_snap_machinea_75.png"></img>
+&nbsp
+&nbsp
+&nbsp
+&nbsp
+<img class="screen" src="images/destool_snap_machineb_75.png"></img>
+</p>
+
+
+
+
+<h3>Specification</h3>
+
+<p>
+For the closed loop specification, we model the buffer
+with a capacity of one workpiece, i.e. the buffer is either
+empty for full. The screen-shot shows both, the list view and the graphics view
+on the specification generator <em>BufferAB</em>.
+</p>
+
+<p>
+We also need a variable of type <em>EventSet</em> to represent the overall 
+alphabet.
+</p>
+
+
+<p>
+<img class="screen" src="images/destool_snap_bufferab_75.png"></img>
+&nbsp
+&nbsp
+&nbsp
+&nbsp
+<img class="screen" src="images/destool_snap_sigma_75.png"></img>
+</p>
+
+
+<h3>Synthesis Script</h3>
+
+<p>
+Synthesis consists of three steps. First we compose the two plant components
+<em>MachineA</em> and <em>MachineB</em> to an overall plant model
+<em>PlantAB</em>. Next, we use the inverse projection to add self-loops
+to the specification. Third, we compute the least restrictive supervisor
+that enforces the specification <em>BufferAB</em> for <em>PlantAB</em>.
+</p>
+
+<p>
+You may use the <em>Script</em> tab from the project browser to
+set up an according script:
+</p>
+
+<p>
+<ol>
+<li><p>
+introduce three operations <em>Parallel</em>, <em>InvProject</em> and <em>SupConNB</em>
+by selecting them from the <em>Insert Operation</em> button;
+the operations will be coloured red to indicate that no operand or result variables 
+have been assigned; 
+</p></li>
+<li><p>
+in <em>Parallel</em>, set the operands to <em>MachineA</em>
+and <em>MachineB</em>; for the result, enter a new variable name <em>PlantAB</em>;
+observe green to indicate that this operation is ready to be performed; however, the
+default type is <em>Generator</em>, and does not maintain controllability attributes;
+therefore, you should use the context menu to change the type to <em>System</em>;
+</p>
+<p><img class="screen" fsrc="IMAGES/destool_gimp_oparallel.png"/></p>
+</li>
+<p><li>
+in <em>InvProject</em>, choose the signature with three arguments, and set them to
+<em>BufferAB</em>, <em>Sigma</em> and <em>FullBufferAB</em>, respectively; the
+specification does not require event attributes, and, hence, type <em>Generator</em>
+is fine; 
+</li></p>
+<li>
+<p><img class="screen" fsrc="IMAGES/destool_gimp_oproject.png"/></p>
+</li>
+<li>
+<p>
+in <em>SupConNB</em> set the arguments to 
+<em>PlantAB</em>, <em>FullBufferAB</em> and <em>SuperAB</em>, respectively.
+</p>
+<p><img class="screen" src="images/destool_gimp_osupcon.png"></img></p>
+</li>
+</ol>
+</p>
+
+
+<p>
+To run the script, use the <em>Exec.</em> button below. 
+Observe that all operations turn grey to indicate successful completion.
+</p>
+
+<p>
+To inspect the resulting supervisor, you may use the context menu of the 
+result variable in the synthesis operation. Note that the supervisor
+will be shown as list view by default. To automatically generate a graphics
+view, adjust the vertical splitter and click <em>Generate via dot</em>. This requires
+the Graphviz package to be installed.
+</p>
+
+<p>
+<img class="screen" src="images/destool_snap_superab1_75.png"></img>
+</p>
+<p>
+<img class="screen" src="images/destool_snap_superab2_75.png"></img>
+</p>
+
+<p>
+In order to save your supervisor to separate file, choose <em>External File</em> from the
+variable context menu.
+</p>
+
+
+</ReferencePage>
+

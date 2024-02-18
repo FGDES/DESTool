@@ -1,0 +1,231 @@
+<VioGenerator>
+<Generator>
+"SupConNB((Generator||Generator),(Generator))" 
+
+% 
+%  Statistics for SupConNB((Generator||Generator),(Generator))
+% 
+%  States:        12
+%  Init/Marked:   1/1
+%  Events:        8
+%  Transitions:   25
+%  StateSymbols:  12
+%  Attrib. E/S/T: 0/0/0
+% 
+
+<Alphabet>
+"alpha_a"     "beta_a"      "mue_a"       "lambda_a"    "alpha_b"     "beta_b"      
+"mue_b"       "lambda_b"    
+</Alphabet>
+
+<States>
+"I|I|E"       "B|I|E"       "I|I|F"       "D|I|E"       "I|B|E"       "B|B|E"       
+"I|D|E"       "B|D|E"       "I|D|F"       "D|D|E"       "I|B|F"       "D|B|E"       
+</States>
+
+<TransRel>
+"I|I|E"       "alpha_a"     "B|I|E"       
+"B|I|E"       "beta_a"      "I|I|F"       
+"B|I|E"       "mue_a"       "D|I|E"       
+"I|I|F"       "alpha_b"     "I|B|E"       
+"D|I|E"       "lambda_a"    "I|I|E"       
+"I|B|E"       "alpha_a"     "B|B|E"       
+"I|B|E"       "beta_b"      "I|I|E"       
+"I|B|E"       "mue_b"       "I|D|E"       
+"B|B|E"       "beta_a"      "I|B|F"       
+"B|B|E"       "mue_a"       "D|B|E"       
+"B|B|E"       "beta_b"      "B|I|E"       
+"B|B|E"       "mue_b"       "B|D|E"       
+"I|D|E"       "alpha_a"     "B|D|E"       
+"I|D|E"       "lambda_b"    "I|I|E"       
+"B|D|E"       "beta_a"      "I|D|F"       
+"B|D|E"       "mue_a"       "D|D|E"       
+"B|D|E"       "lambda_b"    "B|I|E"       
+"I|D|F"       "lambda_b"    "I|I|F"       
+"D|D|E"       "lambda_a"    "I|D|E"       
+"D|D|E"       "lambda_b"    "D|I|E"       
+"I|B|F"       "beta_b"      "I|I|F"       
+"I|B|F"       "mue_b"       "I|D|F"       
+"D|B|E"       "lambda_a"    "I|B|E"       
+"D|B|E"       "beta_b"      "D|I|E"       
+"D|B|E"       "mue_b"       "D|D|E"       
+</TransRel>
+
+<InitStates>
+"I|I|E"       
+</InitStates>
+
+<MarkedStates>
+"I|I|E"       
+</MarkedStates>
+
+
+</Generator>
+<VioModels>
+<TransitionList>
+=AAAAGQEAAAAGAAAACgBtAHUAZQBfAGIAAAAIAQAAAAIAAAAKAG0AdQBlAF8AYQAAAAQBAAAAAgAAAAwAYgBlAHQAYQBfAGEAAAADAQAAAAEAAAAOAGEAbABwAGgAYQBfAGEAAAACAQAAAAQAAAAQAGwAYQBtAGIAZABhAF8AYQAAAAEBAAAAAwAAAA4AYQBsAHAAaABhAF8AYgAAAAYBAAAABgAAAA4AYQBsAHAAaABhAF8AYQAAAAcBAAAABgAAAAwAYgBlAHQAYQBfAGIAAAABAQAAAAcAAAAMAGIAZQB0AGEAXwBhAAAADQEAAAAHAAAACgBtAHUAZQBfAGEAAAAOAQAAAAcAAAAMAGIAZQB0AGEAXwBiAAAAAgEAAAAHAAAACgBtAHUAZQBfAGIAAAAJAQAAAAgAAAAOAGEAbABwAGgAYQBfAGEAAAAJAQAAAAgAAAAQAGwAYQBtAGIAZABhAF8AYgAAAAEBAAAACQAAAAwAYgBlAHQAYQBfAGEAAAAKAQAAAAkAAAAKAG0AdQBlAF8AYQAAAAsBAAAACQAAABAAbABhAG0AYgBkAGEAXwBiAAAAAgEAAAAKAAAAEABsAGEAbQBiAGQAYQBfAGIAAAADAQAAAAsAAAAQAGwAYQBtAGIAZABhAF8AYQAAAAgBAAAACwAAABAAbABhAG0AYgBkAGEAXwBiAAAABAEAAAANAAAADABiAGUAdABhAF8AYgAAAAMBAAAADQAAAAoAbQB1AGUAXwBiAAAACgEAAAAOAAAAEABsAGEAbQBiAGQAYQBfAGEAAAAGAQAAAA4AAAAMAGIAZQB0AGEAXwBiAAAABAEAAAAOAAAACgBtAHUAZQBfAGIAAAAL= </TransitionList>
+<StateList>
+=AAAADAIAAAACAgAAAAMCAAAABAIAAAAGAgAAAAcCAAAACAIAAAAJAgAAAAoCAAAACwIAAAABAgAAAA0CAAAADg=== </StateList>
+<EventList>
+=AAAACAMAAAAOAGEAbABwAGgAYQBfAGEDAAAADABiAGUAdABhAF8AYQMAAAAKAG0AdQBlAF8AYQMAAAAQAGwAYQBtAGIAZABhAF8AYQMAAAAOAGEAbABwAGgAYQBfAGIDAAAADABiAGUAdABhAF8AYgMAAAAKAG0AdQBlAF8AYgMAAAAQAGwAYQBtAGIAZABhAF8AYg=== </EventList>
+<GraphData>
+<States>
+<State>
+2             
+<Item>
+<Position>
+152.800000    254.200006    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+3             
+<Item>
+<Position>
+277.800012    187.500000    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+4             
+<Item>
+<Position>
+930.599976    140.300000    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+6             
+<Item>
+<Position>
+527.799988    355.599999    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+7             
+<Item>
+<Position>
+527.799988    529.199982    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.058479    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+8             
+<Item>
+<Position>
+659.700012    315.300012    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+9             
+<Item>
+<Position>
+798.600006    204.200006    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+10            
+<Item>
+<Position>
+798.600006    323.600006    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029125    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+11            
+<Item>
+<Position>
+659.700012    209.699988    
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.029211    0             
+</BasePoints>
+</Item>
+</State>
+</States>
+<TransRel>
+<Trans>
+2             "beta_a"      3             
+<Item>
+<Position>
+152.800000    254.200006    
+</Position>
+<BasePoints>
+62.500012     -26.399994    0             0             21.918212     -20.548346    
+29.100001     -27.800012    41.600001     -36.100006    52.800000     -43.099999    
+62.500012     -47.300005    73.599994     -51.399994    96.021436     -58.986289    
+125.000012    -66.700006    
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+2             "mue_a"       4             
+<Item>
+<Position>
+152.800000    254.200006    
+</Position>
+<BasePoints>
+374.999988    -177.800006   0             0             5.821615      -29.425659    
+16.600001     -80.600011    48.599994     -190.300006   125.000012    -190.300006   
+125.000012    -190.300006   125.000012    -190.300006   645.800006    -190.300006   
+686.099994    -190.300006   723.599994    -165.300006   756.592230    -135.107769   
+777.799976    -113.900006   
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+6             "mue_b"       8             
+<Item>
+<Position>
+527.799988    355.599999    
+</Position>
+<BasePoints>
+62.500000     -6.999993     0             0             28.645072     -9.114356     
+45.800018     -13.899994    70.800018     -22.300005    103.265870    -31.418434    
+131.900024    -40.299988    
+</BasePoints>
+</Item>
+</Trans>
+</TransRel>
+</GraphData>
+</VioModels>
+<VioLayout>
+0             =BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=== 0             150           603           0.520400      
+</VioLayout>
+</VioGenerator>

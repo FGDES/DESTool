@@ -1,0 +1,146 @@
+<VioSystem>
+<Generator>
+"Generator"   
+
+% 
+%  Statistics for Generator
+% 
+%  States:        3
+%  Init/Marked:   1/1
+%  Events:        4
+%  Transitions:   4
+%  StateSymbols:  3
+%  Attrib. E/S/T: 2/0/0
+% 
+
+<Alphabet>
+"alpha_b"     +C+           "beta_b"      "mue_b"       "lambda_b"    +C+           
+</Alphabet>
+
+<States>
+"I"           "D"           "B"           
+</States>
+
+<TransRel>
+"I"           "alpha_b"     "B"           
+"D"           "lambda_b"    "I"           
+"B"           "beta_b"      "I"           
+"B"           "mue_b"       "D"           
+</TransRel>
+
+<InitStates>
+"I"           
+</InitStates>
+
+<MarkedStates>
+"I"           
+</MarkedStates>
+
+
+</Generator>
+<VioModels>
+<TransitionList>
+=AAAABAEAAAABAAAADgBhAGwAcABoAGEAXwBiAAAAAwEAAAADAAAADABiAGUAdABhAF8AYgAAAAEBAAAAAwAAAAoAbQB1AGUAXwBiAAAAAgEAAAACAAAAEABsAGEAbQBiAGQAYQBfAGIAAAAB= </TransitionList>
+<StateList>
+=AAAAAwIAAAABAgAAAAMCAAAAAg=== </StateList>
+<EventList>
+=AAAABAMAAAAOAGEAbABwAGgAYQBfAGIDAAAADABiAGUAdABhAF8AYgMAAAAKAG0AdQBlAF8AYgMAAAAQAGwAYQBtAGIAZABhAF8AYg=== </EventList>
+<GraphData>
+<States>
+<State>
+1             
+<Item>
+<Position>
+0             10            
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.008421    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+2             
+<Item>
+<Position>
+80            120           
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-30.014424    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+3             
+<Item>
+<Position>
+150           10            
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.982456    0             
+</BasePoints>
+</Item>
+</State>
+</States>
+<TransRel>
+<Trans>
+1             "alpha_b"     3             +Spline+      
+<Item>
+<Position>
+0             10            
+</Position>
+<BasePoints>
+50            -40           0             0             25.746455     -15.447877    
+50            -30           100           -30           124.247505    -15.451498    
+150           0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+2             "lambda_b"    1             +Spline+      
+<Item>
+<Position>
+80            120           
+</Position>
+<BasePoints>
+-95           -25           0             0             -18.002972    -24.003962    
+-35.811035    -47.748047    -43.648438    -61.531250    -61.997028    -85.996038    
+-80           -110          
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+3             "beta_b"      1             +Spline+      
+<Item>
+<Position>
+150           10            
+</Position>
+<BasePoints>
+-90           20            0             0             -30.012415    0             
+-66.288379    0             -82.610937    0             -119.987585   0             
+-150          0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+3             "mue_b"       2             +Spline+      
+<Item>
+<Position>
+150           10            
+</Position>
+<BasePoints>
+-20           80            0             0             -16.139336    25.361811     
+-28.573535    44.901270     -41.048438    64.504688     -53.860664    84.638189     
+-70           110           
+</BasePoints>
+</Item>
+</Trans>
+</TransRel>
+</GraphData>
+</VioModels>
+<VioLayout>
+0             =AAAA/wAAAAAAAAADAAABBAAAAPkAAACWAQAAAAQBAAAAAQ=== 0             150           255           0.950625      
+</VioLayout>
+</VioSystem>

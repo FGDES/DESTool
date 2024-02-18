@@ -1,0 +1,38 @@
+# ignore emacs backups
+*~
+*.bak
+*._*
+
+# ignore c build
+*.o
+*.s
+**/obj
+bin/*
+!bin/destool
+lib/*
+
+# ignore DESTool build
+DESTool.app
+dstinstall/dstinstall
+dstinstall/Makefile
+doc/html
+
+# ignore packegaes
+faudes_destool*
+
+# Qt locals
+*.pro.user
+*.pro.user.*
+*.Debug
+Makefile
+.qmake.stash
+
+
+# osx irritations
+**/.DS_Store
+*.app
+
+
+# local archives
+local
+libFAUDES_for_VIODES

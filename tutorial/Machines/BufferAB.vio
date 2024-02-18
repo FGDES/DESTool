@@ -1,0 +1,107 @@
+<VioSystem>
+<Generator>
+"Generator"   
+
+% 
+%  Statistics for Generator
+% 
+%  States:        2
+%  Init/Marked:   1/1
+%  Events:        2
+%  Transitions:   2
+%  StateSymbols:  2
+%  Attrib. E/S/T: 0/0/0
+% 
+
+<Alphabet>
+"beta_a"      "alpha_b"     
+</Alphabet>
+
+<States>
+"E"           "F"           
+</States>
+
+<TransRel>
+"E"           "beta_a"      "F"           
+"F"           "alpha_b"     "E"           
+</TransRel>
+
+<InitStates>
+"E"           
+</InitStates>
+
+<MarkedStates>
+"E"           
+</MarkedStates>
+
+
+</Generator>
+<VioModels>
+<TransitionList>
+=AAAAAgEAAAACAAAADgBhAGwAcABoAGEAXwBiAAAAAQEAAAABAAAADABiAGUAdABhAF8AYQAAAAI== </TransitionList>
+<StateList>
+=AAAAAgIAAAABAgAAAAI== </StateList>
+<EventList>
+=AAAAAgMAAAAMAGIAZQB0AGEAXwBhAwAAAA4AYQBsAHAAaABhAF8AYg=== </EventList>
+<GraphData>
+<States>
+<State>
+1             
+<Item>
+<Position>
+27.800000     61.100000     
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.995675    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+2             
+<Item>
+<Position>
+152.800000    61.100000     
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.996195    0             
+</BasePoints>
+</Item>
+</State>
+</States>
+<TransRel>
+<Trans>
+1             "beta_a"      2             
+<Item>
+<Position>
+27.800000     61.100000     
+</Position>
+<BasePoints>
+40            30            0             0             29.992990     0             
+44.400001     0             65.300000     0             95.020563     0             
+125           0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+2             "alpha_b"     1             
+<Item>
+<Position>
+152.800000    61.100000     
+</Position>
+<BasePoints>
+-90           -50           0             0             -25.210246    -16.343936    
+-32.000005    -20.800000    -43.099999    -25           -52.800000    -27.800000    
+-65.300000    -30.500001    -77.800000    -27.800000    -99.866981    -16.430448    
+-125          0             
+</BasePoints>
+</Item>
+</Trans>
+</TransRel>
+</GraphData>
+</VioModels>
+<VioLayout>
+0             =AQAAAAEAEAABAAAAAQAAAAEAAQEAAAAAAQAAAAIAgAAEAA=== 0             150           312           1             
+</VioLayout>
+</VioSystem>

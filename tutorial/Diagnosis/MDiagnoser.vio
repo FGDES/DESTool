@@ -1,0 +1,253 @@
+<VioDiagnoser>
+<Generator>
+"MDiagnoser"  
+
+% 
+%  Statistics for MDiagnoser
+% 
+%  States:        5
+%  Init/Marked:   1/0
+%  Events:        2
+%  Transitions:   7
+%  StateSymbols:  0
+%  Attrib. E/S/T: 0/5/0
+% 
+
+<Alphabet>
+"alpha"       "beta"        
+</Alphabet>
+
+<States>
+1             
+<StateEstimates>
+1             
+<DiagLabels>
+"N"           
+</DiagLabels>
+</StateEstimates>
+2             
+<StateEstimates>
+2             
+<DiagLabels>
+"N"           
+</DiagLabels>
+</StateEstimates>
+3             
+<StateEstimates>
+1             
+<DiagLabels>
+"N"           
+</DiagLabels>
+2             
+<DiagLabels>
+"F"           
+</DiagLabels>
+</StateEstimates>
+4             
+<StateEstimates>
+1             
+<DiagLabels>
+"F"           
+</DiagLabels>
+2             
+<DiagLabels>
+"F"           
+</DiagLabels>
+</StateEstimates>
+5             
+<StateEstimates>
+2             
+<DiagLabels>
+"F"           
+</DiagLabels>
+</StateEstimates>
+</States>
+
+<TransRel>
+1             "alpha"       2             
+2             "beta"        3             
+3             "alpha"       2             
+3             "beta"        4             
+4             "alpha"       5             
+4             "beta"        4             
+5             "beta"        4             
+</TransRel>
+
+<InitStates>
+1             
+</InitStates>
+
+<MarkedStates>
+</MarkedStates>
+
+
+</Generator>
+<VioModels>
+<TransitionList>
+=AAAABwEAAAABAAAACgBhAGwAcABoAGEAAAACAQAAAAIAAAAIAGIAZQB0AGEAAAADAQAAAAMAAAAKAGEAbABwAGgAYQAAAAIBAAAAAwAAAAgAYgBlAHQAYQAAAAQBAAAABAAAAAoAYQBsAHAAaABhAAAABQEAAAAEAAAACABiAGUAdABhAAAABAEAAAAFAAAACABiAGUAdABhAAAABA=== </TransitionList>
+<StateList>
+=AAAABQIAAAABAgAAAAICAAAAAwIAAAAEAgAAAAU== </StateList>
+<EventList>
+=AAAAAgMAAAAKAGEAbABwAGgAYQMAAAAIAGIAZQB0AGE== </EventList>
+<GraphData>
+<States>
+<State>
+1             
+<Item>
+<Position>
+27.800000     61.100000     
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.030259    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+2             
+<Item>
+<Position>
+140           60            
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.031117    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+3             
+<Item>
+<Position>
+270           60            
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-29.027852    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+4             
+<Item>
+<Position>
+402.799988    61.100000     
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-28.973670    0             
+</BasePoints>
+</Item>
+</State>
+<State>
+5             
+<Item>
+<Position>
+527.799988    61.100000     
+</Position>
+<BasePoints>
+0             0             30            30            -50           0             
+-28.973836    0             
+</BasePoints>
+</Item>
+</State>
+</States>
+<TransRel>
+<Trans>
+1             "alpha"       2             
+<Item>
+<Position>
+27.800000     61.100000     
+</Position>
+<BasePoints>
+43.600000     19.450000     0             0             28.994415     0             
+44.400001     0             52.500000     -1.100000     83.160082     -1.100000     
+112.200000    -1.100000     
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+2             "beta"        3             +Smooth+      
+<Item>
+<Position>
+140           60            
+</Position>
+<BasePoints>
+52.499994     20            0             0             29.007340     0             
+44.400001     0             70.299988     0             101.024589    0             
+130           0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+3             "alpha"       2             +Smooth+      
+<Item>
+<Position>
+270           60            
+</Position>
+<BasePoints>
+-82.499994    -50           0             0             -25.609659    -20.487727    
+-50           -40           -74.999988    -40           -101.829369   -20.487727    
+-130          0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+3             "beta"        4             
+<Item>
+<Position>
+270           60            
+</Position>
+<BasePoints>
+53.900006     20.550000     0             0             29.025566     0             
+44.399977     0             73.100000     1.100000      103.813877    1.100000      
+132.799988    1.100000      
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+4             "beta"        4             +Smooth+      
+<Item>
+<Position>
+402.799988    61.100000     
+</Position>
+<BasePoints>
+-10           70            0             0             10.254447     20.508893     
+30            60            -30           60            -10.254125    20.508249     
+0             0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+4             "alpha"       5             
+<Item>
+<Position>
+402.799988    61.100000     
+</Position>
+<BasePoints>
+50            20            0             0             29.055152     0             
+44.400024     0             65.300035     0             95.984393     0             
+125           0             
+</BasePoints>
+</Item>
+</Trans>
+<Trans>
+5             "beta"        4             
+<Item>
+<Position>
+527.799988    61.100000     
+</Position>
+<BasePoints>
+-70           -40           0             0             -29.036279    -18.824362    
+-50           -30           -70           -30           -95.969488    -18.978393    
+-125          0             
+</BasePoints>
+</Item>
+</Trans>
+</TransRel>
+</GraphData>
+</VioModels>
+<VioLayout>
+0             =Qt1JCOCHNgAxAHgAMgAzAC0AZgBmAGYAMgBmADEAZgAwAA=== 1             167           489           0.775606      
+</VioLayout>
+</VioDiagnoser>

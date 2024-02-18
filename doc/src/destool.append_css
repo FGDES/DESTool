@@ -1,0 +1,41 @@
+/* warning box */
+
+div.warning  {
+  background-color: #CCFFD8;
+  border: 1px solid #ACE0B8;
+} 
+
+
+/* screen shots */
+
+div.screen_r300  {
+  float:right; 
+  margin: 10px;  
+  margin-right: 0px;  
+  padding: 20px;  
+}    
+
+
+/* faudes doxygen fix: paragraph margins ***/
+
+
+DIV.qindex {
+	/* width: 100%; */ /* adapt */
+	background-color: #e8eef2;
+	border: 1px solid #84b0c7;
+}
+
+DIV.nav {
+        background-color: #eeeeff;
+        border: 1px solid #b0b0b0;
+}
+
+DIV.navpath {
+	background-color: #e8eef2;
+	border: 1px solid #84b0c7;
+}
+DIV.navtab {
+       background-color: #e8eef2;
+       border: 1px solid #84b0c7;
+}
+

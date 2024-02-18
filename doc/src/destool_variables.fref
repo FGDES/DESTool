@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE ReferencePage SYSTEM "referencepage.dtd">
+
+<ReferencePage chapter="variables" section="none" title="DESTool: Variables">
+
+<h1> Variables </h1>
+
+
+<div class="screen_r300">
+<img class="screen" src="images/destool_snap_variables_75.png"></img>
+</div>
+
+<p>
+Operands and results of libFAUDES operations are fetched from or stored in
+DESTool <em>Variables</em>. You can access DESTool variables via the variables
+tab from the project browser. To introduce a new variable, use <em>New Variable</em>
+from the <em>File</em> menu, or press <tt>Shift+Return</tt> within the
+variable list.
+</p>
+
+<p>
+Each individual variable is identified by a unique name
+and has the following configuration properties attached.
+</p>
+<ul class="l1">
+<li><p>
+Each variable is of a specific faudes-type, e.g. "System" or "Alphabet"; available types
+are documented in the libFAUDES <a fhref="FAUDES_REFERENCE/index.html">user-reference</a>;
+when you change the type of a variable, DESTool will try to convert
+ it's value to the new type.
+</p></li>
+<li><p>
+Optionally, a variable can be held within the project file ("Persistent");
+this is most convenient, however, may not be applicable if the project consists
+of a large number of large automata.
+</p></li>
+<li><p>
+Optionally, a variable can be linked to an external file;
+when you choose this option, the value can be loaded from
+and saved to the external file via the <em>File</em> menu; since DESTool keeps all files related to one project in the same folder, this option is only available once the project has been saved
+and, thus, it's folder is known.
+</p></li>
+<li><p>
+Optionally, a variable can have a visual representation;
+this option is only applicable to reasonably small automata.
+</p></li>
+<li><p>
+Optionally, a variable can belong to the <em>Supervisor-</em> or <em>Plant-Model</em>;
+this attribute is used to configure which generators are to be simulated; see also the <a href="destool_animation.html">
+simulator's page</a>
+</p></li>
+</ul>
+
+<p>
+The default configuration is <em>Persistent + Visual Representation</em>.
+To display the value of a variable, use the context-menu in the variable list.
+</p>
+
+
+
+
+
+
+<h3> System Variables </h3>
+
+<p>
+Windows that represent variables of type <em>System</em> are vertically split 
+in three regions, one for a graphical representation, one for list representation, 
+and one to display attributes of events, states and transitions.  
+You may toggle between the different representations via the
+<em>Windows</em> menu.
+</p>
+
+<p>
+<img class="screen" src="images/destool_gimp_generator.png"></img>
+</p>
+
+<p>
+Various editing facilities are provided via context-menus and should
+be fairly intuitive. We give some hints on less obvious aspects of the user interface.
+</p>
+<ul class="l1">
+<li><p>
+<b>Insertion</b>.
+The context-menu can be used to insert items, i.e., events, states, or transitions.
+As a shortcut, the list representation uses <tt>Shift+Return</tt> to insert a new line,
+and the graph representation uses <tt>Shift-Mouse-Click</tt> to insert a state or a
+transition.
+</p></li>
+<li><p>
+<b>Attributes</b>. 
+Attributes of the currently selected item are editable in the properties region.
+They can also be accessed via the item's context-menu.
+When multiple items are selected, their attributes will be set
+uniformly.
+</p></li>
+<li><p>
+<b>Graph Representation</b>. 
+The <tt>Shift</tt> key toggles insert- and select-mode. When in insert-mode,
+you may insert states or transitions by mouse-click. For a transition, first click
+into the starting state and then in the final state. You may click
+inbetween to direct the transitions shape. To edit the shape of an existing
+item, select it and drag the control points. When in insert-mode, you
+may also insert or delete control points of the selected transitions. 
+Rendering of a transition is again controlled by it's context-menu, options include
+splines or polygons. The context-menu also allows you to copy the shape of
+a state or a transition.
+</p></li>
+</ul>
+
+
+<h3> Alphabet Variables </h3>
+<p>
+Alphabets have a list representation only. Attributes of events
+can be accessed via the context-menu or via the properties section.
+</p>
+
+<p>
+<img class="screen" src="images/destool_snap_sigma_75.png"></img>
+</p>  
+
+
+
+
+<!-- ---------------------------------------------------- -->
+<!-- ---------------------------------------------------- -->
+
+<h2 id="extensions">Advanced Topic: Accessing Variables in the Console-Window</h2>
+
+<p>
+DESTool provides an error console to report all sorts warnings and errors.
+You can open the console via the <i>Windows</i> menu. 
+The console runs a <tt>luafaudes</tt>-interpreter and 
+provides access to DESTool variables in the Lua-field
+<tt>workspace</tt>. Example:
+</p>
+<pre>
+luafaudes console
+&gt; mach=workspace.Machine()    -- have a copy of the variable "Machine" in mach
+&gt; print(mach:IsTrim())        -- test "Machine" to be trim
+FAUDES_LUAPRINT: false
+&gt; mach:Trim()                 -- make the copy of "Machine" trim
+&gt; workspace.Machine(mach)     -- write result back to DESTool
+</pre>
+
+<p>
+Note: in the current implementation, you can only access variables with names that
+are valid Lua identifiers.
+</p>
+<p>
+For more information on <tt>luafaudes</tt>, see
+the <a fhref="FAUDES_LUAFAUDES/index.html">online documentation</a>.
+</p>
+
+<br/>
+<br/>
+
+
+</ReferencePage>

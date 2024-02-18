@@ -1,0 +1,19 @@
+<!-- ---------------------------------------------------- -->
+<!-- Chapter Navigation   ------------------------------- -->
+<!-- ---------------------------------------------------- -->
+<table class="chapter_line" ftcclass="chapter_this" focclass="chapter_other" fxcclass="chapter_exit">
+<tr>
+<td fchapter="about"><div><a fhref="FAUDES_CHAPTERS/destool_intro.html">About</a></div></td>
+<td fchapter="projects"><div><a fhref="FAUDES_CHAPTERS/destool_project.html">Projects</a></div></td>
+<td fchapter="variables"><div><a fhref="FAUDES_CHAPTERS/destool_variables.html">Variables</a></div></td>
+<td fchapter="scripts"><div><a fhref="FAUDES_CHAPTERS/destool_script.html">Scripts</a></div></td>
+<td fchapter="simulation"><div><a fhref="FAUDES_CHAPTERS/destool_animation.html">Simulation</a></div></td>
+<td fchapter="reference"><div><a fhref="FAUDES_REFERENCE/index.html">Reference</a></div></td>
+<!-- online link -->
+<td width="100%"> &emsp; </td>
+<td fchapter="exit"><div><a fhref="FAUDES_ONLINE">libFAUDES online</a></div></td> 
+</tr>
+</table>
+
+
+

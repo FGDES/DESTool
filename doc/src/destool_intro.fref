@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE ReferencePage SYSTEM "referencepage.dtd">
+
+<ReferencePage chapter="about" section="none" title="DESTool: About">
+
+<h1>DESTool ... </h1>
+
+
+<div class="warning">
+<p><strong>D I S C L A I M E R </strong></p>
+<p>
+DESTool is still under development. The current version
+should be functional, however, it may not always behave nice.
+Don't trust undo/redo/autosave.
+</p>
+</div>
+
+
+
+<p> ... is a tool for the synthesis and analysis of discrete event systems.
+Technically, DESTool is implemented as a graphical front-end to the discrete event systems
+library <a fhref="FAUDES_ONLINE/index.html">libFAUDES</a>.
+The latter uses a fairly simple functions-on-arguments approach, i.e.,
+there are <em>faudes-functions</em> that operate on data of a specific <em>faudes-type</em>. 
+Functions and types are documented by the libFAUDES
+<a fhref="FAUDES_REFERENCE/index.html">user-reference</a>. DESTool invites the user to
+organize a DES design task as a <a href="destool_project.html">project</a> that consists
+of faudes-typed  <a href="destool_variables.html">variables</a>
+on which a list of faudes-functions (aka <a href="destool_script.html">script</a>) is to be applied.
+</p>
+
+<p>
+The below screen-shot shows a DESTool project for a variation of the well known
+<em>simple machine</em> example. 
+</p>
+
+<p>
+<img class="screen" src="images/destool_gimp_synthesis.png"></img>
+</p>
+
+<h2>Features</h2>
+
+<ul  class="l1">
+<li>
+<p><strong>Visual scripting</strong></p>
+<p>
+A DESTool script is a simple list of faudes-functions, ready to run within
+a couple of mouse clicks. Any advanced programming is banned to libFAUDES extensions.
+</p>
+</li>
+<li>
+<p><strong>Animated discrete event systems</strong></p>
+<p>
+To interactively inspect the outcome of a discrete event system design, 
+DESTool provides step by step execution.  Diagnostic information
+includes which components enable or disable individual events. 
+</p>
+</li>
+<li>
+<p><strong>Hardware-in-the-loop simulation</strong></p>
+<p>
+Building on the libFAUDES IoDevice plug-in, DESTool supports
+interaction with physical hardware to run a DES design on the
+actual plant. 
+</p>
+</li>
+<li>
+<p><strong>Transparent to libFAUDES extensions</strong></p>
+<p>
+DESTool passes on the libFAUDES dynamic run-time-interface to the user. When you extend
+your copy of libFAUDES by additional algorithms, they are available through DESTool
+without adapting/re-compiling DESTool. 
+</p>
+</li>
+</ul>
+
+
+<h2>Download/Installation</h2>
+
+<p>
+DESTool is available from the <tt>preview</tt> folder on
+the LRT/FGDes 
+<a href="http://www.rt.eei.uni-erlangen.de/FGdes/download.html">
+download</a> page.
+There are binary packages for most common operating systems:
+</p>
+<ul class="l1">
+<li><p>
+<strong>Linux:</strong>
+The Linux package of DESTool comes as <tt>.tar.gz</tt> archive. Extracting the archive, you obtain
+a folder <tt>faudes_destool</tt>, which you may place anywhere in the users file system.
+System-wide installation is currently not supported.  
+To start DESTool, run <tt>~/faudes_destool/bin/destool</tt> from a command shell. 
+The binaries are compiled for 64-bit Linux and link agains LSB stubs for cross-distribution
+compatibility. The most recent 32-bit binary is DESTool 0.76, still available from the faudes archive.
+If you experience errors for missing libraries or unresolved symbols, 
+get some <a href="destool_instlx.html">more detailed information</a> and/or let us know.  
+</p></li>  
+<li><p>
+<strong>Mac OS:</strong>
+For Apple's Mac OS, DESTool is distributed as a <tt>.dmg</tt> disk-image. Double click will
+mount the image and the finder will show the DESTool application. It may be placed anywhere in
+the users file system. System-wide installation is currently not supported.
+The application bundle also includes the libFAUDES tools (e.g. <tt>luafaudes</tt> and <tt>simfaudes</tt>)
+in the directory <tt>DESTool.app/Contents/MacOS</tt> for command-line execution.
+The binary is built with the Mac OS 10.11 toolchain and should be
+compatible back to Mac OS 10.7, i.e., for Macs dated 2011 and thereafter.
+The most recent distribution that was actually compiled on Mac OS 10.7 is DESTool 0.82.
+The most recent distribution compatible back to 32-bit Mac OS 10.4 (apprx. 2006) is DESTool 0.74.
+</p></li>  
+<li><p>
+<strong>MS Windows:</strong>
+DESTool is distributed as a <tt>setup.exe</tt> installer application. Double click will
+install by default to <tt>C:/Programs/FAUDES/DESTool</tt>. Users need write permission on the
+installation folder in order for DESTool to be fully operational.
+The MS Windows version of DESTool is compiled for 64-bit MS Windows 7
+and should be compatible with subsequent 64bit editions of MS
+Windows. You may need to install the MS Visual C redistributable package  --- look for "vc_redist.x64.exe" for MS VS 2015.
+The most recent distribution compatible back to 32-bit MS Windows XP is DESTool 0.76,
+available from the libFAUDES archive.
+</p></li>  
+</ul>
+
+<p>
+For automatic layout of graphs (generators, systems, etc.), DESTool relies on the tool <tt>dot</tt>
+from the <a href="http://www.graphviz.org">Graphviz package</a>.
+For most Linux distributions, <tt>dot</tt> can be installed by the package manager
+or is included anyway. For Mac OS and MS Windows, installers are available from the
+<a href="http://www.graphviz.org">Graphviz site</a>.
+Regarding DESTool, you may test your Graphviz installation by invoking <tt>dot -V</tt> 
+from the command prompt.
+If DESTool fails to figure the location of the <tt>dot</tt> executable,
+the path can also be set in <tt>vioconfig.txt</tt>.
+</p>
+
+
+
+<h2>Roadmap</h2>
+
+<p>
+Regarding principle functionality, we consider DESTool 
+as of version 0.40 to be fine for a public audience.
+However, there is still quite a number 
+of minor and major issues with the actual user interface, 
+like context menus, navigation through windows,
+undo/redo etc. We plan to address these issues in due course
+by silently updating up to version 0.99. During this process,
+newer versions of DESTool will continue to read files written by 
+older versions, but not necessarily vice versa.
+</p>
+
+<p>
+Please feel free to notify us about any undesirable behaviour 
+in the user interface. This will help us to focus our efforts.
+Also check for available updates once in a while.
+</p>
+
+
+<h2>Authors</h2>
+<p>
+DESTool is developed at the Friedrich-Alexander Universitaet Erlangen-Nuernberg
+with Thomas Moor as coordinator and principle author. 
+The underlying class hierarchy for workspace objects and the 
+interface via the libFAUDES RTI were designed in course of 
+Ruediger Berndt's master thesis.
+Overall, our software development did substantially benefit 
+from various student projects, 
+either in form of code contributions or user feedback.
+</p>
+<p>
+As of February 2016, the following people have contributed libFAUDES/DESTool:
+</p>
+<center><div style="width: 75%;"><i>
+<fcontributors/>
+</i></div></center>
+
+
+<p>
+In contrast to libFAUDES, DESTool is currently distributed in binary
+form only, see <a href="destool_license.html#opensource">[here]</a>
+for license/legal details.
+If you need access to the DESTool source code, this can be arranged on
+an individual basis.
+</p>
+
+<p>&nbsp;</p>
+
+<p>
+Copyright (C) 2008 - 2016 Thomas Moor
+</p>
+
+
+<h2>History</h2>
+
+<p>
+<table width="100%"  border="0">
+  <tr>
+    <td width="14%">01.03.2016</td>
+    <td width="86%">DESTool 0.82 (improved build system)</td>
+  </tr>
+  <tr>
+    <td width="14%">01.12.2013</td>
+    <td width="86%">DESTool 0.74 (improved HIL-performance)</td>
+  </tr>
+  <tr>
+    <td width="14%">01.10.2011</td>
+    <td width="86%">DESTool 0.63 (Lua console)</td>
+  </tr>
+  <tr>
+    <td width="14%">15.12.2010</td>
+    <td width="86%">DESTool 0.51 (many bug-fixes, more to come)</td>
+  </tr>
+  <tr>
+    <td width="14%">15.03.2010</td>
+    <td width="86%">DESTool 0.40 (3rd public preview, luafaudes extensions)</td>
+  </tr>
+  <tr>
+    <td width="14%">15.02.2010</td>
+    <td width="86%">DESTool 0.33 (2nd public preview, libFAUDES RTI access)</td>
+  </tr>
+  <tr>
+    <td width="14%">10.11.2008</td>
+    <td width="86%">DESTool 0.21 (1st public preview)</td>
+  </tr>
+</table>
+</p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</ReferencePage> 

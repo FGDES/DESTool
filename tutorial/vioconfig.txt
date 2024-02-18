@@ -1,0 +1,953 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% libviodes Configuration
+%
+%
+% Applications typically try to read the configuration file
+% with name "vioconfig.txt" in the same directory as the executable.
+% You may specify an alternative configuration file via the
+% command line option "-c filename".
+%
+%
+
+<VioConfig>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Global Options
+
+% Name of configuration
+"VioStandardConfig-0.83"
+
+% Explicit path to graphviz/dot executable (uncomment and unescape &gt; and &lt;
+% &lt;DotPath&gt; "dot" &lt;/DotPath&gt;                                     %% linux
+% &lt;DotPath&gt; "/Application/Graphviz/Contents/dot" &lt;/DotPath&gt;      %% mac osx
+% &lt;DotPath&gt; "dot.exe" &lt;/DotPath&gt;                                 %% win with PATH set accordingly
+% &lt;DotPath&gt; "c:\Programme\Graphviz2.16\bin\dot.exe" &lt;/DotPath&gt;   %% win xp 32 bit
+% &lt;DotPath&gt; "c:\Program Files (x86)\Graphviz2.38\bin\dot.exe" &lt;/DotPath&gt; %% win 7 64bit
+
+% Colors (not implemented)
+<Color> "Red" 255 0 0 </Color>
+<Color> "Highlight" 255 0 0 </Color>
+
+% Fonts (not implemented)
+<DefaultFont> "Arial" </DefaultFont>
+<BoldFont> "Arial" </BoldFont>
+<ItalicFont> "Arial" </ItalicFont>
+<TypewriterFont> "Arial" </TypewriterFont>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Declare Attribute Styles
+% 
+% List attribute style names and corresponding faudes type.
+% The specified faudes type must be registered with the 
+% libFAUDES RTI, the style itself will be registered as a faudes
+% type on start up. The actual definition of boolean properies
+% follows below
+
+<AttributeFlagsStyles>
+
+% std state and event properties for faudes::Generator
+"AttributeStateFlags"     +faudes::AttributeFlags+
+"AttributeEventFlags"     +faudes::AttributeFlags+
+
+% std event properties for faudes::System
+"AttributeEventCFlags"     +faudes::AttributeCFlags+
+
+% hioplant and friends states and events
+"AttributeHioPlantEvent"  +faudes::HioEventFlags+  
+"AttributeHioPlantState"  +faudes::HioStateFlags+
+"AttributeHioControllerEvent"  +faudes::HioEventFlags+  
+"AttributeHioControllerState"  +faudes::HioStateFlags+
+"AttributeHioEnvironmentEvent"  +faudes::HioEventFlags+  
+"AttributeHioEnvironmentState"  +faudes::HioStateFlags+
+"AttributeHioConstraintEvent"  +faudes::HioEventFlags+  
+"AttributeHioConstraintState"  +faudes::HioStateFlags+
+
+% iosystem and friends states and events
+"AttributeIoPlantEvent"  +faudes::AttributeIosEvent+  
+"AttributeIoPlantState"  +faudes::AttributeIosState+  
+
+
+</AttributeFlagsStyles>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Declare NameSet Styles
+% 
+% List set style names and corresponding faudes type.
+% The specified faudes type must be registered with the 
+% libFAUDES RTI, the style will be registered as a faudes
+% type on start up. The actual definition of individual style
+% follows below.
+
+<NameSetStyles>
+
+% plain event set aka faudes::EventSet
+"EventSet"     +faudes::EventSet+
+
+% std event set aka faudes::Alphabet
+"Alphabet"     +faudes::Alphabet+
+
+% set of simulation conditions aka faudes::SimConditionSet
+"SimConditions"   +faudes::SimConditionSet+
+
+</NameSetStyles>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Declare Generator Styles
+% 
+% List generator style names and corresponding faudes type.
+% The specified faudes type must be registered with the 
+% libFAUDES RTI, the style will be registered as a faudes
+% type on start up. The actual definition of individual style
+% follows below.
+
+<GeneratorStyles>
+
+% std generator aka faudes::Generator
+"Generator"  +faudes::Generator+
+
+% std generator aka faudes::System
+"System"       +faudes::System+
+
+% hiosys plugin
+"HioPlant"        +faudes::HioPlant+
+"HioController"   +faudes::HioController+
+"HioEnvironment"  +faudes::HioEnvironment+
+"HioConstraint"   +faudes::HioConstraint+
+
+
+% iosystem plugin
+"IoSystem"        +faudes::IoSystem+
+
+% colored states generator faudes::MtcSystem
+"MtcSystem"     +faudes::MtcSystem+
+
+</GeneratorStyles>
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define Attribute Styles
+% 
+% Associate property names with faudes flag bits
+% for each of the attribute styles declared above
+
+% example: built in state properties
+<AttributeStateFlagsStyle>
+<BooleanProperty>
+"Initial" "I" +Editable+ 0x80000000 0x80000000
+</BooleanProperty>
+<BooleanProperty>
+"Marked"  "M" +Editable+ 0x40000000 0x40000000
+</BooleanProperty>
+</AttributeStateFlagsStyle>
+
+% example: built in event properties (none)
+<AttributeEventFlagsStyle>
+</AttributeEventFlagsStyle>
+
+% example: built in event properties (cflags)
+<AttributeEventCFlagsStyle>
+<BooleanProperty>
+"Controllable" "C" +Editable+ 0x01 0x01 0x05 0x00
+</BooleanProperty>
+<BooleanProperty>
+"Observable"  "O" +Editable+ 0x02 0x02
+</BooleanProperty>
+<BooleanProperty>
+"Forcible"  "F" +Editable+ 0x05 0x05 0x05 0x00
+</BooleanProperty>
+</AttributeEventCFlagsStyle>
+
+% hiosys: plant events
+<AttributeHioPlantEventStyle>
+<BooleanProperty>
+"Input (Plant)" "UP" +Editable+ 0x003c 0x0014
+</BooleanProperty>
+<BooleanProperty>
+"Output (Plant)" "YP" +Editable+ 0x003c 0x0018
+</BooleanProperty>
+<BooleanProperty>
+"Input (Env.)" "UE" +Editable+ 0x003c 0x0024
+</BooleanProperty>
+<BooleanProperty>
+"Output (Env.)" "YE" +Editable+ 0x003c 0x0028
+</BooleanProperty>
+</AttributeHioPlantEventStyle>
+
+% hiosys: plant states
+<AttributeHioPlantStateStyle>
+<BooleanProperty>
+"Initial" "I" +Editable+ 0x80000000 0x80000000
+</BooleanProperty>
+<BooleanProperty>
+"Marked"  "M" +Editable+ 0x40000000 0x40000000
+</BooleanProperty>
+<BooleanProperty>
+"Input Active (Plant)" "QUP"    0x000a 0x000a
+</BooleanProperty>
+<BooleanProperty>
+"Input Active (Env.)" "QUE" 0x0012 0x0012
+</BooleanProperty>
+<BooleanProperty>
+"Output Active" "QY"   0x0001 0x0001
+</BooleanProperty>
+<BooleanProperty>
+"Error"   +Editable+ 0x0100 0x00100
+</BooleanProperty>
+</AttributeHioPlantStateStyle>
+
+
+% hiosys: controller events
+<AttributeHioControllerEventStyle>
+<BooleanProperty>
+"Input (Plant)" "UC" +Editable+ 0x00fc 0x0044
+</BooleanProperty>
+<BooleanProperty>
+"Output (Plant)" "YC" +Editable+ 0x00fc 0x0048
+</BooleanProperty>
+<BooleanProperty>
+"Input (Env.)" "UP" +Editable+ 0x00fc 0x0014
+</BooleanProperty>
+<BooleanProperty>
+"Output (Env.)" "YP" +Editable+ 0x00fc 0x0018
+</BooleanProperty>
+</AttributeHioControllerEventStyle>
+
+% hiosys: controller states
+<AttributeHioControllerStateStyle>
+<BooleanProperty>
+"Initial" "I" +Editable+ 0x80000000 0x80000000
+</BooleanProperty>
+<BooleanProperty>
+"Marked"  "M" +Editable+ 0x40000000 0x40000000
+</BooleanProperty>
+<BooleanProperty>
+"Plant Output Active" "QYP"    0x09 0x09
+</BooleanProperty>
+<BooleanProperty>
+"Plant-In./Contr.-Out. Active" "QYCUP" 0x40 0x40
+</BooleanProperty>
+<BooleanProperty>
+"Contr. Input Active" "QUC"   0x06 0x06
+</BooleanProperty>
+<BooleanProperty>
+"Error"   +Editable+ 0x0100 0x00100
+</BooleanProperty>
+</AttributeHioControllerStateStyle>
+
+
+% hiosys: constraint states
+<AttributeHioConstraintStateStyle>
+<BooleanProperty>
+"Initial" "I" +Editable+ 0x80000000 0x80000000
+</BooleanProperty>
+<BooleanProperty>
+"Marked"  "M" +Editable+ 0x40000000 0x40000000
+</BooleanProperty>
+<BooleanProperty>
+"Input Active" "QU"    0x02 0x02
+</BooleanProperty>
+<BooleanProperty>
+"Output Active" "QY"    0x01 0x01
+</BooleanProperty>
+<BooleanProperty>
+"Error"   +Editable+ 0x0100 0x00100
+</BooleanProperty>
+</AttributeHioConstraintStateStyle>
+
+% hiosys: constraint events
+<AttributeHioConstraintEventStyle>
+<BooleanProperty>
+"Input" "U" +Editable+ 0x00fc 0x0004
+</BooleanProperty>
+<BooleanProperty>
+"Output" "Y" +Editable+ 0x00fc 0x0008
+</BooleanProperty>
+</AttributeHioConstraintEventStyle>
+
+% iosystem: plant events
+<AttributeIoPlantEventStyle>
+<BooleanProperty>
+"Input" "U" +Editable+ 0x0030 0x0010 0x0010 0x0000
+</BooleanProperty>
+<BooleanProperty>
+"Output" "Y" +Editable+ 0x0030 0x0020 0x0020 0x0000
+</BooleanProperty>
+</AttributeIoPlantEventStyle>
+
+% iosystem: plant states
+<AttributeIoPlantStateStyle>
+<BooleanProperty>
+"Initial" "I" +Editable+ 0x80000000 0x80000000
+</BooleanProperty>
+<BooleanProperty>
+"Marked"  "M" +Editable+ 0x40000000 0x40000000
+</BooleanProperty>
+<BooleanProperty>
+"Input Active" "QU"    0x0010 0x0010
+</BooleanProperty>
+<BooleanProperty>
+"Output Active" "QY"   0x0020 0x0020
+</BooleanProperty>
+<BooleanProperty>
+"Error"   +Editable+ 0x040 0x0040
+</BooleanProperty>
+</AttributeIoPlantStateStyle>
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define NameSet Styles
+% 
+% Associate sets with their attribute type.
+% The attribute must be regigetsred with libviodes
+
+% std event set aka plain
+<EventSetStyle>
+<Header>    "Events"              </Header>
+<DefSymbol> "ev"  </DefSymbol>
+<Attribute>  "AttributeEventFlags" </Attribute>
+</EventSetStyle>
+
+% std event set aka alphabet
+<AlphabetStyle> 
+<Header>    "Events"              </Header>
+<DefSymbol> "ev"  </DefSymbol>
+<Attribute> "AttributeEventCFlags" </Attribute>
+</AlphabetStyle>
+
+% sim cond set
+<SimConditionsStyle>
+<Header>    "Conditions"              </Header>
+<DefSymbol> "cond"  </DefSymbol>
+<Attribute> "AttributeSimCondition" </Attribute>
+</SimConditionsStyle>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define system style parameters
+
+<SystemStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeStateFlags"
+"AttributeEventCFlags"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+% Gray states
+
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++White+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+
+% Std effects on controllable
+<VisualFlagEffect>
+"Controllable" 0x01 0x01 
+<BodyStyle> +Stroke+ </BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on observable
+<VisualFlagEffect>
+"Observable" 0x02 0x00
+<LineStyle> +Dashed+ </LineStyle>
+</VisualFlagEffect>
+
+% Std effects on forcible
+<VisualFlagEffect>
+"Forcible" 0x04 0x04 
+<BodyStyle> +DoubleStroke+ </BodyStyle>
+</VisualFlagEffect>
+
+
+
+</VisualEvents>
+
+
+</SystemStyle>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define hiosys plant style parameters
+
+<HioPlantStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeHioPlantState"
+"AttributeHioPlantEvent"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+"Free Input"         +faudes::FreeInput+
+"IO State Partition" +faudes::HioStatePartition+
+"Mark All States"    +faudes::MarkAllStates+
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+
+% Gray states
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++Grey+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Input P" 0x0a 0x0a 
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Red+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Input E" 0x12 0x12 
+<LineStyle> +Blue+ </LineStyle>
+<BodyStyle> +Blue+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Error" 0x100 0x100 
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Hexagon+ +Double+ </BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+
+<VisualFlagEffect>
+"Input" 0x04 0x04 
+<BodyStyle> +Stroke+ </BodyStyle>
+</VisualFlagEffect>
+
+<VisualFlagEffect>
+"Plant" 0x10 0x10 
+<BodyStyle> +Red+ </BodyStyle>
+<LineStyle> +Red+ </LineStyle>
+</VisualFlagEffect>
+
+<VisualFlagEffect>
+"Environment" 0x20 0x20 
+<BodyStyle> +Blue+ </BodyStyle>
+<LineStyle> +Blue+ </LineStyle>
+</VisualFlagEffect>
+
+
+
+</VisualEvents>
+
+
+</HioPlantStyle>
+
+%% hiocontroller
+<HioControllerStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeHioControllerState"
+"AttributeHioControllerEvent"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+"Free Input"         +faudes::FreeInput+
+"IO State Partition" +faudes::IoStatePartition+
+"Mark All States"    +faudes::MarkAllStates+
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+
+% Gray states
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++Grey+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Output P" 0x09 0x09 
+<LineStyle> +Blue+ </LineStyle>
+<BodyStyle> +Blue+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Input C" 0x06 0x06 
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Red+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Error" 0x100 0x100 
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Hexagon+ +Double+ </BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+
+<VisualFlagEffect>
+"Input" 0x04 0x04 
+<BodyStyle> +Stroke+ </BodyStyle>
+</VisualFlagEffect>
+
+<VisualFlagEffect>
+"Controller" 0x40 0x40 
+<BodyStyle> +Red+ </BodyStyle>
+<LineStyle> +Red+ </LineStyle>
+</VisualFlagEffect>
+
+<VisualFlagEffect>
+"Plant" 0x10 0x10 
+<BodyStyle> +Blue+ </BodyStyle>
+<LineStyle> +Blue+ </LineStyle>
+</VisualFlagEffect>
+
+</VisualEvents>
+
+</HioControllerStyle>
+
+
+
+
+%% hioconstraint
+<HioConstraintStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeHioConstraintState"
+"AttributeHioConstraintEvent"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+"Free Input"         +faudes::FreeInput+
+"IO State Partition" +faudes::IoStatePartition+
+"Mark All States"    +faudes::MarkAllStates+
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+
+% Gray states
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++Grey+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Input" 0x02 0x02 
+<LineStyle> +Blue+ </LineStyle>
+<BodyStyle> +Blue+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Error" 0x100 0x100 
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Hexagon+ +Double+ </BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+
+<VisualFlagEffect>
+"Input" 0x04 0x04 
+<BodyStyle> +Stroke+ +Blue+ </BodyStyle>
+<LineStyle> +Blue+ </LineStyle>
+</VisualFlagEffect>
+
+<VisualFlagEffect>
+"Output" 0x08 0x08 
+<BodyStyle> +Blue+ </BodyStyle>
+<LineStyle> +Blue+ </LineStyle>
+</VisualFlagEffect>
+
+
+
+
+</VisualEvents>
+
+
+</HioConstraintStyle>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define iosystem style parameters
+
+
+
+<IoSystemStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeIoPlantState"
+"AttributeIoPlantEvent"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+"Free Input"          +faudes::IoFreeInput+
+"Remove Dummy States" +faudes::RemoveIoDummyStates+
+"I/O State Partition" +faudes::IoStatePartition+
+"Mark All States"     +faudes::MarkAllStates+
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+
+% Std states
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<LineStyle> +Black+ </LineStyle>
+<BodyStyle> +Grey+ </BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Input" 0x30 0x10 
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Output" 0x30 0x20 
+<LineStyle> +Grey+ </LineStyle>
+<BodyStyle> +Grey+ +SmallSize+ </BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Mismatch" 0x30 0x30
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Red+ </BodyStyle>
+</VisualFlagEffect>
+
+% Faudes controlled flag: io state partition
+<VisualFlagEffect>
+"Error" 0x40 0x40
+<LineStyle> +Red+ </LineStyle>
+<BodyStyle> +Hexagon+ +Double+ </BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+% Event flags
+<VisualEvents>
+
+<VisualFlagEffect>
+"Input" 0x10 0x10 
+<BodyStyle> +Stroke+ </BodyStyle>
+</VisualFlagEffect>
+
+
+</VisualEvents>
+</IoSystemStyle>
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define mtc system style parameters
+
+<MtcSystemStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeColoredState"
+"AttributeEventCFlags"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+% Gray states
+
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++White+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+
+% Std effects on controllable
+<VisualFlagEffect>
+"Controllable" 0x01 0x01 
+<BodyStyle> +Stroke+ </BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on observable
+<VisualFlagEffect>
+"Observable" 0x02 0x00
+<LineStyle> +Dashed+ </LineStyle>
+</VisualFlagEffect>
+
+% Std effects on forcible
+<VisualFlagEffect>
+"Forcible" 0x04 0x04 
+<BodyStyle> +DoubleStroke+ </BodyStyle>
+</VisualFlagEffect>
+
+
+
+</VisualEvents>
+
+
+</MtcSystemStyle>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define diagnoser style parameters
+
+<DiagnoserStyle>
+
+% Specify attribute types
+<Attributes>
+"AttributeGlobalFlags"
+"AttributeTransFlags"
+"AttributeDiagnoserState"
+"AttributeEventCFlags"
+</Attributes>
+
+% Specify edit functions
+<EditFunctions>
+</EditFunctions>
+
+% State flags
+<VisualStates>
+
+% Gray states
+
+<VisualFlagEffect>
+"Default" 0x00 0x00
+<BodyStyle>
++White+ +Rectangle+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on initial
+<VisualFlagEffect>
+"Initial State" 0x80000000 0x80000000 
+<BodyStyle>
++Init+
+</BodyStyle>
+</VisualFlagEffect>
+
+% Std effects on marked
+<VisualFlagEffect>
+"Marked State" 0x40000000 0x40000000 
+<BodyStyle>
++Double+
+</BodyStyle>
+</VisualFlagEffect>
+
+</VisualStates>
+
+
+% Event flags
+<VisualEvents>
+</VisualEvents>
+
+
+</DiagnoserStyle>
+
+
+
+</VioConfig>
+
+%
+% end of vio configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<QHelpCollectionProject version="1.0">
+    <assistant>
+        <title>DESTool</title>
+        <startPage>qthelp://faudes.com/doc/destool_intro.html</startPage>
+        <currentFilter>DESTool</currentFilter>
+        <applicationIcon>images/help128.png</applicationIcon>
+         <enableFilterFunctionality>false</enableFilterFunctionality>
+         <enableDocumentationManager>false</enableDocumentationManager>
+         <enableAddressBar visible="false">false</enableAddressBar>
+        <aboutMenuText>
+            <text>About DESTool</text>
+        </aboutMenuText>
+        <aboutDialog>
+            <file>about.txt</file>
+            <icon>images/help128.png</icon>
+        </aboutDialog>
+    </assistant>
+    <docFiles>
+        <register>
+            <file>destool.qch</file>
+        </register>
+    </docFiles>
+</QHelpCollectionProject>
