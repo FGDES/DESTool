@@ -22,17 +22,26 @@ compiled first to the following folder layout:
 Within the DESTool folder run the following commands.
 
 - build the install tool 
-      cd dstinstall
-      qmake dstinstall.pro
-      make
-      cd ..
+
+        cd wherever/DESTool/dstinstall
+        qmake dstinstall.pro
+        make
+
 - copy libFAUDES and libVIODES essentials    
-      . ./copyfaudes.sh
+
+        cd wherever/DESTool
+        . ./copyfaudes.sh
+
 - build the documentation
-      make -C doc
-- build DESTool    
-      qmake destool.pro
-      make
+
+        cd wherever/DESTool/doc
+        make 
+
+- build DESTool
+
+        cd wherever/DESTool
+        qmake destool.pro
+        make
 
 
 ## Copyright/Authors/License
