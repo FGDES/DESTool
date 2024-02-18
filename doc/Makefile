@@ -10,7 +10,7 @@
 # Targets
 # * dist-clean to start from scartch
 # * html for destool pages
-# * dstinstall to install libFAUDES registry
+# * dstintl to install libFAUDES registry
 #
 # * defaults to target dstinst (implies html)
 #
@@ -29,7 +29,7 @@ SRCDIR = src
 HTMLDIR = html
 TMPDIR = tmp
 SRCFAUDES = ../../libVIODES/libFAUDES_for_VIODES
-DSTINST   = ../dstinstall/dstinstall
+DSTINST   = ../bin/dstinstall
 
 
 # fref processing configuration (accept overwrite from hompage make process)
@@ -78,13 +78,12 @@ $(HTMLDIR)/%.html: $(SRCDIR)/%.fref $(SRCFAUDES)/bin/ref2html
 
 # images 
 $(HTMLDIR)/images: 
-	- mkdir $(HTMLDIR)/images 
+	- mkdir -p $(HTMLDIR)/images 
 	cp $(SRCDIR)/images/* $@
 
 
 # user target
 html: $(HTMLTARGETS) $(COPYTARGETS) $(HTMLDIR)/destool.css $(HTMLDIR)/images $(HTMLDIR)/refsrc
-	cp $(HTMLDIR)/destool_intro.html $(HTMLDIR)/index.html
 
 .PHONY : html $(HTMLDIR)/images
 
@@ -103,6 +102,7 @@ $(HTMLDIR)/reference:
 # do compile
 dstinst: html $(HTMLDIR)/reference $(DSTINST) ../lib/plugins/luaextensions
 	$(DSTINST) -lib $(SRCFAUDES) -dst ..
+	cp $(HTMLDIR)/destool_intro.html $(HTMLDIR)/index.html
 
 ####################################
 # clean up all

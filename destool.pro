@@ -163,7 +163,6 @@ unix:!macx {
     cp $$VIODES_PLUGINS ./lib/plugins/viotypes && \
     cp $$DESTOOL_LIBS ./lib && \
     cp $$DESTOOL_BINS ./bin && \
-    cp dstinstall/dstinstall ./lib/dstinstall.bin && \
     cp $$VIODES_LIBFAUDES/stdflx/*.flx ./lib/plugins/luaextensions && \
     rm -f ./lib/qt.conf && \
     rm -f ./bin/luafaudes.flx
@@ -184,7 +183,7 @@ macx {
   ContFiles.files += $$VIODES_LIBFAUDES/bin/flxinstall
   ContFiles.files += $$VIODES_LIBFAUDES/bin/simfaudes
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes
-  ContFiles.files += dstinstall/dstinstall
+  ContFiles.files += bin/dstinstall
   ContFiles.files += bin/luafaudes.flx
   ContFiles.files += $$VIODES_BASE/libviodes.dylib
   ContFiles.files += $$VIODES_BASE/vioedit/data/vioconfig.txt 

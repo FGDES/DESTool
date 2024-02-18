@@ -19,11 +19,12 @@ VIODES_VERSION = $${VIODES_VERSION_MAJOR}.$${VIODES_VERSION_MINOR}
 DEFINES += VIODES_VERSION=\\\"$${VIODES_VERSION}\\\"
 
 # target setting
+TARGET = ../bin/dstinstall
 TEMPLATE = app
 LANGUAGE = C++
 CONFIG += qt console 
 CONFIG -= app_bundle
-QT -= gui
+QT -= gui widgets
 
 # link statically with libfaudes
 unix:!macx { LIBS += $$VIODES_LIBFAUDES/minfaudes.a }

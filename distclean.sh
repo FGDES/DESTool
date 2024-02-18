@@ -2,7 +2,7 @@ echo ========= make clean
 make clean
 make -C doc clean
 make -C dstinstall clean
-rm -rf doc/html/*
+rm -rf doc/html
 
 echo ========= delete binaries
 cd bin
