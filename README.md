@@ -2,9 +2,9 @@
 
 
 DESTool is a GUI to play along with libFAUDES objecst and algorithms, i.e.,
-- enter automata graphicaly or as table
+- enter automata graphically or as spread sheet
 - run synthesis algorithms to obtain a supevisor
-- simullate the compoiund system, optionally with hardware in the loop
+- simulate the compound system, optionally with hardware in the loop
 
 Further information
 - [online documentation](https://fgdes.tf.fau.de/destool/index.html)
