@@ -7,7 +7,7 @@ DESTool is a GUI to play along with libFAUDES objecst and algorithms, i.e.,
 - simullate the compoiund system, optionally with hardware in the loop
 
 Further information
-- [online documentation](https://fgdes.tf.fau.de/destool/index.html
+- [online documentation](https://fgdes.tf.fau.de/destool/index.html)
 - [download precompiled binaries](https://fgdes.tf.fau.de/archive/preview/#arch)
 
 ## Build Process
