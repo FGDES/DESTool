@@ -51,4 +51,4 @@ LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits from a vario
 projects and external contributions. A list of authors is generated on the About-Page. 
 
 
-Copyright (C) 2011-2024 Thomas Moor
+Copyright (C) 2008-2024 Thomas Moor
