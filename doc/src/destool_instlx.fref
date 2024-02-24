@@ -55,6 +55,16 @@ for graphical representation of generators.
 </ul>
 
 <h2>
+Instructions Below this Line ... 
+</h2>
+
+<p><b>
+.. refers to DESTool 0.83 and before. We are currently migrating to Qt 6 and abandon LSB stubs. For
+DESTool 0.84 report any issues by mail, so we can gather experience and update this page accordingly.
+</b></p>  
+  
+
+<h2>
 Missing Libraries
 </h2>
 
@@ -197,28 +207,7 @@ Open-Source
 </h2>
 <p>
 Most of the above deployment issues come from
-binary distribution, so why not make DESTool open source?
-</p>
-<p>
-Honestly, the source is currently not in a shape that 
-allows for effective collaborative development. 
-There is the intention to release the source under GPL terms,
-once it makes sense to share. Core requirements include:
-</p>
-<ul class="l2">
-<li><p>
-clean and well documented 
-interface for visual representations of faudes-objects;
-</p></li>
-<li><p>
-fix at least the five most irritating design flaws that sneaked in
-due to laziness and pragmatism.
-</p></li>
-</ul>
-<p>
-If you would like to inspect the situation in detail,
-perhaps to contribute to the further development of DESTool,
-this can be aranged
+binary distribution --- hence our move to GPL as of DESTool 0.84.
 </p>
 
 <p>&nbsp;</p>

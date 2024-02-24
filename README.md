@@ -12,7 +12,8 @@ Further information
 
 ## Build Process
 
-To build DESTool, you wull need get and compile  copieslibFAUDES and LibVIODES. We recommend the following
+In the case you want to build DESTool youself, you can retrieve the sources from our GitHub repository.
+You will also need to get the sources of libFAUDES and LibVIODES. We recommend the following
 folder layout:
 
     -> whereever + -> libFAUDES
@@ -21,7 +22,9 @@ folder layout:
 
 The build process is then organised in 4 stages.
 
-1. copy libFAUDES and libVIODES essentials (executables and shared objects)   
+0. configure and compile libFAUDES and libVIODES; instructions come with the source code
+
+1. copy libFAUDES and libVIODES essentials to the DESTool sources (executables and shared objects)   
 
         cd wherever/DESTool
         . ./copyfaudes.sh
@@ -43,6 +46,7 @@ The build process is then organised in 4 stages.
         qmake destool.pro
         make
 
+This is quite some process, hence we provide precomipiled binaries. 
 
 ## Copyright/Authors/License
 

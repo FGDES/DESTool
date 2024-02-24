@@ -31,21 +31,21 @@
 #ifdef FAUDES_DEBUG_SCRIPT
 #define FD_DS(message) FAUDES_WRITE_CONSOLE("DESTOOL_SCRIPT: " << message);
 #else
-#define FD_DS(message) {};
+#define FD_DS(message) {}
 #endif
 
 // debugging: script level
 #ifdef FAUDES_DEBUG_PROJECT
 #define FD_DP(message) FAUDES_WRITE_CONSOLE("DESTOOL_PROJECT: " << message);
 #else
-#define FD_DP(message) {};
+#define FD_DP(message) {}
 #endif
 
 // debugging: items
 #ifdef FAUDES_DEBUG_ITEMS
 #define FD_DI(message) FAUDES_WRITE_CONSOLE("DESTOOL_ITEM " << message)
 #else
-#define FD_DI(message) {};
+#define FD_DI(message) {}
 #endif
 
 
@@ -77,7 +77,6 @@ drawing routines, and other compiletime options.
 class DesStyle {
 
 public:
-
 
   // drawing: common
   static void DefaultPen(QPen& pen);
@@ -243,14 +242,17 @@ public:
      ~DesAssistant();
      void ShowDocumentation(const QString &file);
      void QuitAssistant(void);
+     const QString& DocPath();
+     const QString& ExePath();
+
 
 private:
      bool startProcess();
      QProcess *mProcess;
+     QString mDocPath;
+     QString mExePath;
+
 };
-
-
-
 
 
 

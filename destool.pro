@@ -9,7 +9,6 @@ VIODES_BASE = ../libVIODES
 VIODES_LIBFAUDES = $$VIODES_BASE/libFAUDES_for_VIODES
 
 # retreive version from qmake persistent settings
-# figure version numbers from qmake database
 VIODES_VERSION_MAJOR = $$[VIODES_VERSION_MAJOR]
 VIODES_VERSION_MINOR = $$[VIODES_VERSION_MINOR]
 isEmpty( VIODES_VERSION_MAJOR ): error("=== error: libVIODES major version not configured")
@@ -228,7 +227,7 @@ macx {
 
 # mac: copy doc to bundle 
 macx { 
-  DocFiles.files = doc/destool_html/
+  DocFiles.files = doc/html/
   DocFiles.path = Contents/Resources/doc/destool_html/
   QMAKE_BUNDLE_DATA += DocFiles
 }

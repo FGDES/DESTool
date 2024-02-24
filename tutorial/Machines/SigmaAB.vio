@@ -1,11 +1,11 @@
 <VioEventSet>
 <NameSet>
-"alpha_a"     "beta_a"      "mue_a"       "lambda_a"    "alpha_b"     "beta_b"      
-"mue_b"       "lambda_b"    
+beta_a        alpha_b       alpha_a       mue_a         lambda_a      beta_b       
+mue_b         lambda_b     
 </NameSet>
 <VioData>
 =AAAACAAAAA4AYQBsAHAAaABhAF8AYQAAAAwAYgBlAHQAYQBfAGEAAAAKAG0AdQBlAF8AYQAAABAAbABhAG0AYgBkAGEAXwBhAAAADgBhAGwAcABoAGEAXwBiAAAADABiAGUAdABhAF8AYgAAAAoAbQB1AGUAXwBiAAAAEABsAGEAbQBiAGQAYQBfAGI== </VioData>
 <VioLayout>
-0             150           150           
+0              150            150           
 </VioLayout>
 </VioEventSet>

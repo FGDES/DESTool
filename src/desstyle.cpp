@@ -10,6 +10,7 @@
 
 
 #define FAUDES_DEBUG_VIO
+#define FAUDES_DEBUG_SCRIPT
 
 #include "desstyle.h"
 #include "libfaudes.h"
@@ -493,8 +494,83 @@ implementation: DesAssistant
 
 
 // construct
-DesAssistant::DesAssistant() : mProcess(0) {
+DesAssistant::DesAssistant() : mProcess(nullptr) {
 };
+
+// find my data aka help collection
+const QString& DesAssistant::DocPath(void) {
+    if(mDocPath!="") return mDocPath;
+    // a) linux: package
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  QCoreApplication::applicationDirPath()
+                   +  QLatin1String("/../doc");
+    }
+    // b) linux: development
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  QCoreApplication::applicationDirPath()
+                   +  QLatin1String("/../doc/html");
+    }
+    // c) macosx: bundle
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  QCoreApplication::applicationDirPath()
+                   + QLatin1String("/../Resources/doc/destool_html");
+    }
+    // d) windows: package
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  QCoreApplication::applicationDirPath()
+                   +  QLatin1String("/Doc");
+    }
+    // ... fail
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  "cannot find doc path";
+    }
+    return mDocPath;
+}
+
+// find assistant path ...
+const QString& DesAssistant::ExePath(void) {
+    if(mExePath!="") return mExePath;
+    mExePath="";
+    // a) linux: package, binary
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QCoreApplication::applicationDirPath()
+                   + QLatin1String("/../lib/assistant.bin");
+    }
+    // b) linux: package, shell script
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QCoreApplication::applicationDirPath()
+                   + QLatin1String("/../bin/assistant");
+    }
+    // c) linux: using locally installed qt (must remove qt_conf for this to work)
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QLibraryInfo::path(QLibraryInfo::BinariesPath)
+                   + QLatin1String("/assistant");
+    }
+    // d) linux: system (must remove qt_conf and local qtlibs for this to work)
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = "/usr/bin/assistant";
+    }
+    // e) macosx: installed system qt
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QLibraryInfo::path(QLibraryInfo::BinariesPath)
+                   +QLatin1String("/Assistant.app/Contents/MacOS/Assistant");
+    }
+    // f) macosx: destool bundle
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QCoreApplication::applicationDirPath()
+                   + QLatin1String("/Assistant");
+    }
+    // g) windows: destool package
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = QCoreApplication::applicationDirPath()
+                   + QLatin1String("\\assistant.exe");
+    }
+    // ... fail
+    if(!QFileInfo(mExePath).isExecutable()) {
+        mExePath = "cannot find help browser";
+    }
+    return mExePath;
+}
 
 //destruct
 DesAssistant::~DesAssistant() {
@@ -509,18 +585,24 @@ DesAssistant::~DesAssistant() {
 
 // doit
 void DesAssistant::ShowDocumentation(const QString &page) {
-  // report
-  FD_DS("DesAssistant::ShowDocu" << VioStyle::StrFromQStr(page));
+  FD_DS("DesAssistant::ShowDocumentation(" << VioStyle::StrFromQStr(page)<<"}");
+  // use syste browser
+  QString dpage = QLatin1String("file://")+DocPath()+"/"+page;
+  if(page=="") dpage=dpage+QLatin1String("destool_intro.html");
+  FD_DS("DesAssistant::ShowDocumentation(..): url: " << VioStyle::StrFromQStr(dpage));
+  QDesktopServices::openUrl(dpage);
+/*
   // ensure process is up
   if(!startProcess()) return;
   // my default
   QString dpage = page;
   if(dpage=="") dpage=QLatin1String("destool_intro.html");
   QString dmssg = QLatin1String("setSource qthelp://com.faudes/doc/") + dpage;
-  // FD_WARN("DesAssistant::sendmessage: " << VioStyle::StrFromQStr(dmssg));
+  FD_DS("DesAssistant::ShowDocumentation(..): sending message: " << VioStyle::StrFromQStr(dmssg));
   // set up stream, send message
   QTextStream str(mProcess);
   str  << dmssg << QLatin1String("\n");
+*/
 }
 
 // quit
@@ -545,70 +627,11 @@ bool DesAssistant::startProcess() {
   // allready running, fine
   if(mProcess->state() == QProcess::Running) return true;
   // 1. find assistant path ...
-  QString app="";
-  // ... linux: package, binary
-  if(!QFileInfo(app).isExecutable()) {
-    app = QCoreApplication::applicationDirPath() 
-        + QLatin1String("/../lib/assistant.bin");
-  }
-  // ... linux: package, shell script
-  if(!QFileInfo(app).isExecutable()) {
-    app = QCoreApplication::applicationDirPath() 
-        + QLatin1String("/../bin/assistant");
-  }
-  // ... linux: using locally installed qt (must remove qt_conf for this to work)
-  if(!QFileInfo(app).isExecutable()) {
-    app = QLibraryInfo::path(QLibraryInfo::BinariesPath) 
-        + QLatin1String("/assistant");
-  }
-  // ... linux: system (must remove qt_conf and local qtlibs for this to work)
-  if(!QFileInfo(app).isExecutable()) {
-    app = "/usr/bin/assistant";
-  }
-  // ... macosx: installed system qt
-  if(!QFileInfo(app).isExecutable()) {
-    app = QLibraryInfo::path(QLibraryInfo::BinariesPath) 
-        +QLatin1String("/Assistant.app/Contents/MacOS/Assistant");
-  }
-  // ... macosx: destool bundle
-  if(!QFileInfo(app).isExecutable()) {
-    app = QCoreApplication::applicationDirPath() 
-        + QLatin1String("/Assistant");
-  }
-  // ... windows: destool package
-  if(!QFileInfo(app).isExecutable()) {
-    app = QCoreApplication::applicationDirPath()
-        + QLatin1String("\\assistant.exe");
-  }
-  // ... fail
-  if(!QFileInfo(app).isExecutable()) {
-    app = "cannot find help browser";
-  }
+  QString app=ExePath();
   // report
   FD_WARN("DesAssistant::startProcess: assistant at " << VioStyle::StrFromQStr(app));
   // 2. find help file *qch to register ...
-  QString qch="";
-  // ... linux: package
-  if(!QFileInfo(qch).isReadable()) {
-    qch =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("/../doc/destool.qch");
-  }
-  // ... linux: development
-  if(!QFileInfo(qch).isReadable()) {
-    qch =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("/../doc/html/destool.qch");
-  }
-  // ... macosx: bundle
-  if(!QFileInfo(qch).isReadable()) {
-    qch =  QCoreApplication::applicationDirPath()
-        + QLatin1String("/../Resources/doc/destool_html/destool.qch");
-  }
-  // ... windows: package
-  if(!QFileInfo(qch).isReadable()) {
-    qch =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("\\Doc\\destool.qch");
-  }
-  // ... fail
+  QString qch=DocPath() + QLatin1String("/destool.qch");
   if(!QFileInfo(qch).isReadable()) {
     qch =  "cannot find destool.qch";
   }
@@ -631,34 +654,11 @@ bool DesAssistant::startProcess() {
     //return false;
   }
   */
-  // 5. find help collection *.qhc path ...
-  QString qhc="";
-  // ... linux: package
+  // 6. find help file *qch to register ...
+  QString qhc=DocPath() + QLatin1String("/destool.qhc");
   if(!QFileInfo(qhc).isReadable()) {
-    qhc =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("/../doc/destool.qhc");
+      qhc =  "cannot find destool.qch";
   }
-  // ... linux: development
-  if(!QFileInfo(qhc).isReadable()) {
-    qhc =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("/../doc/html/destool.qhc");
-  }
-  // ... macosx: bundle
-  if(!QFileInfo(qhc).isReadable()) {
-    qhc =  QCoreApplication::applicationDirPath()
-        + QLatin1String("/../Resources/doc/destool_html/destool.qhc");
-  }
-  // ... windows: package
-  if(!QFileInfo(qhc).isReadable()) {
-    qhc =  QCoreApplication::applicationDirPath()
-        +  QLatin1String("\\Doc\\destool.qhc");
-  }
-  // ... fail
-  if(!QFileInfo(qhc).isReadable()) {
-    qhc =  "cannot find help collection destool.qhc";
-  }
-  // report
-  FD_WARN("DesAssistant::startProcess: helpcollection at " << VioStyle::StrFromQStr(qhc));
   // assistant args for launch
   QStringList largs;
   largs << QLatin1String("-collectionFile")

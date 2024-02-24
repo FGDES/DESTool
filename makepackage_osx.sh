@@ -5,13 +5,7 @@ echo ==================== Deployment script DESTool  Mac OS X
 CLEAN=false
 #CLEAN=true
 
-# manually set qt: Trolltech precompiled package
-#export QTOOLS=/Developer/Tools/Qt
-#export QAPPS=/Developer/Applications/Qt
-#export QFRAMEWORKS=/Library/Frameworks
-#export QPLUGINS=/Developer/Applications/Qt/plugins
-
-# manually set qt: self build LPGL 4.8.7
+# manually set qt: self build LGPL 4.8.7
 #export QTOOLS=/usr/local/qt-4.8.7-osx11/bin
 #export QAPPS=$QTOOLS
 #export QFRAMEWORKS=/usr/local/qt-4.8.7-osx11/lib
@@ -29,7 +23,7 @@ VIODES_BASE=$(pwd)/../libVIODES
 FAUDES_BASE=$(pwd)/../libVIODES/libFAUDES_for_VIODES
 DESTOOL_BASE=$(pwd)
 
-# retrieve version an pass to qmake
+# retrieve version and pass to qmake
 . $VIODES_BASE/VERSION
 qmake -set VIODES_VERSION_MAJOR $VERSION_VERSION_MAJOR 
 qmake -set VIODES_VERSION_MINOR $VERSION_VERSION_MINOR 
@@ -77,7 +71,7 @@ rm -rf $DESTOOL_BASE/bin/dstinstall
 
 if test $CLEAN = true ; then  
 # clean viodes
-echo cd $VIODES_BASE
+echo ===== clean libVIODES in  $VIODES_BASE
 cd $VIODES_BASE
 . ./distclean.sh
 . ./copyfaudes.sh
@@ -85,15 +79,19 @@ qmake "CONFIG-=debug" viodes.pro
 make clean
 # clean destool
 echo cd $DESTOOL_BASE
+echo ===== clean DESTool in  $DESTOOL_BASE
 cd $DESTOOL_BASE
-. ./distclean.sh
 qmake "CONFIG-=debug" destool.pro
 make clean
 # clean dstsintall
-echo cd $DESTOOL_BASE/dstinstall
+echo ===== clean dstinatll in $DESTOOL_BASE/dstinstall
 cd $DESTOOL_BASE/dstinstall
 qmake "CONFIG-=debug" dstinstall.pro
 make clean
+# clean doc
+echo ===== clean dstinatll in $DESTOOL_BASE/dstinstall
+cd $DESTOOL_BASE
+make -C doc dist-clean
 fi
 
 
@@ -111,7 +109,6 @@ make -j 20 -C $VIODES_BASE
 
 # doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
 echo ==================== compile - doc 
-echo cd $DESTOOL_BASE
 cd $DESTOOL_BASE
 make -C doc
 
@@ -208,7 +205,7 @@ echo ==================== have qhelp tools b fix
 
 echo ==================== copy other vio
 cp -v $DESTOOL_BASE/README.md  $DEST
-cp -v $DESTOOL_BASE/LICENSE $DEST
+cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
 cp -Rv $DESTOOL_BASE/tutorial $DEST/Examples
 cp -v $VIODES_BASE/vioedit/data/distsave/vioconfig.txt  $DEST/Examples
 
