@@ -1625,7 +1625,7 @@ void SimRunThread::RunBackground(void) {
       wpev = pExecutor->SyncEvents();
       // !! make sure, the proposal is updated ... while still in the mutex
       // !! this is because otherwise the below waitsync will not be read only
-      faudes::TimedEvent tev= pExecutor->ProposeNextTransition();
+      pExecutor->ProposeNextTransition();
     }
     // break on time
     if(mStopStep>=0 && pExecutor->CurrentStep()>=mStopStep) done=true;

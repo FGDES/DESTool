@@ -5,13 +5,7 @@ echo ==================== Deployment script DESTool  Mac OS X
 CLEAN=false
 #CLEAN=true
 
-# manually set qt: self build LGPL 4.8.7
-#export QTOOLS=/usr/local/qt-4.8.7-osx11/bin
-#export QAPPS=$QTOOLS
-#export QFRAMEWORKS=/usr/local/qt-4.8.7-osx11/lib
-#export QPLUGINS=/usr/local/qt-4.8.7-osx11/plugins
-
-# manually set qt: Qt Project precompiled package
+# set qt to Qt Project precompiled package
 export QTOOLS=~/Qt/6.6.2/macos/bin
 export QTOOLSX=~/Qt/6.6.2/macos/libexec
 export QFRAMEWORKS=~/Qt/6.6.2/macos/lib
@@ -206,7 +200,7 @@ echo ==================== have qhelp tools b fix
 echo ==================== copy other vio
 cp -v $DESTOOL_BASE/README.md  $DEST
 cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
-cp -Rv $DESTOOL_BASE/tutorial $DEST/Examples
+cp -Rv $DESTOOL_BASE/examples $DEST/Examples
 cp -v $VIODES_BASE/vioedit/data/distsave/vioconfig.txt  $DEST/Examples
 
 

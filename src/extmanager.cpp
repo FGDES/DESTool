@@ -4,7 +4,7 @@
 /*
    Extensionmanager for FAU Discrete Event Systems Library (libfaudes)
 
-   Copyright (C) 2011 Thomas Moor
+   Copyright (C) 2011, 2024 Thomas Moor
 
 */
 
@@ -150,7 +150,7 @@ bool Extension::ExtensionFile(const QString& extfile) {
   try {
     faudes::TokenReader tr(VioStyle::LfnFromQStr(filename));
     tr.ReadBegin("LuaExtension",btag);
-  } catch(faudes::Exception) {
+  } catch(const faudes::Exception& ex) {
     FD_QP("Test Extension: could not read LuaExtension tag");
     mValid=false;
   }

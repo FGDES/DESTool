@@ -261,7 +261,7 @@ int ScrOperation::Variant(int n) {
 int ScrOperation::VectorCount(int n, int m) {
   FD_DS("ScrOperation::VectorCount(" << n <<","<<m<<")");  
   // error
-  if(n<0 || n>= mParameterDescr.size()) return -1;
+  if((n<0) || (n>= mParameterDescr.size())) return -1;
   // no change
   if(mParameterDescr.at(n).size()==m) return m;
   // do set size shrink
@@ -307,41 +307,58 @@ int ScrOperation::VariantCount(void) const {
 int ScrOperation::OptionCount(void) const {return mOptionDescr.size();};
 int ScrOperation::ParameterCount(void) const {return mParameterDescr.size();};
 int ScrOperation::VectorCount(int n) const {
-  if(n<0 || n>=mParameterDescr.size()) return -1;
+  if((n<0) || (n>=mParameterDescr.size())) return -1;
   return mParameterDescr.at(n).size();
 }
 
 // query variables by index
 QString ScrOperation::ParameterVar(int n, int m) const {
-  if(n<0) return ""; return mParameterVars.at(n).at(m);};
+  if(n<0) return "";
+  return mParameterVars.at(n).at(m);
+};
+
 bool ScrOperation::OptionVal(int n) const {
   if(n<0 || n>= mOptionVals.size()) return false; 
   return mOptionVals.at(n);};
 
 
-
 // query types by index
 QString ScrOperation::ParameterType(int n) const {
-  if(n<0) return ""; return mParameterTypes.at(n);};
+  if(n<0) return "";
+  return mParameterTypes.at(n);
+};
 
 // query parameter attribute (In/Out/InOut)
 QString ScrOperation::ParameterAttr(int n) const {
-  if(n<0) return ""; return mParameterAttr.at(n);};
+  if(n<0) return "";
+  return mParameterAttr.at(n);
+};
 
 // query description by index
 QString ScrOperation::VariantDescr(int n) const {
   if(n<0) return ""; 
-  return QString(VioStyle::QStrFromStr(pFnctnDefinition->Variant(n).Name()));};
+  return QString(VioStyle::QStrFromStr(pFnctnDefinition->Variant(n).Name()));
+};
 QString ScrOperation::VectorDescr(int n) const {
-  if(n<0) return ""; return mVectorDescr.at(n);}
+  if(n<0) return "";
+  return mVectorDescr.at(n);
+};
 QString ScrOperation::ParameterDescr(int n, int m) const {
-  if(n<0) return ""; return mParameterDescr.at(n).at(m);};
+  if(n<0) return "";
+  return mParameterDescr.at(n).at(m);
+};
 QString ScrOperation::OptionDescr(int n) const {
-  if(n<0) return ""; return mOptionDescr.at(n);};
+  if(n<0) return "";
+  return mOptionDescr.at(n);
+};
 QString ScrOperation::OptionToolTip(int n) const {
-  if(n<0) return ""; return mOptionToolTip.at(n);};
+  if(n<0) return "";
+  return mOptionToolTip.at(n);
+};
 QString ScrOperation::OptionWhatsThis(int n) const {
-  if(n<0) return ""; return mOptionWhatsThis.at(n);};
+  if(n<0) return "";
+  return mOptionWhatsThis.at(n);
+};
 
 // set operands variables
 void ScrOperation::ParameterVar(QString varname, int n, int m ) {  

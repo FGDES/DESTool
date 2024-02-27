@@ -29,20 +29,17 @@ if  test -z $VIOQT ; then {
 VIOQT=local
 } fi
 if test $VIOQT == local ; then {
-VIOQTLIB=/usr/lib
-VIOQTBIN=/usr/bin
-VIOQTPLUGINS=/usr/lib/qt4/plugins
+VIOQTLIB=/usr/lib/x86_64-linux-gnu
+VIOQTBIN=/usr/lib/qt6/bin
 } else {
 VIOQTLIB=$VIOQT/lib
 VIOQTBIN=$VIOQT/bin
-VIOQTPLUGINS=$VIOQT/plugins
 } fi
 echo ========  qt at $VIOQTLIB
 
 # clean before
-rm $VIOLIB/qt.conf 
+rm -f $VIOLIB/qt.conf 
 rm -rf $VIOBIN/luafaudes.flx
-rm -rf $VIOBIN/assistant
 rm -rf $VIOBIN/*~
 rm -rf $VIOLIB/plugins
 rm -rf $VIOLIB/q*
@@ -50,15 +47,15 @@ rm -rf $VIOLIB/lib*
 rm -rf $VIOBIN/luafaudes.flx
 
 # prepare dirs
-mkdir $VIOLIB/plugins
-mkdir $VIOLIB/plugins/viotypes
-mkdir $VIOLIB/plugins/luaextensions
+mkdir -p $VIOLIB/plugins
+mkdir -p $VIOLIB/plugins/viotypes
+mkdir -p $VIOLIB/plugins/luaextensions
 
 # do copy libfaudes
 cp $FAUDES/libfaudes$DOTSO $VIOLIB
 cp $FAUDES/include/libfaudes.rti $VIOLIB
 cp $FAUDES/bin/* $VIOBIN
-cp $VIODES/libFAUDES_for_VIODES/stdflx/*.flx $VIOAPP/plugins/luaextensions
+cp $VIODES/libFAUDES_for_VIODES/stdflx/*.flx $VIOLIB/plugins/luaextensions
 
 # do copy libviodes
 cp -p $VIODES/libviodes$DOTSO $VIOLIB

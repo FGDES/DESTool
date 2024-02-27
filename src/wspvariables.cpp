@@ -612,7 +612,7 @@ int WspVariable::UserImport(void) {
     settings.setValue("importFileDialog", fdiag->saveState());
     // do the import
     mVioModel->ImportFaudesFile(fileName);
-  } catch(faudes::Exception& exception) {
+  } catch(const faudes::Exception& exception) {
     err=+1;
   } 
   // set validity
@@ -652,7 +652,7 @@ int WspVariable::UserExport(void) {
     settings.setValue("importFileDialog", fdiag->saveState());
     // do the export
     mVioModel->ExportFaudesFile(fileName);
-  } catch(faudes::Exception& exception) {
+  } catch(const faudes::Exception& exception) {
     err=+1;
   } 
   return err;
@@ -669,7 +669,7 @@ int WspVariable::Import(const QString& filename) {
     } else {
       mFaudesObject->Read(VioStyle::LfnFromQStr(filename));
     }
-  } catch(faudes::Exception& exception) {
+  } catch(const faudes::Exception& exception) {
     err=1;
   } 
   // set validity
@@ -690,7 +690,7 @@ int WspVariable::Export(const QString& filename) const {
     } else {
       mFaudesObject->Write(VioStyle::LfnFromQStr(filename));
     }
-  } catch(faudes::Exception& exception) {
+  } catch(const faudes::Exception& exception) {
     err=1;
   } 
   // done
@@ -816,7 +816,7 @@ void WspVariable::DoRead(faudes::TokenReader& rTr, const QString& rLabel) {
       /* 
       try {
         ExternalRead(mFilename);
-      } catch(faudes::Exception& exception) {
+      } catch(const faudes::Exception& exception) {
         // TODO: report
       } 
       */
@@ -1817,7 +1817,7 @@ static int WspGetValue(lua_State* L) {
   }
   try {
     faudes::LuaState::Push(L,fdata);
-  } catch(faudes::Exception ex) {
+  } catch(const faudes::Exception& ex) {
     lua_pushstring(L, "WspGetValue: failed to push variable");
     lua_error(L);
   }
@@ -1857,7 +1857,7 @@ static int WspSetValue(lua_State* L) {
   faudes::Type* fdata = 0;
   try {
     fdata=faudes::LuaState::Pop(L);
-  } catch(faudes::Exception ex) {
+  } catch(const faudes::Exception& ex) {
     fdata=0;
   }
   FD_DS("WspSetValue(): found data at " << fdata);

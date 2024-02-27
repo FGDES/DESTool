@@ -654,10 +654,8 @@ void ScrOpWidget::UpdateVariableComboBox(QComboBox* vared) {
   QVariant propname = vared->property("Variable");
   QString varname=propname.toString();
   QVariant propi = vared->property("ParameterNumI");
-  int i=propi.toInt();
   QVariant propj = vared->property("ParameterNumJ");
-  int j=propj.toInt();
-  FD_DS("ScrOpWidget::UpdateVariableComboBox(): for \"" << VioStyle::StrFromQStr(varname) << "\" at position " << i << "-" << j);
+  FD_DS("ScrOpWidget::UpdateVariableComboBox(): for \"" << VioStyle::StrFromQStr(varname) << "\" at position " << propi.toInt() << "-" << propj.toInt());
   // set up the combo box
   vared->clear();
   /*

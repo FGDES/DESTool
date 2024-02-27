@@ -108,6 +108,8 @@ int main(int argc, char *argv[]) {
     faudes::ConsoleOut::G()->ToFile(VioStyle::LfnFromQStr(deslogname));
     FD_WARN("DESTool logfile " << deslogname);
   }
+#else
+  (void) dowincon;
 #endif
 
 #ifdef Q_OS_WIN32  
