@@ -22,7 +22,7 @@ folder layout:
 
 The build process is then organised in 4 stages.
 
-0. configure and compile libFAUDES and libVIODES; instructions come with the source code
+0. configure and compile libFAUDES and libVIODES; instructions come with the respective source code
 
 1. copy libFAUDES and libVIODES essentials to the DESTool sources (executables and shared objects)   
 
