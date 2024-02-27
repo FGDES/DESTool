@@ -13,7 +13,7 @@ Further information
 ## Build Process
 
 In the case you want to build DESTool youself, you can retrieve the sources from our GitHub repository.
-You will also need to get the sources of libFAUDES and LibVIODES. We recommend the following
+You will also need to get the sources of libFAUDES and libVIODES. We recommend the following
 folder layout:
 
     -> whereever + -> libFAUDES
