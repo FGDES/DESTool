@@ -9,7 +9,7 @@ cd bin
 find . -type f -not -name 'destool' -delete
 cd ..
 
-echo remove Makefile
+echo ========= remove Makefiles
 rm Makefile
 rm dstinstall/Makefile
 

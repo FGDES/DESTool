@@ -4,8 +4,8 @@
 #
 
 # set friends paths
-VIODES_BASE = ../../libviodes
-VIODES_LIBFAUDES = ../../libviodes/libfaudes_for_viodes
+VIODES_BASE = ../../libVIODES
+VIODES_LIBFAUDES = ../../libVIODES/libFAUDES_for_VIODES
 
 # retrieve version from qmake persistent settings
 # figure version numbers from qmake database
@@ -19,7 +19,10 @@ VIODES_VERSION = $${VIODES_VERSION_MAJOR}.$${VIODES_VERSION_MINOR}
 DEFINES += VIODES_VERSION=\\\"$${VIODES_VERSION}\\\"
 
 # target setting
-TARGET = ../bin/dstinstall
+unix:!macx { TARGET = ../lib/dstinstall.bin }
+macx:TARGET = ../bin/dstinstall
+win32:TARGET = ../bin/dstinstall
+
 TEMPLATE = app
 LANGUAGE = C++
 CONFIG += qt console 
