@@ -96,8 +96,8 @@ If you experience errors for missing libraries or unresolved symbols,
 get some <a href="destool_instlx.html">more detailed information</a> and/or let us know.  
 </p></li>  
 <li><p>
-<strong>Mac OS:</strong>
-For Apple's Mac OS, DESTool is distributed as a <tt>.dmg</tt> disk-image. Double click will
+<strong>macOS:</strong>
+For Apple's macOS, DESTool is distributed as a <tt>.dmg</tt> disk-image. Double click will
 mount the image and the finder will show the DESTool application. It may be placed anywhere in
 the users file system. System-wide installation is currently not supported.
 The application bundle also includes the libFAUDES tools (e.g. <tt>luafaudes</tt> and <tt>simfaudes</tt>)

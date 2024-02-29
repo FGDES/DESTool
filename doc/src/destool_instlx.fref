@@ -17,7 +17,6 @@ Step by Step
 </h2>
 
 <p>
-Until there is an automated installation script, 
 DESTool must be manually unpacked. 
 This is perhaps a bit old fashioned,
 but not difficult.
@@ -47,25 +46,50 @@ You can now start DESTool by
 &gt; ./faudes_destool_x_xx/bin/destool
 </pre>
 <p>
-When DESTool starts, you can use the <i>About</i> menu
+You can use the DESTool <i>About</i> menu
 to verify versions and available plug-ins. There should
 be at least the <tt>VioGenerator</tt> plug-in, which is responsible
 for graphical representation of generators.
 </p></li>
 </ul>
+<p>
+As a binary distribution, DESTool dynamically links against quite a number of shared objects aka libraries.
+Some of them are provided with the package (e.g. libFAUDES, libVIODES) and some are required to be present
+on the target platform. On start-up, DESTOOL will list the libraries it exspects are how the dependencies
+are to be resolved. Most of the libraries are faily standard and should be present on common Linux
+installations. We are currently using Ubuntu 22.04 LTS for development dated 2023.
+Any not substantially older Linux distribution should be fine.
+</p>
+<p>
+The only less common libraries relevant for DESTool the Qt framework series 6.
+To install these on e.g. Ubuntu 22.04, use
+</p>
+<pre>
+sudo apt install qt6-base-dev
+</pre>
+<p>
+If your Linux distribution does not have a Qt series 6 package, you can obtain Qt directly
+from the Qt project. The (free of cost) open source license should be ok for most usecases.
+</p>
+<p>
+If you experience issues with missing libraries, please report back to us.
+As a last resort, you can compile DESTool from source.  
+</p>
+
 
 <h2>
 Instructions Below this Line ... 
 </h2>
 
 <p><b>
-.. refers to DESTool 0.83 and before. We are currently migrating to Qt 6 and abandon LSB stubs. For
-DESTool 0.84 report any issues by mail, so we can gather experience and update this page accordingly.
+  ...
+  refer to DESTool 0.83 and before. These versions did ship with Qt series 4 included, linked against
+  LSB library stubs and should be compatible to a wide range of older Linux distyributions.
 </b></p>  
   
 
 <h2>
-Missing Libraries
+Missing Libraries (DESTool pre 0.84) 
 </h2>
 
 <p>
@@ -149,7 +173,7 @@ please let us know.
 
 
 <h2>
-Inconsistent GUI Style - Broken Online Help
+Inconsistent GUI Style (DESTool pre 0.84)
 </h2>
 
 <p>
@@ -200,15 +224,6 @@ assistant bookmarks and local copies of any help-files.
 </p>
 
 
-<h2>
-<a id="opensource">
-Open-Source
-</a>
-</h2>
-<p>
-Most of the above deployment issues come from
-binary distribution --- hence our move to GPL as of DESTool 0.84.
-</p>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
