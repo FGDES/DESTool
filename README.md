@@ -12,13 +12,14 @@ Further information
 
 ## Build Process
 
-In the case you want to build DESTool youself, you can retrieve the sources from our GitHub repository.
+In the case you want to build DESTool yourself, you can retrieve the sources
+from our GitHub repository.
 You will also need to get the sources of libFAUDES and libVIODES. We recommend the following
 folder layout:
 
-    -> whereever + -> libFAUDES
-                 + -> libVIODES
-                 + -> DESTool
+    -> where_ever + -> libFAUDES
+                  + -> libVIODES
+                  + -> DESTool
 
 The build process is then organised in 4 stages.
 
@@ -52,7 +53,8 @@ This is quite some process, hence we provide precomipiled binaries.
 
 DESTool is distributed under terms of the GLP vession 3; for details see the provided
 LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits from a various student
-projects and external contributions. A list of authors is generated on the About-Page. 
+projects and external contributions. DESTool produces a list of libFAUDES
+authors/contributors vai its About dialog.
 
 
 Copyright (C) 2008-2024 Thomas Moor

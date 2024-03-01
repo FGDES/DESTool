@@ -80,16 +80,14 @@ without adapting/re-compiling DESTool.
 <p>
 DESTool is available as GPL licensed source code from our GitHub repository
 <a href=https://github.com/FGDES>FGDES</a>. The build process is somewhat
-involved and for this reason we also distribute pre-compiled binaries via our
-<a href="http://www.rt.eei.uni-erlangen.de/FGdes/download.html">
-download</a> page.
+involved and for this reason we distribute pre-compiled binaries via our
+<a href="https://fgdes.tf.fau.de/download.html"> download</a> page.
 </p>
 
 <ul class="l1">
 <li><p>
 <strong>Linux:</strong>
-The Linux package of DESTool comes as <tt>.tar.gz</tt> archive. Extracting the archive, you obtain
-a folder <tt>faudes_destool</tt>, which you may place anywhere in the users file system.
+The Linux package of DESTool comes as <tt>.tar.gz</tt> archive. Extracting the archive, you obtain a folder <tt>faudes_destool</tt>, which you may place anywhere in the users file system.
 System-wide installation is currently not supported.  
 To start DESTool, run <tt>~/faudes_destool/bin/destool</tt> from a command shell.
 If you experience errors for missing libraries or unresolved symbols, 
@@ -158,7 +156,7 @@ Also check for available updates once in a while.
 
 <h2>Authors</h2>
 <p>
-DESTool is developed at the Friedrich-Alexander Universitaet Erlangen-Nuernberg
+DESTool is developed at the Friedrich-Alexander-Universit&umla;t Erlangen-N&umlu;rnberg
 with Thomas Moor as coordinator and principle author. 
 The underlying class hierarchy for workspace objects and the 
 interface via the libFAUDES RTI were designed in course of 
@@ -168,7 +166,7 @@ from various student projects,
 either in form of code contributions or user feedback.
 </p>
 <p>
-As of February 2016, the following people have contributed libFAUDES/DESTool:
+As of February 2024, the following people have contributed libFAUDES/DESTool:
 </p>
 <center><div style="width: 75%;"><i>
 <fcontributors/>

@@ -11,13 +11,14 @@ bin/*
 !bin/destool
 lib/*
 
+
 # ignore DESTool build
 DESTool.app
 dstinstall/dstinstall
 dstinstall/Makefile
 doc/html
 
-# ignore packegaes
+# ignore packages
 faudes_destool*
 
 # Qt locals

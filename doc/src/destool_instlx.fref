@@ -8,18 +8,21 @@
 
 <p> 
 libFAUDES/DESTool is developed in a Linux environment, so one
-would think, deployment for that platform is particularly easy.
-The contrary is the case ...
+should think, deployment for that platform is particularly straight forward.
+The contrary is the case.
 </p>
+
+<p><i>
+With version 0.84 we have reorganised our deployment scheme. For details
+on earlier versions, see <a href="destool_instlx83.html">[here]</a>.
+</i></p>
 
 <h2>
 Step by Step
 </h2>
 
 <p>
-DESTool must be manually unpacked. 
-This is perhaps a bit old fashioned,
-but not difficult.
+DESTool must be unpacked manually. You may proceed as follows.  
 </p>
 
 <ul class="l1">
@@ -30,7 +33,7 @@ from our
 </p></li>
 <li><p>
 Extract the archive somewhere in the users file system. System wide
-installation is currently not supported. Extraction will look something like this:
+installation is currently not supported. E.g.,
 </p>
 <pre>
 &gt; mkdir ~/here_should_detool_go
@@ -48,21 +51,23 @@ You can now start DESTool by
 <p>
 You can use the DESTool <i>About</i> menu
 to verify versions and available plug-ins. There should
-be at least the <tt>VioGenerator</tt> plug-in, which is responsible
-for graphical representation of generators.
+be at least the <tt>VioGenerator</tt> plug-in for
+graphical representation of generators.
 </p></li>
 </ul>
 <p>
-As a binary distribution, DESTool dynamically links against quite a number of shared objects aka libraries.
-Some of them are provided with the package (e.g. libFAUDES, libVIODES) and some are required to be present
-on the target platform. On start-up, DESTOOL will list the libraries it exspects are how the dependencies
-are to be resolved. Most of the libraries are faily standard and should be present on common Linux
-installations. We are currently using Ubuntu 22.04 LTS for development dated 2023.
-Any not substantially older Linux distribution should be fine.
+As a binary distribution, DESTool dynamically links against quite a number of shared
+objects aka libraries.
+Some of them are provided with the DESTool (e.g. libFAUDES, libVIODES) and some
+are required to be present on the target system.
+On start-up, DESTool will list the libraries it exspects are how the dependencies
+are to be resolved. Most of the libraries are faily standard and should be present
+on common Linux installations. We are currently using Ubuntu 22.04 LTS for development
+dated 2023. Any desktop Linux distribution not substantially older should be fine.
 </p>
 <p>
-The only less common libraries relevant for DESTool is the Qt framework series 6.
-To test whether Qt installed, try
+The only less common libraries relevant for DESTool are from the Qt framework series 6.
+To test whether Qt is available, try either of
 </p>
 <pre>
 qmake6 -v  
@@ -70,8 +75,8 @@ qmake -v
 </pre>
 <p>
 If the version shown is at least 6.2.4, you whould be fine.
-If not, you may try your distributions package manager.  
-E.g. for Ubuntu 22.04
+If not, you may try your distributions package manager;  
+e.g. for Ubuntu 22.04 LTS
 </p>
 <pre>
 sudo apt install qt6-base-dev
@@ -79,11 +84,14 @@ sudo apt install qt6-base-dev
 <p>
 will install Qt series 6 in a suitable version.  
 If your Linux distribution does not provide a Qt series 6 package, you can obtain Qt directly
-from the Qt project. The (free of cost) open source license should be ok for most usecases.
-In this case, you will need to copy/link the actual shared objects libQ*so to the DESToll lib folder.
+from the Qt project. The free-of-cost open-source license should be ok for most usecases.
+You will then need to copy/link the actual shared objects <tt>libQt6*.so</tt> to the DESTool lib folder; e.g.,
+<pre>
+&gt;cp /lib/x86_64-linux-gnu/libQt6Widgets.so.6  ./faudes_destool_x_xx/lib
+</pre>
 </p>
 <p>
-If you experience issues with missing libraries, please report back to us.
+If you still experience issues with missing libraries, please report back to us.
 As a last resort, you can always compile DESTool from source.  
 </p>
 

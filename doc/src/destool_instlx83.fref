@@ -3,30 +3,30 @@
 
 <ReferencePage chapter="about" section="none" title="DESTool: About">
 
-<h1>DESTool up to Version 0.83 on Linux </h1>
+<h1>DESTool on Linux </h1>
 
-
-<p> 
-libFAUDES/DESTool is developed in a Linux environment, so one
-would think, deployment for that platform is particularly easy.
-The contrary is the case ...
+<div class="warning">
+<p><strong>O B S O L E T E</strong></p>
+<p>
+  The infomation on this page refers to DESTool version 0.83 and below.
+  We recommend to update to 0.84 or above.
 </p>
+</div>
+
 
 <h2>
 Step by Step
 </h2>
 
 <p>
-DESTool must be manually unpacked. 
-This is perhaps a bit old fashioned,
-but not difficult.
+DESTool must be unpacked manually. You may proceed as follows.  
 </p>
 
 <ul class="l1">
 <li><p>
 Download the latest archive <tt>faudes_destool_x_xx.tar.gz</tt> 
 from our 
-<a href="http://www.rt.eei.uni-erlangen.de/FGdes/archive/preview">online archive</a>.
+<a href="https://fgdes.tf.fau.de/archive/preview">online archive</a>.
 </p></li>
 <li><p>
 Extract the archive somewhere in the users file system. System wide
@@ -139,7 +139,7 @@ please let us know.
 
 
 <h2>
-Inconsistent GUI Style (DESTool pre 0.84)
+Inconsistent GUI Style (DESTool up to Version 0.83)
 </h2>
 
 <p>
