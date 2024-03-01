@@ -41,7 +41,7 @@ REF2HTML_CSS  ?= destool.css
 # DESTool doc source files
 ####################################
 
-FREFFILES  = destool_intro.fref destool_instlx.fref destool_variables.fref destool_script.fref destool_project.fref destool_animation.fref destool_license.fref
+FREFFILES  = destool_intro.fref destool_instlx.fref destool_instlx83.fref destool_variables.fref destool_script.fref destool_project.fref destool_animation.fref destool_license.fref
 
 
 ####################################

@@ -61,166 +61,30 @@ installations. We are currently using Ubuntu 22.04 LTS for development dated 202
 Any not substantially older Linux distribution should be fine.
 </p>
 <p>
-The only less common libraries relevant for DESTool the Qt framework series 6.
-To install these on e.g. Ubuntu 22.04, use
+The only less common libraries relevant for DESTool is the Qt framework series 6.
+To test whether Qt installed, try
+</p>
+<pre>
+qmake6 -v  
+qmake -v  
+</pre>
+<p>
+If the version shown is at least 6.2.4, you whould be fine.
+If not, you may try your distributions package manager.  
+E.g. for Ubuntu 22.04
 </p>
 <pre>
 sudo apt install qt6-base-dev
 </pre>
 <p>
-If your Linux distribution does not have a Qt series 6 package, you can obtain Qt directly
+will install Qt series 6 in a suitable version.  
+If your Linux distribution does not provide a Qt series 6 package, you can obtain Qt directly
 from the Qt project. The (free of cost) open source license should be ok for most usecases.
+In this case, you will need to copy/link the actual shared objects libQ*so to the DESToll lib folder.
 </p>
 <p>
 If you experience issues with missing libraries, please report back to us.
-As a last resort, you can compile DESTool from source.  
-</p>
-
-
-<h2>
-Instructions Below this Line ... 
-</h2>
-
-<p><b>
-  ...
-  refer to DESTool 0.83 and before. These versions did ship with Qt series 4 included, linked against
-  LSB library stubs and should be compatible to a wide range of older Linux distyributions.
-</b></p>  
-  
-
-<h2>
-Missing Libraries (DESTool pre 0.84) 
-</h2>
-
-<p>
-If you get errors on missing libraries or other obscure
-messages before even the DESTool welcome screen shows ...
-stay calm, presumably there is nothing big missing.
-</p>
-<p>
-We have verified DESTool do operate on a range of 64-bit Linux distributions,
-including Ubuntu 10.04 LTS, Fedota 14 (2010) and various versions of plain Debian (2014).
-There is also a 32-bit version of DESTool available, compatible back to SUSE 10.0 (2005). 
-However, the 32-bit version is only updated upon request -- let us know if you need a recent 32-bit binary.
-</p>
-<p>
-Technically, DESTool is dynamically linked against the so 
-called LSB library stubs. While this type of linkage is meant to increase binary compatibility, 
-on some distributions manual installation of an LSB loader is required.
-To list present LSB modules, try:
-</p>
-<pre>
-&gt; lsb_release
-</pre>
-<ul class="l1">
-<li><p>
-Among the listed modules, there is a module
-<tt>core-3.0-amd64</tt>
-<tt>core-3.2-amd64</tt> or 
-<tt>core-4.0-amd64</tt>: you should be fine.
-</p></li>
-<li><p>
-There are no <tt>...-amd64</tt> modules at all, but
-<tt>core-3.0-ia32</tt>
-<tt>core-3.2-ia32</tt> or 
-<tt>core-4.0-ia32</tt>: you are running a 32-bit Linux, so you'll need 32-bit DESTool.
-</p></li>
-<li><p>
-No modules reported at all (just something like
-<tt> command not found</tt>):
-LSB support is not installed, see below.
-</p></li>
-<li><p>
-There are <tt>...-ia32</tt> modules, but 
-the highest version number is <tt>core-2.1-ia32</tt>:
-the distribution is just too old, sorry.
-</p></li>
-</ul>
-
-<p>
-Examples on how to install LSB packages ...
-</p>
-<p>
-... on Ubuntu 10.04, both 32-bit and 64-bit distributions:
-</p>
-<pre>
-&gt; aptitude install lsb
-&gt; aptitude install lsb-desktop
-</pre>
-<p>
-... on Fedora 14, both 32-bit and 64-bit  distributions:
-</p>
-<pre>
-&gt; yum install redhat-lsb
-&gt; yum install redhat-lsb-graphics
-</pre>
-<p>
-... on Fedora 14, 64-bit distribution to run 32-bit DESTool:
-</p>
-<pre>
-&gt; yum install redhat-lsb
-&gt; yum install redhat-lsb-graphics
-&gt; yum install redhat-lsb.i686
-&gt; yum install redhat-lsb-graphics.i686
-</pre>
-<p>
-</p>
-
-<p>
-If you still experience errors for missing libraries or unresolved symbols, 
-please let us know.  
-</p>
-
-
-<h2>
-Inconsistent GUI Style (DESTool pre 0.84)
-</h2>
-
-<p>
-DESTool uses Qt 4.8 as a GUI framework.
-To operate on older Linux installations that do not provide Qt 4.8,
-DESTool ships with a customized copy of Qt 4.8 (linked against
-LSB library stubs, see above). If, on the other hand, 
-one installs DESTool on a more recent Linux installation, 
-it may be preferable that DESTool uses the installation's
-version of Qt. This will have a more consistent look &amp; feel
-and, presumably, be more stable than the one that comes with DESTool.
-</p>
- 
-<p>
-To test which version of Qt came with your Linux distribution, try
-</p>
-<pre>
-&gt; qmake -v
-</pre>
-<p>
-If your systems Qt version is 4.8 or above, it is recommended to delete the 
-Qt libraries from the DESTool package. This can be done as follows.
-</p>
-<pre>
-&gt; cd ~/here_is_destool
-&gt; rm ./faudes_destool_x_xx/lib/libQt*
-&gt; rm ./faudes_destool_x_xx/lib/q*.bin
-&gt; rm ./faudes_destool_x_xx/lib/plugins/imageformats/*
-&gt; rm ./faudes_destool_x_xx/lib/plugins/sqldrivers/*
-&gt; rm ./faudes_destool_x_xx/lib/assistant.lib
-&gt; rm ./faudes_destool_x_xx/bin/assistant
-</pre>
-
-<p>
-The DESTool online help is managed by Qt's 
-<tt>assistant</tt>. This is really a great tool,
-however, we have observed hick-ups somehow related
-to cached states/files. You may decide to delete the
-assistant's cache ... if you find it. Try
-</p>
-<pre>
-&gt; mv ~/.assistant ~/assistant_delete_later
-&gt; mv ~/.local/share/data/Trolltech/Assistant ~/assistant_delete_later
-</pre>
-<p>
-Note: when removing the assistant's cache you will lose 
-assistant bookmarks and local copies of any help-files.
+As a last resort, you can always compile DESTool from source.  
 </p>
 
 
