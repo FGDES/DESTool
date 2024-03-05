@@ -14,6 +14,7 @@
 
 #include "desstyle.h"
 #include "libfaudes.h"
+#include <QtGlobal>
 
 
 /*
@@ -527,10 +528,11 @@ const QString& DesAssistant::DocPath(void) {
     return mDocPath;
 }
 
-// find assistant path ...
+// find assistant path ... abandoned with DESTool 8.4
 const QString& DesAssistant::ExePath(void) {
     if(mExePath!="") return mExePath;
-    mExePath="";
+    mExePath="";    
+/*
     // a) linux: package, binary
     if(!QFileInfo(mExePath).isExecutable()) {
         mExePath = QCoreApplication::applicationDirPath()
@@ -569,6 +571,7 @@ const QString& DesAssistant::ExePath(void) {
     if(!QFileInfo(mExePath).isExecutable()) {
         mExePath = "cannot find help browser";
     }
+*/
     return mExePath;
 }
 
