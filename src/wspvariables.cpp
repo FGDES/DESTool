@@ -1453,7 +1453,7 @@ void WspExternalSaveDialog::Discard(void) {
   FD_DI("WspExternalSaveDialog::Discard()");
   for(int i=0; i<mTodoVariables->count(); i++) {
     QListWidgetItem* witem = mTodoVariables->item(i);
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole))) continue;
     QString varname = witem->data(Qt::UserRole).toString();
     WspItem* item = pPool->At(varname);
     if(!item) continue;
@@ -1471,7 +1471,7 @@ void WspExternalSaveDialog::Save(void) {
   for(int i=0; i<mTodoVariables->count(); i++) {
     QListWidgetItem* witem = mTodoVariables->item(i);
     if(witem->checkState()!=Qt::Checked) continue;
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole))) continue;
     QString varname = witem->data(Qt::UserRole).toString();
     if(pPool->At(varname)->FileLinked()) continue;
     FD_DI("WspExternalSaveDialog::Save(): link " << varname);
@@ -1482,7 +1482,7 @@ void WspExternalSaveDialog::Save(void) {
   for(int i=0; i<mTodoVariables->count(); i++) {
     QListWidgetItem* witem = mTodoVariables->item(i);
     if(witem->checkState()!=Qt::Checked) continue;
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole))) continue;
     QString varname = witem->data(Qt::UserRole).toString();
     FD_DI("WspExternalSaveDialog::Save(): save " << varname);
     WspVariable* var = pPool->At(varname);

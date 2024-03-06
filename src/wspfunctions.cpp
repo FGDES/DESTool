@@ -834,7 +834,7 @@ void WspFunctionPool::Help(void) {
   // figure descr
   if(!sender()) return;
   QVariant prop = sender()->property("Item");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString descr = prop.toString();
   Help(descr);
 }

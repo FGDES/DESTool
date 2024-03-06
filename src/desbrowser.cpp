@@ -5,6 +5,7 @@
    Gui frontend for FAU Discrete Event Systems Library (libfaudes)
 
    Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2024  Thomas Moor
 
 */
 
@@ -932,7 +933,7 @@ void DesProjectBrowser::ActivateWindow(void) {
   QAction* wact =qobject_cast<QAction*>(sender());
   if(!wact) return;
   QVariant prop = wact->property("ActivateId");
-  if(!(prop.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(prop)) return;
   int id = prop.toInt();
   ActivateWindow(id);
 }
@@ -990,7 +991,7 @@ void DesProjectBrowser::RaiseWindow(void) {
   QAction* wact =qobject_cast<QAction*>(sender());
   if(!wact) return;
   QVariant prop = wact->property("ActivateId");
-  if(!(prop.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(prop)) return;
   int id = prop.toInt();
   RaiseWindow(id);
 }
@@ -1975,7 +1976,7 @@ void WspFaudesExportDialog::Export(void) {
   for(int i=0; i<mTodoVariables->count(); i++) {
     QListWidgetItem* witem = mTodoVariables->item(i);
     if(witem->checkState()!=Qt::Checked) continue;
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole)))  continue;
     QString varname = witem->data(Qt::UserRole).toString();
     todovars << varname;
   }
@@ -1984,7 +1985,7 @@ void WspFaudesExportDialog::Export(void) {
   for(int i=0; i<mTodoFunctions->count(); i++) {
     QListWidgetItem* witem = mTodoFunctions->item(i);
     if(witem->checkState()!=Qt::Checked) continue;
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole)))  continue;
     QString fnctname = witem->data(Qt::UserRole).toString();
     todofncts << fnctname;
   }
@@ -1993,7 +1994,7 @@ void WspFaudesExportDialog::Export(void) {
   for(int i=0; i<mTodoSimulation->count(); i++) {
     QListWidgetItem* witem = mTodoSimulation->item(i);
     if(witem->checkState()!=Qt::Checked) continue;
-    if(witem->data(Qt::UserRole).typeId()!=QMetaType::QString) continue;
+    if(!VIODES_QVAR_IS_STR(witem->data(Qt::UserRole)))  continue;
     todosims << witem->data(Qt::UserRole).toString();
   }
   // doit

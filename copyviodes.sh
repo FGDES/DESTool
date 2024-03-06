@@ -23,19 +23,21 @@ esac
 DOTSO=.so
 if test $MACHINE == Mac ; then DOTSO=.dylib; fi
 echo ========  sensed os $MACHINE
+echo ========  using qmake $(which qmake)
+echo ========  qt at $(qmake -query QT_INSTALL_LIBS)
 
-# qt sources
-if  test -z $VIOQT ; then {
-VIOQT=local
+# test for system qt on Linux
+if test $MACHINE == Linux ; then {
+  if [[ $(which qmake) =~ "/usr/bin" ]]; then
+     SYSQT=true 
+     echo ========  sensed system qt libs
+  fi
+  if [[ $(which qmake) =~ "/usr/lib" ]]; then
+     SYSQT=true 
+     echo ========  sensed system qt libs
+  fi
 } fi
-if test $VIOQT == local ; then {
-VIOQTLIB=/usr/lib/x86_64-linux-gnu
-VIOQTBIN=/usr/lib/qt6/bin
-} else {
-VIOQTLIB=$VIOQT/lib
-VIOQTBIN=$VIOQT/bin
-} fi
-echo ========  qt at $VIOQTLIB
+
 
 # clean before
 rm -f $VIOLIB/qt.conf 
@@ -59,7 +61,7 @@ cp $VIODES/libFAUDES_for_VIODES/stdflx/*.flx $VIOLIB/plugins/luaextensions
 
 # do copy libviodes
 cp -p $VIODES/libviodes$DOTSO $VIOLIB
-cp $VIODES/vioedit/data/vioconfig.txt $VIOLIB
+cp $VIODES/vioedit/example/vioconfig.txt $VIOLIB
 cp $VIODES/libviogen$DOTSO $VIOLIB/plugins/viotypes
 cp $VIODES/libviohio$DOTSO $VIOLIB/plugins/viotypes
 cp $VIODES/libviomtc$DOTSO $VIOLIB/plugins/viotypes
@@ -68,10 +70,8 @@ cp $VIODES/libviodiag$DOTSO $VIOLIB/plugins/viotypes
 cp $VIODES/libviolua$DOTSO $VIOLIB/plugins/viotypes
 
 
-# copy/clear default extensions 
-
-# do copy qt stuff  (this was for Qt4
-#if test $VIOQT != local ; then {
+# do copy qt stuff  (this is still Qt4)
+#if test $SYSQT != true ; then {
 #  mkdir $VIOAPP/plugins/sqldrivers
 #  mkdir $VIOAPP/plugins/imageformats
 #  cp src/qt.conf $VIOAPP

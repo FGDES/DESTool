@@ -4,7 +4,7 @@
 /*
    Visual skripting for FAU Discrete Event Systems Library (libfaudes)
 
-   Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2006, 2007, 2024  Thomas Moor, Klaus Schmidt, Sebastian Perk
 
    Except the flowlayout, which is based on code copyrighted by Trolltech,
    see original header at end of file
@@ -259,6 +259,38 @@ private:
 #endif 
 
 
+/*
+*******************************************
+*******************************************
+*******************************************
+
+Minimal Qt5/Qt6 compatibility layer. This 
+will be removed, once we go for Qt6 only
+
+
+*******************************************
+*******************************************
+*******************************************
+*/
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+
+#define VIODES_QVAR_IS_INT(var) (var.typeId()==QMetaType::Int)
+#define VIODES_QVAR_IS_STR(var) (var.typeId()==QMetaType::QString)
+#define VIODES_EVENTP_POS(evp)    (evp->position().toPoint())
+
+#else
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+
+#define VIODES_QVAR_IS_INT(var) (var.type()==QVariant::Int)
+#define VIODES_QVAR_IS_STR(var) (var.type()==QVariant::String)
+#define VIODES_EVENTP_POS(evp)    (evp->pos())
+#endif
+#endif
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+#error minimum QT version 5.15 required
+#endif
 
 // flowlayout copyright:
 

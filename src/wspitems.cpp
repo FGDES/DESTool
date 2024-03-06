@@ -905,7 +905,7 @@ bool WspPool::Erase(void) {
   FD_DI("WspPool::Erase()");
   if(!sender()) return false;
   QVariant prop = sender()->property("Item");
-  if(!(prop.typeId()==QMetaType::QString)) return false;
+  if(!VIODES_QVAR_IS_STR(prop)) return false;
   QString name = prop.toString();
   return Erase(name);
 }
@@ -1049,7 +1049,7 @@ void WspPool::Read(faudes::TokenReader& rTr,const QString& rLabel) {
 void WspPool::ShowItem(bool show) { 
   FD_DI("WspPool::ShowItem()");
   QVariant prop = sender()->property("Item");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString name = prop.toString();
   ShowItem(name, show);
 }

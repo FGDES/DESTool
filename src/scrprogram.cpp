@@ -106,7 +106,7 @@ void ScrProgram::EraseFunctionFromProgram(void) {
   // figure descr
   if(!sender()) return;
   QVariant prop = sender()->property("Item");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString descr = prop.toString();
   EraseFunctionFromProgram(descr);
 }
@@ -134,7 +134,7 @@ void ScrProgram::EraseFunctionFromProject(void) {
   // figure descr
   if(!sender()) return;
   QVariant prop = sender()->property("Item");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString descr = prop.toString();
   // first from script
   EraseFunctionFromProgram(descr);

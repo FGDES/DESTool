@@ -544,10 +544,10 @@ void ScrOpWidget::setParameterVar(void) {
   if(varname=="") return;
   FD_DS("ScrOpWidget::setParameterVar(): operand name " << VioStyle::StrFromQStr(varname));
   QVariant propi = sender()->property("ParameterNumI");
-  if(!(propi.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(propi)) return;
   int i = propi.toInt();
   QVariant propj = sender()->property("ParameterNumJ");
-  if(!(propj.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(propj)) return;
   int j = propj.toInt();
   FD_DS("ScrOpWidget::setParameterVar(): setting operand " << i << "-" << j);
   mScrOp->ParameterVar(varname,i,j);
@@ -577,7 +577,7 @@ void ScrOpWidget::setVectorCount(void) {
   if(!ok) return;
   FD_DS("ScrOpWidget::setVectorCount(): newdim " << m);
   QVariant propi = sender()->property("ParameterNumI");
-  if(!(propi.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(propi)) return;
   int i = propi.toInt();
   FD_DS("ScrOpWidget::setVectorCount(): setting dimension for position " << i);
   mScrOp->VectorCount(i,m); // emits update signal
@@ -594,7 +594,7 @@ void ScrOpWidget::setOptionValue(void) {
   if(!mScrOp->VariablePool()) return;
   FD_DS("ScrOpWidget::setOptionValue()");
   QVariant prop = sender()->property("OptionNumI");
-  if(!(prop.typeId()==QMetaType::Int)) return;
+  if(!VIODES_QVAR_IS_INT(prop)) return;
   int optidx = prop.toInt();
   FD_DS("ScrOpWidget::setOptionValue() for " << optidx);
   bool value=false;
@@ -742,7 +742,7 @@ void ScrOpWidget::VariableContextMenu(QPoint pos) {
   FD_DS("ScrOpWidget::VariableContextMenu()");
   if(!sender()) return;
   QVariant prop = sender()->property("Variable");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString varname = prop.toString();
   if(QWidget* widget=qobject_cast<QWidget*>(sender())) {
     pos=widget->mapToGlobal(pos);
@@ -760,7 +760,7 @@ void ScrOpWidget::OperationContextMenu(QPoint pos) {
   FD_DS("ScrOpWidget::OperationContextMenu()");
   if(!sender()) return;
   QVariant prop = sender()->property("OperationDescr");
-  if(!(prop.typeId()==QMetaType::QString)) return;
+  if(!VIODES_QVAR_IS_STR(prop)) return;
   QString opdescr = prop.toString();
   FD_DS("ScrOpWidget::OperationContextMenu(): descr " << VioStyle::StrFromQStr(opdescr));
   if(QWidget* widget=qobject_cast<QWidget*>(sender())) {

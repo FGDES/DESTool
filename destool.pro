@@ -147,7 +147,7 @@ unix:!macx {
   DESTOOL_LIBS = $$VIODES_LIBFAUDES/libfaudes.so
   DESTOOL_LIBS += $$VIODES_LIBFAUDES/include/libfaudes.rti
   DESTOOL_LIBS += $$VIODES_BASE/libviodes.so
-  DESTOOL_LIBS += $$VIODES_BASE/vioedit/data/vioconfig.txt
+  DESTOOL_LIBS += $$VIODES_BASE/vioedit/examples/vioconfig.txt
 
   VIODES_PLUGINS =  $$VIODES_BASE/libviogen.so
   VIODES_PLUGINS += $$VIODES_BASE/libviohio.so

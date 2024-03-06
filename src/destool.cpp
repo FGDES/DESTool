@@ -32,10 +32,10 @@
 // read args and  start event loop
 int main(int argc, char *argv[]) {
 
-  // import default styles
-  QApplication::setDesktopSettingsAware(true);
-
-  // osx 11: fix fonts (nee to be before QApplication)
+  // say hello, console only
+  FD_WARN("DESTool main(): starting");
+  
+  // osx 11: fix fonts (nee to be before QApplication; was a Qt4 issue)
 #ifdef Q_OS_MACOS
   QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
   QFont::insertSubstitution(".Helvetica Neue DeskInterface", "Helvetica Neue");
@@ -43,7 +43,12 @@ int main(int argc, char *argv[]) {
 #endif
 
   // let Qt see commandline
-  QApplication app(argc, argv);
+  QApplication app(argc, argv); 
+ 
+  // import default styles
+  //QApplication::setDesktopSettingsAware(true);
+
+
  
   // lazy commandline, get filename and options
   QString  cfgname =  QCoreApplication::applicationDirPath() + "/vioconfig.txt";

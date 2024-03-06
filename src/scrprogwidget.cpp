@@ -5,6 +5,7 @@
    Visual skripting for FAU Discrete Event Systems Library (libfaudes)
 
    Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2006, 2024  Thomas Moor
 
 */
 
@@ -547,7 +548,7 @@ void ScrProgWidget::dragEnterEvent(QDragEnterEvent *event){
 // reimplement: drop event (mimique internal move)
 void ScrProgWidget::dropEvent(QDropEvent *event){
   // map to content widget
-  QPoint cpos = mContent->mapFromGlobal(mapToGlobal(event->position().toPoint())); 
+  QPoint cpos = mContent->mapFromGlobal(mapToGlobal(VIODES_EVENTP_POS(event))); 
   // report
   FD_DS("ScrProgWidget::dropEvent(" << cpos.x() << "," << cpos.y() << ")");
   // reject invalid actions
