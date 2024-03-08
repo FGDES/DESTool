@@ -4,7 +4,7 @@
   FAU Discrete Event Systems Library (libfaudes)
 
   Copyright (C) 2009 Ruediger Berndt
-  Copyright (C) 2009 Thomas Moor
+  Copyright (C) 2009, 2024 Thomas Moor
 */
 
 #include "wspvariables.h"
