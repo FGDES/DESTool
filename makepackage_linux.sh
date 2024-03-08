@@ -4,8 +4,8 @@ echo ==================== Deployment script for DESTool -- Linux
 
 
 # do all viodes and destool from scratch
-CLEAN=true
-#CLEAN=false
+#CLEAN=true
+CLEAN=false
 
 # manually set qt: local qt5
 export VIOQT=local
@@ -165,8 +165,8 @@ rm -f $DEST/bin/*~
 echo ==================== copy extras
 cp -v $DESTOOL_BASE/README.md  $DEST
 cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
-cp -Rv $DESTOOL_BASE/tutorial/distsave/* $DEST/examples
-cp -v $VIODES_BASE/vioedit/data/distsave/vioconfig.txt  $DEST/examples
+cp -Rv $DESTOOL_BASE/examples/* $DEST/examples/
+cp -v $VIODES_BASE/vioedit/examples/vioconfig.txt  $DEST/examples
 cp -R $DESTOOL_BASE/doc/html/* $DEST/doc
 
 echo ====================compile package

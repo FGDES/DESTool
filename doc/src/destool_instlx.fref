@@ -58,7 +58,7 @@ graphical representation of generators.
 <p>
 As a binary distribution, DESTool dynamically links against quite a number of shared
 objects aka libraries.
-Some of them are provided with tDESTool (e.g. libFAUDES, libVIODES), others
+Some of them are provided with DESTool (e.g. libFAUDES, libVIODES), others
 are required to be present on the target system.
 On start-up from command line, DESTool will list the libraries it exspects are how
 the dependencies are to be resolved. Most of the libraries are faily standard and should
@@ -76,15 +76,15 @@ qmake5 -v
 qmake -v  
 </pre>
 <p>
-We are currently developing DESTool with Qt series 6 (to be specific, 6.2.4, but the
-minors should not matter). However, we link precompiled binaries to Qt 5.15 to gain
+We are currently developing DESTool with Qt series 6 (to be specific 6.2.4, but the
+minors should not matter). However, we link precompiled binaries to Qt 5.15.3 to gain
 compatibility with most common desktop installations of Linux. If your setup misses
 the Qt framework, you may try to install via your distributions package manager.
 E.g. for Ubuntu 22.04 LTS
 </p>
 <pre>
 sudo apt install qt6-base-dev ## will install Qt 6.2.4
-sudo apt install qtbase5-dev  ## will install Qt 5.15.15
+sudo apt install qtbase5-dev  ## will install Qt 5.15.3
 </pre>
 <p>
 If your Linux distribution does not provide an adequate Qt package, you can obtain

@@ -9,7 +9,7 @@
 <div class="warning">
 <p><strong>D I S C L A I M E R </strong></p>
 <p>
-Don't trust undo/redo/autosave.
+don't trust undo/redo/autosave.
 </p>
 </div>
 
@@ -186,8 +186,8 @@ Copyright (C) 2008 - 2024 Thomas Moor
 <p>
 <table width="100%"  border="0">
   <tr>
-    <td width="14%">20.02.2024</td>
-    <td width="86%">DESTool 0.84 (distributed unter GPL)</td>
+    <td width="14%">01.03.2024</td>
+    <td width="86%">DESTool 0.84 (GPL release, migrating to Qt6)</td>
   </tr>
   <tr>
     <td width="14%">01.03.2016</td>

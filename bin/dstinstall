@@ -1,0 +1,11 @@
+#!/bin/bash
+appname=`basename $0`
+dirname=`dirname $0`
+if [ "${dirname:0:1}" != "/" ]; then
+dirname=$PWD/$dirname
+fi
+LD_LIBRARY_PATH=$dirname/../lib:$dirname/../lib/plugins/viotypes
+export LD_LIBRARY_PATH
+echo ldd $dirname/../lib/$appname.bin 
+ldd $dirname/../lib/$appname.bin 
+$dirname/../lib/$appname.bin $*
