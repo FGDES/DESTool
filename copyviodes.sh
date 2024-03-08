@@ -61,7 +61,7 @@ cp $VIODES/libFAUDES_for_VIODES/stdflx/*.flx $VIOLIB/plugins/luaextensions
 
 # do copy libviodes
 cp -p $VIODES/libviodes$DOTSO $VIOLIB
-cp $VIODES/vioedit/example/vioconfig.txt $VIOLIB
+cp $VIODES/vioedit/examples/vioconfig.txt $VIOLIB
 cp $VIODES/libviogen$DOTSO $VIOLIB/plugins/viotypes
 cp $VIODES/libviohio$DOTSO $VIOLIB/plugins/viotypes
 cp $VIODES/libviomtc$DOTSO $VIOLIB/plugins/viotypes

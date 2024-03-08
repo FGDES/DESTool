@@ -289,7 +289,7 @@ will be removed, once we go for Qt6 only
 #endif
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-#error minimum QT version 5.15 required
+#error minimum QT version 5.15 required to compile DESTool
 #endif
 
 // flowlayout copyright:
