@@ -5,6 +5,7 @@
    Visual skripting for FAU Discrete Event Systems Library (libfaudes)
 
    Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2024  
 
 */
 
@@ -501,15 +502,15 @@ DesAssistant::DesAssistant() : mProcess(nullptr) {
 // find my data aka help collection
 const QString& DesAssistant::DocPath(void) {
     if(mDocPath!="") return mDocPath;
-    // a) linux: package
-    if(!QFileInfo(mDocPath).isDir()) {
-        mDocPath =  QCoreApplication::applicationDirPath()
-                   +  QLatin1String("/../doc");
-    }
-    // b) linux: development
+    // a) linux: development
     if(!QFileInfo(mDocPath).isDir()) {
         mDocPath =  QCoreApplication::applicationDirPath()
                    +  QLatin1String("/../doc/html");
+    }
+    // b) linux: package
+    if(!QFileInfo(mDocPath).isDir()) {
+        mDocPath =  QCoreApplication::applicationDirPath()
+                   +  QLatin1String("/../doc");
     }
     // c) macosx: bundle
     if(!QFileInfo(mDocPath).isDir()) {

@@ -68,7 +68,7 @@ echo ==================== compile libviodes
 cd $VIODES_BASE
 if test $CLEAN == true ; then
 . ./distclean.sh
-. ./copyfaudes.sh    
+. ./copyviodes.sh    
 fi
 qmake "CONFIG-=debug" viodes.pro
 if test $CLEAN == true ; then
