@@ -58,15 +58,17 @@ graphical representation of generators.
 <p>
 As a binary distribution, DESTool dynamically links against quite a number of shared
 objects aka libraries.
-Some of them are provided with the DESTool (e.g. libFAUDES, libVIODES) and some
+Some of them are provided with tDESTool (e.g. libFAUDES, libVIODES), others
 are required to be present on the target system.
-On start-up, DESTool will list the libraries it exspects are how the dependencies
-are to be resolved. Most of the libraries are faily standard and should be present
-on common Linux installations. We are currently using Ubuntu 22.04 LTS for development
-dated 2023. Any desktop Linux distribution not substantially older should be fine.
+On start-up from command line, DESTool will list the libraries it exspects are how
+the dependencies are to be resolved. Most of the libraries are faily standard and should
+be present on common Linux installations. We are currently using Ubuntu 22.04 LTS for
+development dated 2023. Any desktop Linux distribution not substantially older should
+be fine.
 </p>
 <p>
-The only less common libraries relevant for DESTool are from the Qt framework series 6.
+The only less common libraries relevant for DESTool are recent versions of the Qt
+framework series 6.
 To test whether Qt is available, try either of
 </p>
 <pre>
