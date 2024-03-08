@@ -7,9 +7,13 @@ echo ==================== Deployment script for DESTool -- Linux
 CLEAN=true
 #CLEAN=false
 
-# manually set qt: local qt6
+# manually set qt: local qt5
 export VIOQT=local
-export PATH=/usr/lib/qt6/bin:$PATH
+export PATH=/usr/lib/qt5/bin:$PATH
+
+# manually set qt: local qt6
+#export VIOQT=local
+#export PATH=/usr/lib/qt6/bin:$PATH
 
 # manually set qt: lsb version on destool 64bit
 #export VIOQT=/opt/qt-4.8.7-lsb-4.0
@@ -19,7 +23,7 @@ export PATH=/usr/lib/qt6/bin:$PATH
 #export VIOQT=/opt/qt-4.4.2-lsb-3.2   
 #export PATH=$VIOQT/bin:/opt/lsb/bin:$PATH
 
-# manually set qt: qt on destool
+# manually set qt: qt on early destool
 #export VIOQT=/opt/qtsdk-2010.01/qt
 #export PATH=$VIOQT/bin:$PATH
 
@@ -33,7 +37,7 @@ DESTOOL_BASE=$(pwd)
 DESTOOL_LIB=$DESTOOL_BASE/lib
 DESTOOL_BIN=$DESTOOL_BASE/bin
 
-# retrieve version an pass to qmake
+# retrieve version and pass to qmake
 . $VIODES_BASE/VERSION
 qmake -set VIODES_VERSION_MAJOR $VIODES_VERSION_MAJOR 
 qmake -set VIODES_VERSION_MINOR $VIODES_VERSION_MINOR 
@@ -57,7 +61,7 @@ echo ==================== press return or ctrl-c to bail out
 read
 
 
-echo ==================== prepare clean
+echo ==================== prepare destool clean
 if test $CLEAN == true ; then
 cd $DESTOOL_BASE
 . ./distclean.sh
@@ -68,12 +72,9 @@ echo ==================== compile libviodes
 cd $VIODES_BASE
 if test $CLEAN == true ; then
 . ./distclean.sh
-. ./copyviodes.sh    
+. ./copyfaudes.sh    
 fi
 qmake "CONFIG-=debug" viodes.pro
-if test $CLEAN == true ; then
-make clean
-fi    
 make -j20
 cd $DESTOOL_BASE
 
@@ -90,6 +91,13 @@ cp dstinstall $DESTOOL_BASE/bin
 cd $DESTOOL_BASE
 
 
+echo ==================== compile docs 
+cd $DESTOOL_BASE
+if test $CLEAN == true ; then
+make dist-clean
+fi    
+make -C doc
+
 
 echo ==================== compile destool
 cd $DESTOOL_BASE
@@ -104,7 +112,7 @@ strip -R .debug_aranges -R .debug_pubnames lib/destool.bin
 echo ==================== copy libraries
 
 #### this is still for qt4
-if test $VIOST != local ; then 
+if test $VIOQT != local ; then 
 
 cd $DESTOOL_BASE
 VIOQTLIB=$VIOQT/lib
@@ -135,10 +143,6 @@ chrpath -r '$ORIGIN' $DESTOOL_LIB/qcollectiongenerator.bin
 
 fi
 
-
-echo ==================== compile docs 
-cd $DESTOOL_BASE
-make -C doc
 
 
 echo ==================== prepare destination
