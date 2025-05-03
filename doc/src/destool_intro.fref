@@ -156,7 +156,7 @@ Also check for available updates once in a while.
 
 <h2>Authors</h2>
 <p>
-DESTool is developed at the Friedrich-Alexander-Universit&umla;t Erlangen-N&umlu;rnberg
+DESTool is developed at the Friedrich-Alexander-Universit&auml;t Erlangen-N&uuml;rnberg
 with Thomas Moor as coordinator and principle author. 
 The underlying class hierarchy for workspace objects and the 
 interface via the libFAUDES RTI were designed in course of 
@@ -166,7 +166,7 @@ from various student projects,
 either in form of code contributions or user feedback.
 </p>
 <p>
-As of February 2024, the following people have contributed libFAUDES/DESTool:
+As of May 2025, the following people have contributed libFAUDES/DESTool:
 </p>
 <center><div style="width: 75%;"><i>
 <fcontributors/>
@@ -177,7 +177,7 @@ As of February 2024, the following people have contributed libFAUDES/DESTool:
 <p>&nbsp;</p>
 
 <p>
-Copyright (C) 2008 - 2024 Thomas Moor
+Copyright (C) 2008 - 2025 Thomas Moor
 </p>
 
 
