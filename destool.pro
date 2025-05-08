@@ -1,5 +1,5 @@
 #
-# project file for destool, tmoor 2024
+# project file for destool, tmoor 2025
 #
 #
 
@@ -19,7 +19,8 @@ VIODES_VERSION = $${VIODES_VERSION_MAJOR}.$${VIODES_VERSION_MINOR}
 message("=== building DESTool")
 message("=== libVIODES base at" $${VIODES_BASE})
 message("=== libVIODES version" $${VIODES_VERSION})
-message("=== using Qt at" $${QMAKE_LIBDIR_QT})
+#message("=== using Qt at" $${QMAKE_LIBDIR_QT})   #QT5
+message("=== using Qt at" $$[QT_HOST_LIBS])       #Qt6
 
 # target setting
 TEMPLATE = app
@@ -37,16 +38,19 @@ unix {
   VIODES_LIBFAUDES_DSO = -L$${VIODES_LIBFAUDES} -lfaudes
   VIODES_LIBVIODES_DSO = -L$${VIODES_BASE} -lviodes
 }
-win32 {
+win32-msvc {
   VIODES_LIBFAUDES_DSO = $${VIODES_LIBFAUDES}\\faudes.lib
   VIODES_LIBVIODES_DSO = $${VIODES_BASE}\\viodes.lib
+}
+win32-g++ {
+  VIODES_LIBFAUDES_DSO = $${VIODES_LIBFAUDES}\\faudes.lib
+  VIODES_LIBVIODES_DSO = $${VIODES_BASE}\\libviodes.a
 }
 
 
 # link to libviodes and libfaudes
 LIBS += $${VIODES_LIBFAUDES_DSO} 
 LIBS += $${VIODES_LIBVIODES_DSO} 
-
 
 
 # dll import/export switch
@@ -65,9 +69,15 @@ DEFINES += FAUDES_DEBUG_ITEMS
 # pass on version to compiler
 DEFINES += VIODES_VERSION='\\"$${VIODES_VERSION}\\"'
 
-# win32 extra configuration 
-win32 {
+# win32 MSVC extra configuration 
+win32-msvc {
   QMAKE_CXXFLAGS += /EHsc 
+  LIBS += -lwsock32
+  DEFINES += VIO_WINCONSOLE
+}
+
+# win32 MSYS extra configuration 
+win32-g++ {
   LIBS += -lwsock32
   DEFINES += VIO_WINCONSOLE
 }

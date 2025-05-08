@@ -6,27 +6,76 @@ VIODES=../libVIODES
 # libfaudes base dir
 FAUDES=$VIODES/libFAUDES_for_VIODES
 
-# app destination
-VIOLIB=lib
-VIOBIN=bin
 
 # figure os
 unameOut="$(uname -s)"
 case "$(uname -s)" in
     Linux*)     MACHINE=Linux;;
     Darwin*)    MACHINE=Mac;;
-    CYGWIN*)    MACHINE=Cygwin;;
     MINGW*)     MACHINE=MinGw;;
-    MSYS_NT*)   MACHINE=Git;;
     *)          MACHINE="UNKNOWN:${unameOut}"
 esac
-DOTSO=.so
-if test $MACHINE == Mac ; then DOTSO=.dylib; fi
-echo ========  sensed os $MACHINE
+echo ========  sensed OS $MACHINE
 echo ========  using qmake $(which qmake)
-echo ========  qt at $(qmake -query QT_INSTALL_LIBS)
+echo ========  Qt at $(qmake -query QT_INSTALL_LIBS)
 
-# test for system qt on Linux
+
+# set DSO naming conventions
+if test $MACHINE == Mac ; then {
+  PRESO=lib				 
+  DOTSO=.dylib
+} fi
+if test $MACHINE == MinGw ; then {
+  PRESO=				 
+  DOTSO=.dll
+} fi
+
+
+# setup destinations
+if test $MACHINE == Mac ; then {
+  VIOEXE=lib
+  VIOAUX=bin
+} fi
+if test $MACHINE == MinGw ; then {
+  VIOEXE=release
+  VIOAUX=release
+} fi
+
+
+# clean before
+rm -rf $VIOEXE/plugins
+rm -rf $VIOEXE/qt.conf
+rm -rf $VIOEXE/*~
+rm -rf $VIOAUX/luafaudes.flx
+rm -rf $VIOEXE/lib*.so
+rm -rf $VIOEXE/lib*.dylib
+rm -rf $VIOEXE/*.dll
+
+
+# prepare dirs
+mkdir -p $VIOEXE/plugins
+mkdir -p $VIOEXE/plugins/viotypes
+mkdir -p $VIOEXE/plugins/luaextensions
+
+# do copy libfaudes
+cp $FAUDES/${PRESO}faudes${DOTSO} $VIOEXE
+cp $FAUDES/include/libfaudes.rti $VIOEXE
+cp $FAUDES/bin/* $VIOAUX
+cp $FAUDES/stdflx/*.flx $VIOEXE/plugins/luaextensions
+
+# do copy libviodes
+cp $VIODES/${PRESO}viodes${DOTSO} $VIOEXE
+cp $VIODES/vioedit/examples/vioconfig.txt $VIOEXE
+cp $VIODES/${PRESO}viogen${DOTSO}  $VIOEXE/plugins/viotypes
+cp $VIODES/${PRESO}viohio${DOTSO}  $VIOEXE/plugins/viotypes
+cp $VIODES/${PRESO}viomtc${DOTSO}  $VIOEXE/plugins/viotypes
+cp $VIODES/${PRESO}viosim${DOTSO}  $VIOEXE/plugins/viotypes
+cp $VIODES/${PRESO}viodiag${DOTSO} $VIOEXE/plugins/viotypes
+cp $VIODES/${PRESO}violua${DOTSO}  $VIOEXE/plugins/viotypes
+
+
+
+# test for system Qt on Linux
 if test $MACHINE == Linux ; then {
   if [[ $(which qmake) =~ "/usr/bin" ]]; then
      SYSQT=true 
@@ -37,37 +86,6 @@ if test $MACHINE == Linux ; then {
      echo ========  sensed system qt libs
   fi
 } fi
-
-
-# clean before
-rm -f $VIOLIB/qt.conf 
-rm -rf $VIOBIN/luafaudes.flx
-rm -rf $VIOBIN/*~
-rm -rf $VIOLIB/plugins
-rm -rf $VIOLIB/q*
-rm -rf $VIOLIB/lib*
-rm -rf $VIOBIN/luafaudes.flx
-
-# prepare dirs
-mkdir -p $VIOLIB/plugins
-mkdir -p $VIOLIB/plugins/viotypes
-mkdir -p $VIOLIB/plugins/luaextensions
-
-# do copy libfaudes
-cp $FAUDES/libfaudes$DOTSO $VIOLIB
-cp $FAUDES/include/libfaudes.rti $VIOLIB
-cp $FAUDES/bin/* $VIOBIN
-cp $VIODES/libFAUDES_for_VIODES/stdflx/*.flx $VIOLIB/plugins/luaextensions
-
-# do copy libviodes
-cp -p $VIODES/libviodes$DOTSO $VIOLIB
-cp $VIODES/vioedit/examples/vioconfig.txt $VIOLIB
-cp $VIODES/libviogen$DOTSO $VIOLIB/plugins/viotypes
-cp $VIODES/libviohio$DOTSO $VIOLIB/plugins/viotypes
-cp $VIODES/libviomtc$DOTSO $VIOLIB/plugins/viotypes
-cp $VIODES/libviosim$DOTSO $VIOLIB/plugins/viotypes
-cp $VIODES/libviodiag$DOTSO $VIOLIB/plugins/viotypes
-cp $VIODES/libviolua$DOTSO $VIOLIB/plugins/viotypes
 
 
 # do copy qt stuff  (this is still Qt4)
