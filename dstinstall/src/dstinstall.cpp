@@ -229,11 +229,21 @@ void ConfigFromCore(void) {
   mCfgRti2Code="rti2code.exe";
   mCfgFlxinstall="flxinstall.exe";
   // dst structure win distro
-  mDstDocBase = mDstDestool + "/Doc";
-  mDstLibfaudesRtiFile = mDstDestool + "/libfaudes.rti";
-  mDstHelper = mDstDestool;
-  mDstLibfaudes = mDstDestool;
-  mDstPluginFlx = mDstDestool + "/plugins/luaextensions";
+  if(!mOptBuild) {
+    mDstDocBase = mDstDestool + "/Doc";
+    mDstLibfaudesRtiFile = mDstDestool + "/libfaudes.rti";
+    mDstHelper = mDstDestool;
+    mDstLibfaudes = mDstDestool;
+    mDstPluginFlx = mDstDestool + "/plugins/luaextensions";
+  }
+  // dst structure mac: build mode
+  if(mOptBuild) {
+    mDstDocBase = mDstDestool + "/doc/html";
+    mDstLibfaudes = mDstDestool + "/lib"; 
+    mDstLibfaudesRtiFile = mDstDestool + "/lib/libfaudes.rti"; 
+    mDstHelper = mDstDestool +"/bin"; 
+    mDstPluginFlx = mDstDestool + "/lib/plugins/luaextensions"; 
+  }
   // dst structure derived
   mDstDocRefsrc = mDstDocBase+"/refsrc";
   mDstDocImages = mDstDocBase+"/images";

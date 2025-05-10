@@ -57,7 +57,7 @@ FREFSOURCES += $(SRCDIR)/destool.qhcp $(SRCDIR)/about.txt
 
 
 # have refsrc dir
-$(HTMLDIR)/refsrc/.tstamp: $(FREFSOURCES) $(REF2HTML_CNAV)
+$(HTMLDIR)/refsrc/.tstamp: $(FREFSOURCES) 
 	- mkdir -p $(HTMLDIR)/refsrc
 	cp $(FREFSOURCES)  $(HTMLDIR)/refsrc
 	cp $(REF2HTML_CNAV) $(HTMLDIR)/refsrc/destool_navigation.include_fref
@@ -100,7 +100,7 @@ $(HTMLDIR)/reference:
 	mkdir -p $@
 
 # do compile
-dstinst: html $(HTMLDIR)/reference $(DSTINST) ../lib/plugins/luaextensions
+dstinst: html $(HTMLDIR)/reference ../lib/plugins/luaextensions
 	$(DSTINST) -lib $(SRCFAUDES) -b -dst ..
 	cp $(HTMLDIR)/destool_intro.html $(HTMLDIR)/index.html
 
