@@ -254,8 +254,8 @@ void ConfigFromCore(void) {
   mDstDocQch = mDstDocBase+"/destool.qch";
   mDstDocQhcp = mDstDocRefsrc+"/destool.qhcp";
   mDstDocQhc = mDstDocBase+"/destool.qhc";
-  // dst structure win distro
-  mSrcLibfaudesFile = mSrcLibfaudes+"/libfaudes.dll";
+  // src structure win distro
+  mSrcLibfaudesFile = mSrcLibfaudes+"/faudes.dll";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/libfaudes.rti";
   mSrcHelper = mSrcLibfaudes+"/bin";
   mSrcRef2Html = mSrcHelper+"/ref2html.exe";

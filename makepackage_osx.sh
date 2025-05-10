@@ -97,9 +97,9 @@ make -C $DESTOOL_BASE/dstinstall
 
 # viodes (required by destool)
 echo ==================== compile - viodes
-cd $DESTOOL_BASE
+#cd $VIODES_BASE
+#. ./copyfaudes.sh
 make -j 20 -C $VIODES_BASE
-. ./copyfaudes.sh
 
 # doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
 echo ==================== compile - doc 
@@ -112,7 +112,8 @@ cd $DESTOOL_BASE
 make   ## tricky build issue
 make -j20
 
-echo ==================== copy my bins and libs to bundle destination
+# viodes (required by destool)
+echo ==================== copy my bi
 cd $DESTOOL_BASE
 rm -rf $DEST
 mkdir $DEST

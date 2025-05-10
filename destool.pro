@@ -261,12 +261,15 @@ win32-g++ {
   DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*
 
   INSTCMD = \
-    cp $$VIODES_PLUGINS ./lib/plugins/viotypes && \
-    cp $$DESTOOL_LIBS ./lib && \
-    cp $$DESTOOL_BINS ./bin && \
-    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./lib/plugins/luaextensions && \
-    rm -f ./lib/qt.conf && \
-    rm -f ./bin/luafaudes.flx
+    mkdir -p ./release/plugins/luaextensions ./release/Examples ./release/Doc && \
+    cp $$VIODES_PLUGINS ./release/plugins && \
+    cp $$DESTOOL_LIBS ./release && \
+    cp $$DESTOOL_BINS ./release && \
+    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./release/plugins/luaextensions && \
+    cp -r doc/html/* ./release/Doc && \   
+    cp -r LICENSE ./release/License.txt && \   
+    rm -f ./release/qt.conf && \
+    rm -f ./release/luafaudes.flx 
 
   QMAKE_EXTRA_TARGETS += instlibs
   instlibs.target = instlibs

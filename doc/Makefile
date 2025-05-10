@@ -31,6 +31,11 @@ TMPDIR = tmp
 SRCFAUDES = ../../libVIODES/libFAUDES_for_VIODES
 DSTINST   = ../bin/dstinstall 
 
+# fix windows extension
+ifneq ($(findstring Windows,$(OS)),)
+DSTINST   = ../bin/dstinstall.exe 
+endif
+
 
 # fref processing configuration (accept overwrite from hompage make process)
 REF2HTML_CNAV ?= $(shell pwd)/src/destool_navigation.include_fref
