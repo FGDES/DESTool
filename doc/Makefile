@@ -29,7 +29,7 @@ SRCDIR = src
 HTMLDIR = html
 TMPDIR = tmp
 SRCFAUDES = ../../libVIODES/libFAUDES_for_VIODES
-DSTINST   = ../bin/dstinstall
+DSTINST   = ../bin/dstinstall 
 
 
 # fref processing configuration (accept overwrite from hompage make process)
@@ -101,7 +101,7 @@ $(HTMLDIR)/reference:
 
 # do compile
 dstinst: html $(HTMLDIR)/reference $(DSTINST) ../lib/plugins/luaextensions
-	$(DSTINST) -lib $(SRCFAUDES) -dst ..
+	$(DSTINST) -lib $(SRCFAUDES) -b -dst ..
 	cp $(HTMLDIR)/destool_intro.html $(HTMLDIR)/index.html
 
 ####################################

@@ -25,7 +25,7 @@ message("=== using Qt at" $$[QT_HOST_LIBS])       #Qt6
 # target setting
 TEMPLATE = app
 LANGUAGE = C++
-QT += core gui svg widgets printsupport
+QT += core gui svg widgets printsupport help
 
 # target name
 unix:TARGET = lib/destool.bin
@@ -62,8 +62,8 @@ DEFINES += VIODES_BUILD_APP
 debug {
 #DEFINES += FAUDES_DEBUG_PROJECT
 #DEFINES += FAUDES_DEBUG_SCRIPT
-DEFINES += FAUDES_DEBUG_SIMULATOR
-DEFINES += FAUDES_DEBUG_ITEMS
+#DEFINES += FAUDES_DEBUG_SIMULATOR
+#DEFINES += FAUDES_DEBUG_ITEMS
 }
 
 # pass on version to compiler
@@ -193,7 +193,7 @@ macx {
   ContFiles.files += $$VIODES_LIBFAUDES/bin/simfaudes
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes
   ContFiles.files += bin/dstinstall
-  ContFiles.files += bin/luafaudes.flx
+  ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes.flx
   ContFiles.files += $$VIODES_BASE/libviodes.dylib
   ContFiles.files += $$VIODES_BASE/vioedit/examples/vioconfig.txt 
   ContFiles.path = Contents/MacOS
@@ -208,7 +208,7 @@ macx {
   ViopFiles.path = Contents/plugins/viotypes
   QMAKE_BUNDLE_DATA += ViopFiles
 
-  LuaxFiles.files = $$VIODES_LIBFAUDES/stdflx
+  LuaxFiles.files = $$VIODES_LIBFAUDES/stdflx/
   LuaxFiles.path  = Contents/plugins/luaextensions
   QMAKE_BUNDLE_DATA += LuaxFiles
 }

@@ -21,7 +21,7 @@ DEFINES += VIODES_VERSION=\\\"$${VIODES_VERSION}\\\"
 # target setting
 unix:!macx { TARGET = ../lib/dstinstall.bin }
 macx:TARGET = ../bin/dstinstall
-win32:TARGET = ../bin/dstinstall
+win32:TARGET = ../bin/dstinstall.exe
 
 TEMPLATE = app
 LANGUAGE = C++
@@ -32,7 +32,7 @@ QT -= gui widgets
 # link statically with libfaudes
 unix:!macx { LIBS += $$VIODES_LIBFAUDES/minfaudes.a }
 macx:LIBS += $$VIODES_LIBFAUDES/minfaudes.a
-win32:LIBS += $$VIODES_LIBFAUDES/minfaudes.lib wsock32.lib winmm.lib
+win32:LIBS += $$VIODES_LIBFAUDES/minfaudes.lib -lwsock32 -lwinmm
 
 # include path
 INCLUDEPATH += $$VIODES_LIBFAUDES/include

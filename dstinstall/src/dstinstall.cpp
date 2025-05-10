@@ -74,8 +74,8 @@ void usage_exit(const QString& rMessage="") {
   }
   *qout << "dstinstall: utility to install libFAUDES within DESTool" << "\n";
   *qout << "\n" << "usage: " << "\n";
-  *qout << " dstinstall -lib <libfaudes-path> -dst <DESTool-path>" << "\n";
-  *qout << " dstinstall -flx <luaextensions-path> -dst <DESTool-path> " << "\n";
+  *qout << " dstinstall [-v] -lib <libfaudes-path> [-b] -dst <DESTool-path> " << "\n";
+  *qout << " dstinstall [-v] -flx <luaextensions-path> -dst <DESTool-path> " << "\n";
   qout->flush();
   exit(1);
 }
@@ -98,6 +98,8 @@ Configuration
 QString mSrcLibfaudes;
 QString mSrcExtensions;
 QString mDstDestool;
+bool    mOptBuild=false;
+bool    mOptVerb=false;
 
 // dependent config
 QString mCfgRtiFile;
@@ -126,6 +128,7 @@ QString mDstDocQhc;
 
 QString mSrcLibfaudesFile;
 QString mSrcLibfaudesRtiFile;
+QString mSrcHelper;
 QString mSrcRef2Html;
 QString mSrcRti2Code;
 QString mSrcFlxinstall;
@@ -161,9 +164,10 @@ void ConfigFromCore(void) {
   // src structure default aka linux
   mSrcLibfaudesFile = mSrcLibfaudes+"/libfaudes.so";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/include/libfaudes.rti";
-  mSrcRef2Html = mSrcLibfaudes+"/bin/ref2html";
-  mSrcRti2Code = mSrcLibfaudes+"/bin/rti2code";
-  mSrcFlxinstall = mSrcLibfaudes+"/bin/flxinstall";
+  mSrcHelper = mSrcLibfaudes+"/bin";
+  mSrcRef2Html = mSrcHelper+"/ref2html";
+  mSrcRti2Code = mSrcHelper+"/rti2code";
+  mSrcFlxinstall = mSrcHelper+"/flxinstall";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/include/libfaudes.rti";
   mSrcDocRefsrc = mSrcLibfaudes + "/doc/refsrc";
   mSrcDocImages = mSrcLibfaudes + "/doc/images";  
@@ -177,21 +181,21 @@ void ConfigFromCore(void) {
   mCfgRef2Html="ref2html";
   mCfgRti2Code="rti2code";
   mCfgFlxinstall="flxinstall";
-  // dst structure mac: assume application bundle if there is no "./doc"
-  if(!QFileInfo(mDstDestool + "/doc").isDir()) {
+  // dst structure mac: app bundle
+  if(!mOptBuild) {
     mDstDocBase = mDstDestool + "/Contents/Resources/doc/destool_html";
     mDstLibfaudes = mDstDestool + "/Contents/MacOS";
     mDstLibfaudesRtiFile = mDstDestool + "/Contents/MacOS/libfaudes.rti";
     mDstHelper = mDstDestool + "/Contents/MacOS";
     mDstPluginFlx = mDstDestool + "/Contents/plugins/luaextensions";
   }
-  // dst structure mac: "assume make doc" build process if there is "./doc"
-  if(QFileInfo(mDstDestool + "/doc").isDir()) {
+  // dst structure mac: build mode
+  if(mOptBuild) {
     mDstDocBase = mDstDestool + "/doc/html";
-    mDstLibfaudes = mDstDestool + "/lib"; // dummy
-    mDstLibfaudesRtiFile = mDstDestool + "/lib/libfaudes.rti"; // dummy
-    mDstHelper = mDstDestool +"/bin"; // dummy
-    mDstPluginFlx = mDstDestool + "/lib/plugins/luaextensions"; // dummy
+    mDstLibfaudes = mDstDestool + "/lib"; 
+    mDstLibfaudesRtiFile = mDstDestool + "/lib/libfaudes.rti"; 
+    mDstHelper = mDstDestool +"/bin"; 
+    mDstPluginFlx = mDstDestool + "/lib/plugins/luaextensions"; 
   }
   // derived dst
   mDstDocRefsrc = mDstDocBase+"/refsrc";
@@ -206,9 +210,10 @@ void ConfigFromCore(void) {
   // src structure mac
   mSrcLibfaudesFile = mSrcLibfaudes+"/libfaudes.dylib";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/include/libfaudes.rti";
-  mSrcRef2Html = mSrcLibfaudes+"/bin/ref2html";
-  mSrcRti2Code = mSrcLibfaudes+"/bin/rti2code";
-  mSrcFlxinstall = mSrcLibfaudes+"/bin/flxinstall";
+  mSrcHelper = mSrcLibfaudes+"/bin";
+  mSrcRef2Html = mSrcHelper+"/ref2html";
+  mSrcRti2Code = mSrcHelper+"/rti2code";
+  mSrcFlxinstall = mSrcHelper+"/flxinstall";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/include/libfaudes.rti";
   mSrcDocRefsrc = mSrcLibfaudes + "/doc/refsrc";
   mSrcDocImages = mSrcLibfaudes + "/doc/images";  
@@ -242,9 +247,10 @@ void ConfigFromCore(void) {
   // dst structure win distro
   mSrcLibfaudesFile = mSrcLibfaudes+"/libfaudes.dll";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/libfaudes.rti";
-  mSrcRef2Html = mSrcLibfaudes+"/ref2html.exe";
-  mSrcRti2Code = mSrcLibfaudes+"/rti2code.exe";
-  mSrcFlxinstall = mSrcLibfaudes+"/flxinstall.exe";
+  mSrcHelper = mSrcLibfaudes+"/bin";
+  mSrcRef2Html = mSrcHelper+"/ref2html.exe";
+  mSrcRti2Code = mSrcHelper+"/rti2code.exe";
+  mSrcFlxinstall = mSrcHelper+"/flxinstall.exe";
   mSrcLibfaudesRtiFile = mSrcLibfaudes+"/include/libfaudes.rti";
   mSrcDocRefsrc = mSrcLibfaudes + "/doc/refsrc";
   mSrcDocImages = mSrcLibfaudes + "/doc/images";  
@@ -334,6 +340,10 @@ char mIOBuffer[IOBUFFER];
 // * create dest directory if necessary
 // * exit on any error
 void CopyFile(const QString& src, const QString& dst) {
+  if(mOptVerb) {
+    *qout << "copy: " << src << " -> " << dst << "\n";
+    qout->flush();
+  }
   QString fdst = dst;
   // if dst is a dir, append filename
   if(QFileInfo(dst).isDir()) 
@@ -342,12 +352,12 @@ void CopyFile(const QString& src, const QString& dst) {
   QString ddst = QFileInfo(fdst).path();
   if(!QDir(ddst).exists()) QDir().mkpath(ddst);
   if(!QDir(ddst).exists()) 
-    usage_exit("copy files: cannot open/create " + ddst);
-  // if src is an exe, set flag on dst
-  //bool exe=false;
-  //if(QFileInfo(src).isExecutable())
-  //  exe=true;
-  // *qout << "copy: " << src << " -> " << fdst << "\n";
+    usage_exit("ERROR: copy files: cannot open/create destination directory" + ddst);
+  // report
+  if(mOptVerb) {
+    *qout << "copy: " << src << " -> " << fdst << "\n";
+    qout->flush();
+  }
   QFile sfile(src);
   QFile dfile(fdst);
   if(!sfile.open(QIODevice::ReadOnly))
@@ -538,6 +548,11 @@ void ParseKeywords(void) {
 // compile qhelp file
 void CompileQhelp(void) {
  
+  // bail out --- we dropped this when moving to Qt6
+  *qout << "### dstinstall: skipping qhp-file ### " << "\n";
+  qout->flush();
+  return;
+  
   // report
   *qout << "### dstinstall: generate qhp-file ### " << "\n";
   qout->flush();
@@ -855,12 +870,12 @@ void ProcessLuaextensions(void) {
   // report and fix 
   QStringList nfiles;
   foreach(QString file, mLuaextensionFiles) {
-    *qout << "luaextensions: " << QFileInfo(file).fileName() << "\n";
+    *qout << "### luaextensions: " << QFileInfo(file).fileName() << "\n";
     nfiles << QDir::toNativeSeparators(file);
   } 
   qout->flush();
   // run flxinstall
-  *qout << "luaextensions: process by flxinstall \n";
+  *qout << "### luaextensions: process by flxinstall \n";
   qout->flush();
   QStringList options;
   options
@@ -928,20 +943,35 @@ void InstallLibfaudes(void) {
 
   // load registry
   *qout << "### dstinstall: load registry ### " << "\n";
+  qout->flush();
   faudes::LoadRegistry(LfnFromQStr(mSrcLibfaudesRtiFile));
 
   // copy fref doc to dstrefsrc
   *qout << "### dstinstall: copy reference source ### " << "\n";
+  qout->flush();
   DeleteFiles(mDstDocReference);
   DeleteFiles(mDstDocRefsrc+"/reference");
   DeleteFiles(mDstDocRefsrc+"/images");
   CopyFiles(mSrcDocRefsrc+"/reference",mDstDocRefsrc+"/reference");
   CopyFiles(mSrcDocRefsrc+"/images",mDstDocRefsrc+"/images");
   CopyFiles(mSrcDocImages,mDstDocImages);
-
+  
+  // copy libfaudes
+  *qout << "### dstinstall: copy libfaudes ### " << "\n";
+  qout->flush();
+  CopyFile(mSrcLibfaudesRtiFile,mDstLibfaudesRtiFile);
+  CopyFile(mSrcRef2Html,mDstHelper);
+  CopyFile(mSrcRti2Code,mDstHelper);
+  CopyFile(mSrcFlxinstall,mDstHelper);
+  CopyFile(mSrcLibfaudesFile,mDstLibfaudes);
+#ifdef Q_WS_MAC
+  *qout << "### dstinstall: mac osx fix dependencies ### " << "\n";
+  FixMacDeps();
+#endif
 
   // figure and process my luaextensions (using flxinstall, trusting is to leave tmp_flx)
   *qout << "### dstinstall: replace luaextensions ### " << "\n";
+  qout->flush();
   DeleteFiles(mDstPluginFlx);
   CollectLuaextensions(mSrcLibfaudes + "/stdflx");
   foreach(QString file, mLuaextensionFiles) 
@@ -955,12 +985,12 @@ void InstallLibfaudes(void) {
 
   // collect fref
   *qout << "### dstinstall: compile fref-toc ### " << "\n";
+  qout->flush();
   CollectFrefFiles(mDstDocRefsrc+"/reference");
   CollectFrefFiles(mDstDocRefsrc+"/images");
   CollectFrefFiles(mDstDocRefsrc+"/tmp_flx");
   CollectFrefFiles(mDstDocRefsrc);
    
-
   /*
   // compile toc
   *qout << "### dstinstall: compile fref-toc ### " << "\n";
@@ -978,6 +1008,7 @@ void InstallLibfaudes(void) {
 
   // load/update registry
   *qout << "### dstinstall: load registry ### " << "\n";
+  qout->flush();
   faudes::LoadRegistry(LfnFromQStr(mDstLibfaudesRtiFile));
   if(mDstFlxFile!="") {
     faudes::FunctionRegistry::G()->MergeDocumentation(LfnFromQStr(mDstFlxFile));
@@ -985,20 +1016,8 @@ void InstallLibfaudes(void) {
 
   // run qt
   *qout << "### dstinstall: compile qhelp ### " << "\n";
+  qout->flush();
   CompileQhelp();
-
-
-  // copy binaries
-  *qout << "### dstinstall: copy libfaudes ### " << "\n";
-  CopyFile(mSrcLibfaudesRtiFile,mDstLibfaudesRtiFile);
-  CopyFile(mSrcRef2Html,mDstHelper);
-  CopyFile(mSrcRti2Code,mDstHelper);
-  CopyFile(mSrcFlxinstall,mDstHelper);
-  CopyFile(mSrcLibfaudesFile,mDstLibfaudes);
-#ifdef Q_WS_MAC
-  *qout << "### dstinstall: mac osx fix dependencies ### " << "\n";
-  FixMacDeps();
-#endif
 
   // all fine exit
   *qout << "### dstinstall: done ### " << "\n";
@@ -1132,6 +1151,16 @@ int main(int argc, char *argv[]) {
   int i;
   for(i=1; i<qargs.size(); i++) {
     QString option = qargs.at(i);
+    // option: build mode
+    if(option=="-b") { 
+      mOptBuild=true;
+      continue;
+    }
+    // option: verbose mode
+    if(option=="-v") { 
+      mOptVerb=true;
+      continue;
+    }
     // option: src
     if(option=="-lib") { 
       i++; if(i>=qargs.size()) usage_exit();
@@ -1170,6 +1199,8 @@ int main(int argc, char *argv[]) {
     usage_exit("use either -flx or -lib");
   if(mSrcLibfaudes=="" && mSrcExtensions=="")
     usage_exit("use either -flx or -lib");
+  if(mOptBuild && mSrcExtensions!="")
+    usage_exit("use -b with -lib");
   if(mDstDestool=="")
     usage_exit("destination not specified");
 

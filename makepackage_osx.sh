@@ -118,20 +118,27 @@ rm -rf $DEST
 mkdir $DEST
 cp -R DESTool.app $BUNDLE
 
+echo ==================== have qhelp tools 
+cd $DESTOOL_BASE
+cp -R -L $QTOOLSX/qhelpgenerator $BUNDLEEXE
+cp -R -L $QTOOLSX/qcollectiongenerator $BUNDLEEXE
+
+
 echo ==================== run deploy tool
-macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall
+macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall -executable=$BUNDLEEXE/qhelpgenerator
 
 
 echo ==================== fix my plugins
 
 # framework locations 
-CHANGE_CORE="-change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore" 
-CHANGE_SVG="-change QtSvg.framework/Versions/4/QtSvg @executable_path/../Frameworks/QtSvg.framework/Versions/4/QtSvg" 
-CHANGE_GUI="-change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui" 
-CHANGE_SQL="-change QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtSql.framework/Versions/4/QtSql" 
-CHANGE_XML="-change QtXml.framework/Versions/4/QtXml @executable_path/../Frameworks/QtXml.framework/Versions/4/QtXml" 
-CHANGE_HELP="-change QtHelp.framework/Versions/4/QtHelp @executable_path/../Frameworks/QtHelp.framework/Versions/4/QtHelp" 
-CHANGE_NET="-change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork" 
+CHANGE_CORE="-change @rpath/QtCore.framework/Versions/A/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/A/QtCore"
+CHANGE_SVG="-change @rpath/QtSvg.framework/Versions/A/QtSvg  @executable_path/../Frameworks/QtSvg.framework/Versions/A/QtSvg" 
+CHANGE_GUI="-change @rpath/QtGui.framework/Versions/A/QtGui  @executable_path/../Frameworks/QtGui.framework/Versions/A/QtGui" 
+CHANGE_WIDGETS="-change @rpath/QtWidgets.framework/Versions/A/QtWidgets @executable_path/../Frameworks/QtWidgets.framework/Versions/A/QtWidgets" 
+CHANGE_SQL="-change @rpath/QtSql.framework/Versions/A/QtSql  @executable_path/../Frameworks/QtSql.framework/Versions/A/QtSql" 
+CHANGE_XML="-change @rpath/QtXml.framework/Versions/A/QtXml  @executable_path/../Frameworks/QtXml.framework/Versions/A/QtXml" 
+CHANGE_HELP="-change @rpath/QtHelp.framework/Versions/A/QtHelp @executable_path/../Frameworks/QtHelp.framework/Versions/A/QtHelp"
+CHANGE_NET="-change @rpath/QtNetwork.framework/Versions/A/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/A/QtNetwork" 
 
 
 # set frameworks to libvio*
@@ -183,25 +190,20 @@ CHANGE_NET="-change QtNetwork.framework/Versions/4/QtNetwork @executable_path/..
 
 #rm -rf $BUNDLE/Assistant.app
 
-echo ==================== have qhelp tools A copy
-
-cd $DESTOOL_BASE
-cp -R -L $QTOOLSX/qhelpgenerator $BUNDLEEXE
-
 echo ==================== have qhelp tools b fix
 
 # tell qhelpgenerator where frameworks are
-#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qhelpgenerator
+#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_WIDGET $CHANGE_NET $BUNDLEEXE/qhelpgenerator
 
 # tell qcollectiongenerator where frameworks are
-#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_NET $BUNDLEEXE/qcollectiongenerator
+#install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANHE_WIDGET $CHANGE_NET $BUNDLEEXE/qcollectiongenerator
 
 
 echo ==================== copy other vio
 cp -v $DESTOOL_BASE/README.md  $DEST
 cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
 cp -Rv $DESTOOL_BASE/examples $DEST/Examples
-cp -v $VIODES_BASE/vioedit/data/distsave/vioconfig.txt  $DEST/Examples
+cp -v $VIODES_BASE/vioedit/examples/vioconfig.txt  $DEST/Examples
 
 
 echo ===================== make disk image
