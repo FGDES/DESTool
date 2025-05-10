@@ -243,4 +243,36 @@ macx {
 }
 
 
+# msys
+win32-g++ {
+
+  DESTOOL_LIBS = $$VIODES_LIBFAUDES/faudes.dll
+  DESTOOL_LIBS += $$VIODES_LIBFAUDES/include/libfaudes.rti
+  DESTOOL_LIBS += $$VIODES_BASE/viodes.dll
+  DESTOOL_LIBS += $$VIODES_BASE/vioedit/examples/vioconfig.txt
+
+  VIODES_PLUGINS =  $$VIODES_BASE/viogen.dll
+  VIODES_PLUGINS += $$VIODES_BASE/viohio.dll
+  VIODES_PLUGINS += $$VIODES_BASE/viomtc.dll
+  VIODES_PLUGINS += $$VIODES_BASE/viosim.dll
+  VIODES_PLUGINS += $$VIODES_BASE/viodiag.dll
+  VIODES_PLUGINS += $$VIODES_BASE/violua.dll
+
+  DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*
+
+  INSTCMD = \
+    cp $$VIODES_PLUGINS ./lib/plugins/viotypes && \
+    cp $$DESTOOL_LIBS ./lib && \
+    cp $$DESTOOL_BINS ./bin && \
+    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./lib/plugins/luaextensions && \
+    rm -f ./lib/qt.conf && \
+    rm -f ./bin/luafaudes.flx
+
+  QMAKE_EXTRA_TARGETS += instlibs
+  instlibs.target = instlibs
+  instlibs.commands += $$INSTCMD
+  QMAKE_POST_LINK += make instlibs
+
+}
+
                 
