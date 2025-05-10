@@ -22,7 +22,7 @@ OutputDir=.\
 OutputDir=.\release
 OutputBaseFilename=destool-{#VMAJOR}_{#VMINOR}_setup
 SetupIconFile=images\icon_red_win.ico
-LicenseFile=License.txt
+LicenseFile=.\release\License.txt
 
 [Dirs]
 Name: {app}\Examples
@@ -35,14 +35,14 @@ Source: release\viodes.dll; DestDir: {app}
 Source: release\vioconfig.txt; DestDir: {app}
 Source: release\faudes.dll; DestDir: {app}
 Source: release\libfaudes.rti; DestDir: {app}
-Source: release\assistant.exe; DestDir: {app}
+;Source: release\assistant.exe; DestDir: {app}
 ;Source: release\qhelpgenerator.exe; DestDir: {app}
 ;Source: release\qcollectiongenerator.exe; DestDir: {app}
 Source: release\*.exe; DestDir: {app}
-Source: License.txt; DestDir: {app}
+Source: release\License.txt; DestDir: {app}
 ;Source: README.txt; DestDir: {app}
 Source: release\plugins\*; DestDir: {app}\plugins;    Flags: recursesubdirs createallsubdirs
-Source: tutorial\distsave\*; DestDir: {app}\Examples;  Flags: recursesubdirs createallsubdirs;
+Source: examples\*; DestDir: {app}\Examples;  Flags: recursesubdirs createallsubdirs;
 Source: doc\html\*; DestDir: {app}\Doc;             Flags: recursesubdirs createallsubdirs;  
 
 

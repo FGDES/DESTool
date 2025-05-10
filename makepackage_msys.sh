@@ -6,11 +6,13 @@ CLEAN=false
 #CLEAN=true
 
 # set qt to Qt Project precompiled package
-QTOOLS=/c/Qt/6.6.2/mingw64/bin
-export PATH=$QTOOLS:$PATH
+export PATH=/C/Qt/Tools/mingw1310_64/bin:$PATH
+echo using MinGW "$(which g++)"
+export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
+echo using Qt "$(which qmake)"
 
 # set inno path
-INNOSCC=/c/Program\ Files\ (x86)/Inno\ Setup\ 6/iscc.exe
+INNOSCC="/c/Program Files (x86)/Inno Setup 6/ISCC.exe"
 
 # source dirs
 VIODES_BASE=$(pwd)/../libVIODES
@@ -93,7 +95,10 @@ make -j20 -C $VIODES_BASE
 echo ==================== compile - destool 
 make -j20 -C $DESTOOL_BASE
 
+# run windeploy
+qtwindeply jy
 
 # run inno
 echo ==================== build installer
-bash -c "$INNOSCC" makepackage_msys.iss /DVMAJOR=%VIODES_VERSION_MAJOR% /DVMINOR=%VIODES_VERSION_MINOR%
+bash -c " \"$INNOSCC\" makepackage_msys.iss /DVMAJOR=$VIODES_VERSION_MAJOR /DVMINOR=$VIODES_VERSION_MINOR\"
+
