@@ -77,7 +77,7 @@ $(HTMLDIR)/destool.css: $(SRCDIR)/destool.append_css $(HTMLDIR)/refsrc
 	cat $(HTMLDIR)/refsrc/destool.append_css >> $(HTMLDIR)/destool.css
 
 # fref process destool pages
-$(HTMLDIR)/%.html: $(SRCDIR)/%.fref $(SRCFAUDES)/bin/ref2html
+$(HTMLDIR)/%.html: $(SRCDIR)/%.fref 
 	$(SRCFAUDES)/bin/ref2html -css $(REF2HTML_CSS) -cnav $(REF2HTML_CNAV) $< $@
 
 

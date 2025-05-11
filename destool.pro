@@ -266,8 +266,6 @@ win32-g++ {
     cp $$DESTOOL_LIBS ./release && \
     cp $$DESTOOL_BINS ./release && \
     cp $$VIODES_LIBFAUDES/stdflx/*.flx ./release/plugins/luaextensions && \
-    cp -r doc/html/* ./release/Doc && \   
-    cp -r LICENSE ./release/License.txt && \   
     rm -f ./release/qt.conf && \
     rm -f ./release/luafaudes.flx 
 
