@@ -11,7 +11,7 @@ export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
 
 # set inno path
 INNOSCC="/c/Program Files (x86)/Inno Setup 6"
-export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
+export PATH=$INNO:$PATH
 
 # source dirs
 VIODES_BASE=$(pwd)/../libVIODES
