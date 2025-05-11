@@ -1,59 +1,49 @@
 <VioSystem>
-<Generator>
-"Generator"   
-
-% 
-%  Statistics for Generator
-% 
-%  States:        2
-%  Init/Marked:   1/1
-%  Events:        2
-%  Transitions:   2
-%  StateSymbols:  2
-%  Attrib. E/S/T: 0/0/0
-% 
+<Generator name="generator" ftype="System">
 
 <Alphabet>
-"beta_a"      "alpha_b"     
+<Event name="beta_a"/>
+<Event name="alpha_b"/>
 </Alphabet>
 
-<States>
-"E"           "F"           
-</States>
+<StateSet>
+<State id="1" name="E">
+<Initial/>
+<Marked/>
+</State>
+<State id="2" name="F"/>
+</StateSet>
 
-<TransRel>
-"E"           "beta_a"      "F"           
-"F"           "alpha_b"     "E"           
-</TransRel>
-
-<InitStates>
-"E"           
-</InitStates>
-
-<MarkedStates>
-"E"           
-</MarkedStates>
-
+<TransitionRelation>
+<Transition x1="1" event="beta_a" x2="2"/>
+<Transition x1="2" event="alpha_b" x2="1"/>
+</TransitionRelation>
 
 </Generator>
 <VioModels>
 <TransitionList>
-=AAAAAgEAAAACAAAADgBhAGwAcABoAGEAXwBiAAAAAQEAAAABAAAADABiAGUAdABhAF8AYQAAAAI== </TransitionList>
+<Transition x1="1" event="beta_a" x2="2"/>
+<Transition x1="2" event="alpha_b" x2="1"/>
+</TransitionList>
 <StateList>
-=AAAAAgIAAAABAgAAAAI== </StateList>
+<State id="1"/>
+<State id="2"/>
+</StateList>
 <EventList>
-=AAAAAgMAAAAMAGIAZQB0AGEAXwBhAwAAAA4AYQBsAHAAaABhAF8AYg=== </EventList>
+<Event name="beta_a"/>
+<Event name="alpha_b"/>
+</EventList>
 <GraphData>
 <States>
 <State>
 1             
 <Item>
 <Position>
-27.800000     61.100000     
+27.800000      61.100000     
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--29.995675    0             
+0              0              30             30             -50            0             
+-29.995159     0             
 </BasePoints>
 </Item>
 </State>
@@ -61,40 +51,40 @@
 2             
 <Item>
 <Position>
-152.800000    61.100000     
+152.800000     61.100000     
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--29.996195    0             
+0              0              30             30             -50            0             
+-29.995679     0             
 </BasePoints>
 </Item>
 </State>
 </States>
 <TransRel>
 <Trans>
-1             "beta_a"      2             
+1              beta_a        2              +Free+       
 <Item>
 <Position>
-27.800000     61.100000     
+27.800000      61.100000     
 </Position>
 <BasePoints>
-40            30            0             0             29.992990     0             
-44.400001     0             65.300000     0             95.020563     0             
-125           0             
+40             30             0              0              29.992647      0             
+44.400001      0              65.300000      0              95.004419      0             
+125            0             
 </BasePoints>
 </Item>
 </Trans>
 <Trans>
-2             "alpha_b"     1             
+2              alpha_b       1              +Free+       
 <Item>
 <Position>
-152.800000    61.100000     
+152.800000     61.100000     
 </Position>
 <BasePoints>
--90           -50           0             0             -25.210246    -16.343936    
--32.000005    -20.800000    -43.099999    -25           -52.800000    -27.800000    
--65.300000    -30.500001    -77.800000    -27.800000    -99.866981    -16.430448    
--125          0             
+-90            -50            0              0              -25.209957     -16.343750    
+-32.000005     -20.800000     -43.099999     -25            -52.800000     -27.800000    
+-65.300000     -30.500001     -77.800000     -27.800000     -99.166659     -15.215400    
+-125           0             
 </BasePoints>
 </Item>
 </Trans>
@@ -102,6 +92,7 @@
 </GraphData>
 </VioModels>
 <VioLayout>
-0             =AQAAAAEAEAABAAAAAQAAAAEAAQEAAAAAAQAAAAIAgAAEAA=== 0             150           312           1             
+0             =AAAA/wAAAAEAAAADAAAAlgAAAOcAAAAAAf////8BAAAAAQA==  0              150            231            1              0             
+150           
 </VioLayout>
 </VioSystem>

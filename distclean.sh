@@ -22,4 +22,7 @@ mkdir -p lib/plugins/viotypes
 echo ========= deleting macosx bundles
 rm -rf DESTool.app
 
+echo ========= deleting windows release
+rm -rf release
+
 

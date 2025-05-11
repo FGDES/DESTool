@@ -1,59 +1,49 @@
 <VioGenerator>
-<Generator>
-"Generator"   
+<Generator ftype="Generator">
 
-% 
-%  Statistics for Generator
-% 
-%  States:        2
-%  Init/Marked:   1/1
-%  Events:        2
-%  Transitions:   2
-%  StateSymbols:  2
-%  Attrib. E/S/T: 0/0/0
-% 
-
-<Alphabet>
-"beta_b"      "alpha_c"     
+<Alphabet ftype="EventSet">
+<Event name="beta_b"/>
+<Event name="alpha_c"/>
 </Alphabet>
 
-<States>
-"E"           "F"           
-</States>
+<StateSet>
+<State id="1" name="E">
+<Initial/>
+<Marked/>
+</State>
+<State id="2" name="F"/>
+</StateSet>
 
-<TransRel>
-"E"           "beta_b"      "F"           
-"F"           "alpha_c"     "E"           
-</TransRel>
-
-<InitStates>
-"E"           
-</InitStates>
-
-<MarkedStates>
-"E"           
-</MarkedStates>
-
+<TransitionRelation>
+<Transition x1="1" event="beta_b" x2="2"/>
+<Transition x1="2" event="alpha_c" x2="1"/>
+</TransitionRelation>
 
 </Generator>
 <VioModels>
 <TransitionList>
-=AAAAAgEAAAABAAAADABiAGUAdABhAF8AYgAAAAIBAAAAAgAAAA4AYQBsAHAAaABhAF8AYwAAAAE== </TransitionList>
+<Transition x1="1" event="beta_b" x2="2"/>
+<Transition x1="2" event="alpha_c" x2="1"/>
+</TransitionList>
 <StateList>
-=AAAAAgIAAAABAgAAAAI== </StateList>
+<State id="1"/>
+<State id="2"/>
+</StateList>
 <EventList>
-=AAAAAgMAAAAMAGIAZQB0AGEAXwBiAwAAAA4AYQBsAHAAaABhAF8AYw=== </EventList>
+<Event name="beta_b"/>
+<Event name="alpha_c"/>
+</EventList>
 <GraphData>
 <States>
 <State>
 1             
 <Item>
 <Position>
-37.800000     71.100000     
+37.800000      71.100000     
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--30.026803    0             
+0              0              30             30             -50            0             
+-30.026717     0             
 </BasePoints>
 </Item>
 </State>
@@ -61,40 +51,40 @@
 2             
 <Item>
 <Position>
-162.800000    71.100000     
+162.800000     71.100000     
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--29.997738    0             
+0              0              30             30             -50            0             
+-29.997652     0             
 </BasePoints>
 </Item>
 </State>
 </States>
 <TransRel>
 <Trans>
-1             "beta_b"      2             
+1              beta_b        2              +Free+       
 <Item>
 <Position>
-37.800000     71.100000     
+37.800000      71.100000     
 </Position>
 <BasePoints>
-40            30            0             0             30.023424     0             
-44.400001     0             65.300000     0             94.990142     0             
-125           0             
+40             30             0              0              30.052686      0             
+44.400001      0              65.300000      0              95.004419      0             
+125            0             
 </BasePoints>
 </Item>
 </Trans>
 <Trans>
-2             "alpha_c"     1             
+2              alpha_c       1              +Free+       
 <Item>
 <Position>
-162.800000    71.100000     
+162.800000     71.100000     
 </Position>
 <BasePoints>
--90           -50           0             0             -25.186418    -16.328488    
--32.000005    -20.800000    -43.099999    -25           -52.800000    -27.800000    
--65.300000    -30.500001    -77.800000    -27.800000    -99.890736    -16.414920    
--125          0             
+-90            -50            0              0              -25.210966     -16.344403    
+-32.000005     -20.800000     -43.099999     -25            -52.800000     -27.800000    
+-65.300000     -30.500001     -77.800000     -27.800000     -99.166659     -15.215400    
+-125           0             
 </BasePoints>
 </Item>
 </Trans>
@@ -102,6 +92,7 @@
 </GraphData>
 </VioModels>
 <VioLayout>
-0             =AAAAANgesLVUeRYIrFtdCAAAAAAAAAAAAAAAACCiMAggog=== 0             150           272           1.137813      
+0             =AAAA/wAAAAEAAAADAAAA6wAAARAAAAAAAf////8BAAAAAQA==  0              150            252            1.137813       0             
+218           
 </VioLayout>
 </VioGenerator>

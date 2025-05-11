@@ -1078,6 +1078,7 @@ SimTrace::SimTrace(SimWidget* simwidget) :  WspItem(simwidget) {
 
   // have my graphics scene incl view
   mScene = new QGraphicsScene(this);
+  mScene->setBackgroundBrush(Qt::white);
   // todo: style this parameter
   TimeScale(10);
   // do all reset

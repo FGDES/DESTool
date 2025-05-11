@@ -31,11 +31,22 @@
 </Generator>
 <VioModels>
 <TransitionList>
-=AAAABAEAAAABAAAADgBhAGwAcABoAGEAXwBiAAAAAwEAAAADAAAADABiAGUAdABhAF8AYgAAAAEBAAAAAwAAAAoAbQB1AGUAXwBiAAAAAgEAAAACAAAAEABsAGEAbQBiAGQAYQBfAGIAAAAB= </TransitionList>
+<Transition x1="1" event="alpha_b" x2="3"/>
+<Transition x1="2" event="lambda_b" x2="1"/>
+<Transition x1="3" event="beta_b" x2="1"/>
+<Transition x1="3" event="mue_b" x2="2"/>
+</TransitionList>
 <StateList>
-=AAAAAwIAAAABAgAAAAMCAAAAAg=== </StateList>
+<State id="1"/>
+<State id="2"/>
+<State id="3"/>
+</StateList>
 <EventList>
-=AAAABAMAAAAOAGEAbABwAGgAYQBfAGIDAAAADABiAGUAdABhAF8AYgMAAAAKAG0AdQBlAF8AYgMAAAAQAGwAYQBtAGIAZABhAF8AYg=== </EventList>
+<Event name="alpha_b"/>
+<Event name="beta_b"/>
+<Event name="mue_b"/>
+<Event name="lambda_b"/>
+</EventList>
 <GraphData>
 <States>
 <State>
@@ -46,7 +57,7 @@
 </Position>
 <BasePoints>
 0              0              30             30             -50            0             
--30.007992     0             
+-30.007046     0             
 </BasePoints>
 </Item>
 </State>
@@ -58,7 +69,7 @@
 </Position>
 <BasePoints>
 0              0              30             30             -50            0             
--30.014081     0             
+-30.013135     0             
 </BasePoints>
 </Item>
 </State>
@@ -70,7 +81,7 @@
 </Position>
 <BasePoints>
 0              0              30             30             -50            0             
--30.040586     0             
+-30.039640     0             
 </BasePoints>
 </Item>
 </State>
@@ -83,7 +94,7 @@
 0              10            
 </Position>
 <BasePoints>
-50             -40            0              0              25.721165      -15.432703    
+50             -40            0              0              25.770886      -15.462534    
 50             -30            100            -30            124.292707     -15.424376    
 150            0             
 </BasePoints>
@@ -96,7 +107,7 @@
 80             120           
 </Position>
 <BasePoints>
--95            -25            0              0              -17.985237     -23.980315    
+-95            -25            0              0              -18.020001     -24.026670    
 -35.811035     -47.748047     -43.648438     -61.531250     -61.966564     -85.955418    
 -80            -110          
 </BasePoints>
@@ -109,7 +120,7 @@
 150            10            
 </Position>
 <BasePoints>
--90            20             0              0              -30.041323     0             
+-90            20             0              0              -30.011385     0             
 -66.288379     0              -82.610937     0              -119.998134    0             
 -150           0             
 </BasePoints>
@@ -122,7 +133,7 @@
 150            10            
 </Position>
 <BasePoints>
--20            80             0              0              -16.107645     25.312011     
+-20            80             0              0              -16.138782     25.360940     
 -28.573535     44.901270      -41.048438     64.504688      -53.881237     84.670515     
 -70            110           
 </BasePoints>

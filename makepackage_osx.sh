@@ -2,8 +2,8 @@ echo ==================== Deployment script DESTool  Mac OS X
 
 
 # build all viodes and destool from scratch
-CLEAN=false
-#CLEAN=true
+#CLEAN=false
+CLEAN=true
 
 # set qt to Qt Project precompiled package
 export QTOOLS=~/Qt/6.6.2/macos/bin
@@ -63,12 +63,13 @@ echo ==================== compile - prepare
 rm -rf $DESTOOL_BASE/DESTool.app 
 rm -rf $DESTOOL_BASE/bin/dstinstall
 
+# extensive clean
 if test $CLEAN = true ; then  
 # clean viodes
 echo ===== clean libVIODES in  $VIODES_BASE
 cd $VIODES_BASE
-. ./distclean.sh
 . ./copyfaudes.sh
+. ./distclean.sh
 qmake "CONFIG-=debug" viodes.pro
 make clean
 # clean destool
@@ -91,42 +92,43 @@ fi
 
 # dstsintall (depends on nothing)
 echo ==================== compile - dstinstall 
-echo cd $DESTOOL_BASE
-cd $DESTOOL_BASE
-make -C $DESTOOL_BASE/dstinstall
-
-# viodes (required by destool)
-echo ==================== compile - viodes
-#cd $VIODES_BASE
-#. ./copyfaudes.sh
-make -j 20 -C $VIODES_BASE
+cd $DESTOOL_BASE/dstinstall
+qmake dstinstall.pro
+make
 
 # doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
 echo ==================== compile - doc 
 cd $DESTOOL_BASE
 make -C doc
 
+# viodes (required by destool)
+echo ==================== compile - viodes
+cd $VIODES_BASE
+qmake viodes.pro
+make -j20
+
+
 # destool (requires viodes to link, copies dstinstall to bundle, copies doc to bundle)
 echo ==================== compile - destool 
 cd $DESTOOL_BASE
-make   ## tricky build issue
+qmake destool.pro     ## tricky build issue
 make -j20
 
-# viodes (required by destool)
-echo ==================== copy my bi
+# prepare package
+echo ==================== copy my bin
 cd $DESTOOL_BASE
 rm -rf $DEST
 mkdir $DEST
 cp -R DESTool.app $BUNDLE
 
-echo ==================== have qhelp tools 
-cd $DESTOOL_BASE
-cp -R -L $QTOOLSX/qhelpgenerator $BUNDLEEXE
-cp -R -L $QTOOLSX/qcollectiongenerator $BUNDLEEXE
+#echo ==================== have qhelp tools 
+#cd $DESTOOL_BASE
+#cp -R -L $QTOOLSX/qhelpgenerator $BUNDLEEXE
+#cp -R -L $QTOOLSX/qcollectiongenerator $BUNDLEEXE
 
 
 echo ==================== run deploy tool
-macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall -executable=$BUNDLEEXE/qhelpgenerator
+macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall # -executable=$BUNDLEEXE/qhelpgenerator
 
 
 echo ==================== fix my plugins
@@ -205,6 +207,26 @@ cp -v $DESTOOL_BASE/README.md  $DEST
 cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
 cp -Rv $DESTOOL_BASE/examples $DEST/Examples
 cp -v $VIODES_BASE/vioedit/examples/vioconfig.txt  $DEST/Examples
+
+
+############################################################################
+# some consistency tests
+if [ ! -f $BUNDLEEXE/libfaudes.dylib ]; then
+    echo "error: libFAUDES not in release"
+    return
+fi
+if [ ! -f $BUNDLEEXE/libviodes.dylib ]; then
+    echo "error: libVIODES not in release"
+    return
+fi
+if [ ! -f $BUNDLEEXE/DESTool ]; then
+    echo "error: DESTool not in release"
+    return
+fi
+if [ ! -f $BUNDLEVIO/libviogen.dylib ]; then
+    echo "error: libVIODES plugins not in release"
+    return
+fi
 
 
 echo ===================== make disk image

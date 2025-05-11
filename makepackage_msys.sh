@@ -6,8 +6,8 @@ CLEAN=false
 #CLEAN=true
 
 # set qt and compiler
-FQGCC=/C/Qt/Tools/mingw1310_64/bin:$PATH
-FQLIB=/C/Qt/6.8.3/mingw_64/bin:$PATH
+FQGCC=/C/Qt/Tools/mingw1310_64/bin
+FQLIB=/C/Qt/6.8.3/mingw_64/bin
 
 # set inno path
 FINNO="/c/Program Files (x86)/Inno Setup 6"
@@ -106,6 +106,26 @@ make -j20
 cd $DESTOOL_BASE
 windeployqt release/DESTool.exe
 cp $FQLIB/Qt6PrintSupport.dll release/
+
+
+############################################################################
+# some consistency tests
+if [ ! -f $DESTOOL_BASE/release/faudes.dll ]; then
+    echo "error: libFAUDES not in release"
+    return
+fi
+if [ ! -f $DESTOOL_BASE/release/viodes.dll ]; then
+    echo "error: libVIODES not in release"
+    return
+fi
+if [ ! -f $DESTOOL_BASE/release/plugins/viogen.dll ]; then
+    echo "error: libVIODES plugins not in release"
+    return
+fi
+if [ ! -f $DESTOOL_BASE/release/DESTool.exe ]; then
+    echo "error: DESTool incomplete"
+    return
+fi
 
 # run inno
 echo ==================== build installer

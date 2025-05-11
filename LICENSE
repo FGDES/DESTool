@@ -1,5 +1,5 @@
-===============================================================
-===============================================================
+========================================
+========================================
 
 License for the DESTool application
 
@@ -20,12 +20,12 @@ you comply with Qt licensing terms.
 We state licenses (A) to (D) below.
 
 
-===============================================================
-===============================================================
+========================================
+========================================
 
 (A) GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
-===============================================================
+========================================
 
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
@@ -701,12 +701,12 @@ Public License instead of this License.  But first, please read
 
 
 
-===============================================================
-===============================================================
+========================================
+========================================
 
 (B) GNU LESSER GENERAL PUBLIC LICENSE (LGPL), Version 3, 29 June  2007
 
-===============================================================
+========================================
 
 Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
@@ -870,12 +870,12 @@ of using an interface provided by the Library.
   permanent authorization for you to choose that version for the
   Library.
 
-===============================================================
-===============================================================
+========================================
+========================================
 
 (C) Integrated 3rd party libraries (statically linked) ALGLIB
 
-===============================================================
+========================================
 
 Copyright (c) 2007, Sergey Bochkanov (ALGLIB project).
 
@@ -904,12 +904,12 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-===============================================================
-===============================================================
+========================================
+========================================
 
 (D) GNU LESSER GENERAL PUBLIC LICENSE (LGPL),  Version 2.1, February 1999
 
-===============================================================
+========================================
 
  Copyright (C) 1991, 1999 Free Software Foundation, Inc.
  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA

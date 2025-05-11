@@ -1,61 +1,63 @@
 <VioSystem>
-<Generator>
-"Generator"   
-
-% 
-%  Statistics for Generator
-% 
-%  States:        3
-%  Init/Marked:   1/1
-%  Events:        4
-%  Transitions:   4
-%  StateSymbols:  3
-%  Attrib. E/S/T: 2/0/0
-% 
+<Generator ftype="System">
 
 <Alphabet>
-"alpha_c"     +C+           "beta_c"      "mue_c"       "lambda_c"    +C+           
+<Event name="alpha_c">
+<Controllable/>
+</Event>
+<Event name="beta_c"/>
+<Event name="mue_c"/>
+<Event name="lambda_c">
+<Controllable/>
+</Event>
 </Alphabet>
 
-<States>
-"I"           "D"           "B"           
-</States>
+<StateSet>
+<State id="1" name="I">
+<Initial/>
+<Marked/>
+</State>
+<State id="2" name="D"/>
+<State id="3" name="B"/>
+</StateSet>
 
-<TransRel>
-"I"           "alpha_c"     "B"           
-"D"           "lambda_c"    "I"           
-"B"           "beta_c"      "I"           
-"B"           "mue_c"       "D"           
-</TransRel>
-
-<InitStates>
-"I"           
-</InitStates>
-
-<MarkedStates>
-"I"           
-</MarkedStates>
-
+<TransitionRelation>
+<Transition x1="1" event="alpha_c" x2="3"/>
+<Transition x1="2" event="lambda_c" x2="1"/>
+<Transition x1="3" event="beta_c" x2="1"/>
+<Transition x1="3" event="mue_c" x2="2"/>
+</TransitionRelation>
 
 </Generator>
 <VioModels>
 <TransitionList>
-=AAAABAEAAAABAAAADgBhAGwAcABoAGEAXwBjAAAAAwEAAAACAAAAEABsAGEAbQBiAGQAYQBfAGMAAAABAQAAAAMAAAAMAGIAZQB0AGEAXwBjAAAAAQEAAAADAAAACgBtAHUAZQBfAGMAAAAC= </TransitionList>
+<Transition x1="1" event="alpha_c" x2="3"/>
+<Transition x1="2" event="lambda_c" x2="1"/>
+<Transition x1="3" event="beta_c" x2="1"/>
+<Transition x1="3" event="mue_c" x2="2"/>
+</TransitionList>
 <StateList>
-=AAAAAwIAAAABAgAAAAICAAAAAw=== </StateList>
+<State id="1"/>
+<State id="2"/>
+<State id="3"/>
+</StateList>
 <EventList>
-=AAAABAMAAAAOAGEAbABwAGgAYQBfAGMDAAAADABiAGUAdABhAF8AYwMAAAAKAG0AdQBlAF8AYwMAAAAQAGwAYQBtAGIAZABhAF8AYw=== </EventList>
+<Event name="alpha_c"/>
+<Event name="beta_c"/>
+<Event name="mue_c"/>
+<Event name="lambda_c"/>
+</EventList>
 <GraphData>
 <States>
 <State>
 1             
 <Item>
 <Position>
-130           -40           
+130            -40           
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--30.002160    0             
+0              0              30             30             -50            0             
+-30.002074     0             
 </BasePoints>
 </Item>
 </State>
@@ -63,11 +65,11 @@
 2             
 <Item>
 <Position>
-210           70            
+210            70            
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--30.017439    0             
+0              0              30             30             -50            0             
+-30.017353     0             
 </BasePoints>
 </Item>
 </State>
@@ -75,65 +77,65 @@
 3             
 <Item>
 <Position>
-290           -40           
+290            -40           
 </Position>
 <BasePoints>
-0             0             30            30            -50           0             
--29.982804    0             
+0              0              30             30             -50            0             
+-29.982718     0             
 </BasePoints>
 </Item>
 </State>
 </States>
 <TransRel>
 <Trans>
-1             "alpha_c"     3             +Spline+      
+1              alpha_c       3              +Spline+     
 <Item>
 <Position>
-130           -40           
+130            -40           
 </Position>
 <BasePoints>
-70            -50           0             0             23.448947     -18.759157    
-50            -40           110           -40           136.549713    -18.760227    
-160           0             
+70             -50            0              0              23.471802      -18.777441    
+50             -40            110            -40            136.565647     -18.747482    
+160            0             
 </BasePoints>
 </Item>
 </Trans>
 <Trans>
-2             "lambda_c"    1             +Spline+      
+2              lambda_c      1              +Spline+     
 <Item>
 <Position>
-210           70            
+210            70            
 </Position>
 <BasePoints>
--100          -30           0             0             -17.631537    -24.243358    
--32.389844    -44.536035    -47.162500    -64.848437    -62.368463    -85.756642    
--80           -110          
+-100           -30            0              0              -17.648722     -24.266987    
+-32.389844     -44.536035     -47.162500     -64.848437     -62.347858     -85.728305    
+-80            -110          
 </BasePoints>
 </Item>
 </Trans>
 <Trans>
-3             "beta_c"      1             +Spline+      
+3              beta_c        1              +Spline+     
 <Item>
 <Position>
-290           -40           
+290            -40           
 </Position>
 <BasePoints>
--90           20            0             0             -30.029428    0             
--62.973437    0             -96.025000    0             -129.970572   0             
--160          0             
+-90            20             0              0              -29.970805     0             
+-62.973437     0              -96.025000     0              -129.978590    0             
+-160           0             
 </BasePoints>
 </Item>
 </Trans>
 <Trans>
-3             "mue_c"       2             +Spline+      
+3              mue_c         2              +Spline+     
 <Item>
 <Position>
-290           -40           
+290            -40           
 </Position>
 <BasePoints>
--30           80            0             0             -17.645994    24.263245     
--32.389844    44.536035     -47.162500    64.848437     -62.354006    85.736755     
--80           110           
+-30            80             0              0              -17.663193     24.286893     
+-32.389844     44.536035      -47.162500     64.848437      -62.347858     85.728305     
+-80            110           
 </BasePoints>
 </Item>
 </Trans>
@@ -141,6 +143,7 @@
 </GraphData>
 </VioModels>
 <VioLayout>
-0             =AAAAANgesLVUeRYIrFtdCAAAAAAAAAAAAAAAACCiMAggog=== 0             150           212           0.602430      
+0             =AAAA/wAAAAEAAAADAAAA6wAAANQAAAAAAf////8BAAAAAQA==  0              150            223            0.602430       0             
+247           
 </VioLayout>
 </VioSystem>
