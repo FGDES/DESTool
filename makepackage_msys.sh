@@ -5,13 +5,15 @@ echo ==================== Deployment script DESTool  MSYS
 CLEAN=false
 #CLEAN=true
 
-# set qt to Qt Project precompiled package
-export PATH=/C/Qt/Tools/mingw1310_64/bin:$PATH
-export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
+# set qt and compiler
+FQGCC=/C/Qt/Tools/mingw1310_64/bin:$PATH
+FQLIB=/C/Qt/6.8.3/mingw_64/bin:$PATH
 
 # set inno path
-INNOSCC="/c/Program Files (x86)/Inno Setup 6"
-export PATH=$INNO:$PATH
+FINNO="/c/Program Files (x86)/Inno Setup 6"
+
+# tell make and submake
+export PATH=$FINNO:$FQGCC:$FQLIB:$PATH
 
 # source dirs
 VIODES_BASE=$(pwd)/../libVIODES
@@ -103,9 +105,10 @@ make -j20
 # run windeploy
 cd $DESTOOL_BASE
 windeployqt release/DESTool.exe
+cp $FQLIB/Qt6PrintSupport.dll release/
 
 # run inno
 echo ==================== build installer
 cd $DESTOOL_BASE
-iscc.exe  makepackage_msys.iss /DVMAJOR=$VIODES_VERSION_MAJOR /DVMINOR=$VIODES_VERSION_MINOR\"
+iscc.exe  makepackage_msys.iss -DVMAJOR=$VIODES_VERSION_MAJOR -DVMINOR=$VIODES_VERSION_MINOR
 
