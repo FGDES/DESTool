@@ -7,19 +7,18 @@ CLEAN=false
 
 # set qt to Qt Project precompiled package
 export PATH=/C/Qt/Tools/mingw1310_64/bin:$PATH
-echo using MinGW "$(which g++)"
 export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
-echo using Qt "$(which qmake)"
 
 # set inno path
-INNOSCC="/c/Program Files (x86)/Inno Setup 6/ISCC.exe"
+INNOSCC="/c/Program Files (x86)/Inno Setup 6"
+export PATH=/C/Qt/6.8.3/mingw_64/bin:$PATH
 
 # source dirs
 VIODES_BASE=$(pwd)/../libVIODES
 FAUDES_BASE=$(pwd)/../libVIODES/libFAUDES_for_VIODES
 DESTOOL_BASE=$(pwd)
 
-# source version numbers
+# version numbers
 . ../libVIODES/VERSION
 qmake -set VIODES_VERSION_MAJOR $VERSION_VERSION_MAJOR 
 qmake -set VIODES_VERSION_MINOR $VERSION_VERSION_MINOR 
@@ -81,7 +80,9 @@ fi
 
 # dstsintall (depends on nothing)
 echo ==================== compile - dstinstall 
-make -C $DESTOOL_BASE/dstinstall
+cd $DESTOOL_BASE/dstinstall
+qmake "CONFIG-=debug" dstinstall.pro
+make
 
 # doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
 echo ==================== compile - doc 
@@ -89,16 +90,22 @@ make -C $DESTOOL_BASE/doc
 
 # viodes (required by destool)
 echo ==================== compile - viodes
-make -j20 -C $VIODES_BASE
+cd $VIODES_BASE
+qmake "CONFIG-=debug" viodes.pro
+make -j20 
 
 # destool (requires viodes to link, copies dstinstall to bundle, copies doc to bundle)
 echo ==================== compile - destool 
-make -j20 -C $DESTOOL_BASE
+cd $DESTOOL_BASE
+qmake "CONFIG-=debug" destool.pro
+make -j20
 
 # run windeploy
+cd $DESTOOL_BASE
 qtwindeply jy
 
 # run inno
 echo ==================== build installer
-bash -c " \"$INNOSCC\" makepackage_msys.iss /DVMAJOR=$VIODES_VERSION_MAJOR /DVMINOR=$VIODES_VERSION_MINOR\"
+cd $DESTOOL_BASE
+iscc.exe  makepackage_msys.iss /DVMAJOR=$VIODES_VERSION_MAJOR /DVMINOR=$VIODES_VERSION_MINOR\"
 
