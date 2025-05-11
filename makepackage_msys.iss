@@ -21,7 +21,7 @@ DefaultGroupName=FAUDES
 OutputDir=.\
 OutputBaseFilename=destool-{#VMAJOR}_{#VMINOR}_setup
 SetupIconFile=images\icon_red_win.ico
-LicenseFile=.\release\License.txt
+LicenseFile=.\LICENSE
 
 [Dirs]
 Name: {app}\Examples
