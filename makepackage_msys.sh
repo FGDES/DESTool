@@ -102,7 +102,7 @@ make -j20
 
 # run windeploy
 cd $DESTOOL_BASE
-qtwindeply jy
+windeployqt release/DESTool.exe
 
 # run inno
 echo ==================== build installer
