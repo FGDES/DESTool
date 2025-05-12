@@ -23,14 +23,6 @@ export PATH=/usr/lib/qt5/bin:$PATH
 #export VIOQT=/opt/qt-4.4.2-lsb-3.2   
 #export PATH=$VIOQT/bin:/opt/lsb/bin:$PATH
 
-# manually set qt: qt on early destool
-#export VIOQT=/opt/qtsdk-2010.01/qt
-#export PATH=$VIOQT/bin:$PATH
-
-# manually set qt: lsb version on wombat
-#export VIOQT=/usr/local/Trolltech/Qt-4.4.2-lsb-3.2
-#export PATH=$VIOQT/bin:/opt/lsb/bin:$PATH
-
 # record dirs
 VIODES_BASE=$(pwd)/../libVIODES
 DESTOOL_BASE=$(pwd)
@@ -61,22 +53,22 @@ echo ==================== press return or ctrl-c to bail out
 read
 
 
-echo ==================== prepare destool clean
-if test $CLEAN == true ; then
-cd $DESTOOL_BASE
-. ./distclean.sh
-fi
-
-
 echo ==================== compile libviodes
 cd $VIODES_BASE
 if test $CLEAN == true ; then
-. ./distclean.sh
 . ./copyfaudes.sh    
+. ./distclean.sh
 fi
 qmake "CONFIG-=debug" viodes.pro
 make -j20
 cd $DESTOOL_BASE
+
+
+echo ==================== prepare destool 
+if test $CLEAN == true ; then
+cd $DESTOOL_BASE
+. ./distclean.sh
+fi
 
 
 echo ==================== compile dstinstall
@@ -111,7 +103,7 @@ strip -R .debug_aranges -R .debug_pubnames lib/destool.bin
 
 echo ==================== copy libraries
 
-#### this is still for qt4
+#### this is still for qt4 --- keep for reference
 if test $VIOQT != local ; then 
 
 cd $DESTOOL_BASE
@@ -168,6 +160,25 @@ cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
 cp -Rv $DESTOOL_BASE/examples/* $DEST/examples/
 cp -v $VIODES_BASE/vioedit/examples/vioconfig.txt  $DEST/examples
 cp -R $DESTOOL_BASE/doc/html/* $DEST/doc
+
+############################################################################
+# some consistency tests
+if [ ! -f $DEST/lib/libfaudes.so ]; then
+    echo "error: libFAUDES not in release"
+    return
+fi
+if [ ! -f $DEST/lib/libviodes.so ]; then
+    echo "error: libVIODES not in release"
+    return
+fi
+if [ ! -f $DEST/lib/plugins/viotypes/libviogen.so ]; then
+    echo "error: libVIODES plugins not in release"
+    return
+fi
+if [ ! -f $DEST/lib/destool.bin ]; then
+    echo "error: DESTool incomplete"
+    return
+fi
 
 echo ====================compile package
 cd $DESTOOL_BASE

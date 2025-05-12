@@ -25,7 +25,7 @@ message("=== using Qt at" $$[QT_HOST_LIBS])       #Qt6
 # target setting
 TEMPLATE = app
 LANGUAGE = C++
-QT += core gui svg widgets printsupport help
+QT += core gui svg widgets printsupport 
 
 # target name
 unix:TARGET = lib/destool.bin
