@@ -19,7 +19,7 @@ VIODES_VERSION = $${VIODES_VERSION_MAJOR}.$${VIODES_VERSION_MINOR}
 DEFINES += VIODES_VERSION=\\\"$${VIODES_VERSION}\\\"
 
 # target setting
-unix:!macx { TARGET = ../lib/dstinstall.bin }
+unix:!macx { TARGET = ../bin/dstinstall }
 macx:TARGET = ../bin/dstinstall
 win32:TARGET = ../../bin/dstinstall
 
