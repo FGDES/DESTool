@@ -4,7 +4,7 @@
 /*
    Gui frontend for FAU Discrete Event Systems Library (libfaudes)
 
-   Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2009 - 2025  Thomas Moor
 
 */
 
@@ -116,6 +116,7 @@ int main(int argc, char *argv[]) {
 #else
   (void) dowincon;
 #endif
+    FD_WARN("DESTool console out OK");
 
 #ifdef Q_OS_WIN32  
 #ifdef FAUDES_IODEVICE_SIMPLENET

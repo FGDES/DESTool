@@ -529,7 +529,7 @@ const QString& DesAssistant::DocPath(void) {
     return mDocPath;
 }
 
-// find assistant path ... abandoned with DESTool 8.4
+// find assistant path ... abandoned with DESTool 0.84
 const QString& DesAssistant::ExePath(void) {
     if(mExePath!="") return mExePath;
     mExePath="";    
@@ -590,11 +590,16 @@ DesAssistant::~DesAssistant() {
 // doit
 void DesAssistant::ShowDocumentation(const QString &page) {
   FD_DS("DesAssistant::ShowDocumentation(" << VioStyle::StrFromQStr(page)<<"}");
-  // use syste browser
-  QString dpage = QLatin1String("file://")+DocPath()+"/"+page;
-  if(page=="") dpage=dpage+QLatin1String("destool_intro.html");
-  FD_DS("DesAssistant::ShowDocumentation(..): url: " << VioStyle::StrFromQStr(dpage));
-  QDesktopServices::openUrl(dpage);
+  // use system HTML browser
+  QString path=DocPath()+"/"+page;
+  if(!QFileInfo(path).isFile()) 
+    path=DocPath()+"/destool_intro.html";
+#ifdef Q_OS_WIN32
+  path="/"+path;
+#endif  
+  QString method="file://";
+  FD_DS("DesAssistant::ShowDocumentation(..): url: " << VioStyle::StrFromQStr(method+path));
+  QDesktopServices::openUrl(method+path);
 /*
   // ensure process is up
   if(!startProcess()) return;
