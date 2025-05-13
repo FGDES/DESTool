@@ -160,7 +160,7 @@ you must base your extension on the same version of libFAUDES as
 the one of the original DESTool distribution (as shown by <i>About</i>); you must
 compile your customized libFAUDES as a shared object in 64-bit, and,
 for MS Windows environments with the same compiler as used for DESTool
-(which at the time of writing is MinGW's g++ in an MSYS2 environment, reporting version 12.10); 
+(which at the time of writing is MinGW's g++ in an MSYS2 environment, reporting version 13.10); 
 you must at least include the plug-ins 
 <i>Simulator</i>,
 <i>Timed</i>,
