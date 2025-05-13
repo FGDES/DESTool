@@ -151,6 +151,17 @@ RC_FILE = ./images/icon_win.rc
 #
 #
 
+
+# copy files via post link
+defineTest(viodes_copy) {
+  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$2) &
+  for(file, $$1) {
+    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$2) $$escape_expand(\\n\\t)
+  }
+  export(QMAKE_POST_LINK)
+}
+
+
 # linux: copy libVIODES and libFAUDES
 unix:!macx {
 
@@ -242,9 +253,8 @@ macx {
   QMAKE_BUNDLE_DATA += DocFiles
 }
 
-
-# msys
-win32-g++ {
+# Windows (both msys and msvc)
+win32 {
 
   DESTOOL_LIBS = $$VIODES_LIBFAUDES/faudes.dll
   DESTOOL_LIBS += $$VIODES_LIBFAUDES/include/libfaudes.rti
@@ -258,21 +268,12 @@ win32-g++ {
   VIODES_PLUGINS += $$VIODES_BASE/viodiag.dll
   VIODES_PLUGINS += $$VIODES_BASE/violua.dll
 
-  DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*
+  DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*.exe
 
-  INSTCMD = \
-    mkdir -p ./release/plugins/luaextensions ./release/Examples ./release/Doc && \
-    cp $$VIODES_PLUGINS ./release/plugins && \
-    cp $$DESTOOL_LIBS ./release && \
-    cp $$DESTOOL_BINS ./release && \
-    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./release/plugins/luaextensions && \
-    rm -f ./release/qt.conf && \
-    rm -f ./release/luafaudes.flx 
-
-  QMAKE_EXTRA_TARGETS += instlibs
-  instlibs.target = instlibs
-  instlibs.commands += $$INSTCMD
-  QMAKE_POST_LINK += make instlibs
+  viodes_copy($$DESTOOL_LIBS, ./release/)
+  viodes_copy($$DESTOOL_BINS, ./release/)
+  viodes_copy($$VIODES_PLUGINS, ./release/plugins/)
+  viodes_copy($$VIODES_LIBFAUDES/stdflx/*.flx, ./release/plugins/luaextensions/)
 
 }
 
