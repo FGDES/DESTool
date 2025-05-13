@@ -23,20 +23,20 @@ folder layout:
 
 The build process is then organised in 4 stages.
 
-0. configure and compile libFAUDES and libVIODES; instructions come with the respective source code; allthough libVIODES is fine with Qt 5.12.12, DESTool will requiere Qt 5.15.3 or better Qt series 6.
+1. configure and compile libFAUDES and libVIODES; instructions come with the respective source code; allthough libVIODES is fine with Qt 5.12.12, DESTool will requiere Qt 5.15.3 or better Qt series 6.
 
-1. build the install tool  `dstinstall`
+2. build the install tool  `dstinstall`
 
         cd wherever/DESTool/dstinstall
         qmake dstinstall.pro
         make
 
-2. build the documentation (requires libFAUDES essentials and dstinstall)
+3. build the documentation (requires libFAUDES essentials and dstinstall)
 
         cd wherever/DESTool/doc
         make 
 
-3. finally build DESTool
+4. finally build DESTool
 
         cd wherever/DESTool
         qmake destool.pro
@@ -49,7 +49,7 @@ This is quite some process, hence we provide precomipiled binaries.
 DESTool is distributed under terms of the GLP vession 3; for details see the provided
 LICENSE file. Building on libFAUDES and libVIODES, DESTool benefits from a various student
 projects and external contributions. DESTool produces a list of libFAUDES
-authors/contributors vai its About dialog.
+authors/contributors via its About dialog.
 
 
-Copyright (C) 2008-2024 Thomas Moor
+Copyright (C) 2008-2025 Thomas Moor
