@@ -1,5 +1,5 @@
 #
-# project file for destool, tmoor 2025
+# project file for destool, tmoor 2025 (incl msys and msvc)
 #
 #
 
