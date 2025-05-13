@@ -152,15 +152,16 @@ RC_FILE = ./images/icon_win.rc
 #
 
 
-# copy files via post link
+# copy via post link target
 defineTest(viodes_copy) {
-  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$2) &
-  for(file, $$1) {
-    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$2) $$escape_expand(\\n\\t)
+  src = $$1
+  dst = $$2
+  QMAKE_POST_LINK += $$QMAKE_MKDIR  $$shell_path($$dst) &
+  for(file, src) {
+    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dst) $$escape_expand(\\n\\t)
   }
   export(QMAKE_POST_LINK)
 }
-
 
 # linux: copy libVIODES and libFAUDES
 unix:!macx {
