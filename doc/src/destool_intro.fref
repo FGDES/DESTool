@@ -110,12 +110,13 @@ or even DESTool 0.82 (built on Mac OSX 10.7 compatible with 10.4, i.e., back to 
 <strong>MS Windows:</strong>
 DESTool is distributed as a <tt>setup.exe</tt> installer application. Double click will
 install by default to <tt>C:/Programs/FAUDES/DESTool</tt>. Users need write permission on the
-installation folder in order for DESTool to be fully operational.
-The MS Windows version of DESTool is compiled for 64-bit MS Windows 7
-and should be compatible with subsequent 64bit editions of MS
-Windows. You may need to install the MS Visual C redistributable package  --- look for "vc_redist.x64.exe" for MS VS 2015.
-The most recent distribution compatible back to 32-bit MS Windows XP is DESTool 0.76,
-available from the libFAUDES archive.
+installation folder in order for DESTool to be fully operational. The MS Windows version of 
+DESTool is compiled in an MSYS2 environment. It should be self-contained and run on any 
+MS Windows 11 machine, no MSYS2 needed.  
+We have archived DESTool 0.83 which is compatible back to Windows 7, 64bit. That version was
+compiled with MS Visual C 2015 and you may need to install a matching redistributable package  
+--- look for "vc_redist.x64.exe". 
+At any rate, for Windows XP 32bit there still is DESTool 0.76 available from the libFAUDES archive.
 </p></li>  
 </ul>
 
@@ -185,6 +186,10 @@ Copyright (C) 2008 - 2025 Thomas Moor
 
 <p>
 <table width="100%"  border="0">
+  <tr>
+    <td width="14%">15.05.2025</td>
+    <td width="86%">DESTool 0.85 (rebuild binary distributions)</td>
+  </tr>
   <tr>
     <td width="14%">01.03.2024</td>
     <td width="86%">DESTool 0.84 (GPL release, migrating to Qt6)</td>
