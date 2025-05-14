@@ -158,7 +158,7 @@ defineTest(viodes_copy) {
   dst = $$2
   QMAKE_POST_LINK += $$QMAKE_MKDIR  $$shell_path($$dst) &
   for(file, src) {
-    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dst) $$escape_expand(\\n\\t)
+    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dst/) $$escape_expand(\\n\\t)
   }
   export(QMAKE_POST_LINK)
 }
@@ -180,20 +180,13 @@ unix:!macx {
 
   DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*
 
-  INSTCMD = \
-    cp $$VIODES_PLUGINS ./lib/plugins/viotypes && \
-    cp $$DESTOOL_LIBS ./lib && \
-    cp $$DESTOOL_BINS ./bin && \
-    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./lib/plugins/luaextensions && \
-    rm -f ./lib/qt.conf && \
-    rm -f ./bin/luafaudes.flx
-
-  QMAKE_EXTRA_TARGETS += instlibs
-  instlibs.target = instlibs
-  instlibs.commands += $$INSTCMD
-  QMAKE_POST_LINK += make instlibs
+  viodes_copy($$DESTOOL_LIBS, ./lib)
+  viodes_copy($$DESTOOL_BINS, ./bin)
+  viodes_copy($$VIODES_PLUGINS, ./lib/plugins/viotypes)
+  viodes_copy($$VIODES_LIBFAUDES/stdflx/*.flx, ./lib/plugins/luaextensions)
 
 }
+
 
 # mac: copy libFAUDES to bundle 
 macx { 

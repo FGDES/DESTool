@@ -33,7 +33,7 @@
 int main(int argc, char *argv[]) {
 
   // say hello, console only
-  FD_WARN("DESTool main(): starting");
+  FD_WARN("DESTool: starting");
   
   // osx 11: fix fonts (nee to be before QApplication; was a Qt4 issue)
 #ifdef Q_OS_MACOS
@@ -111,12 +111,12 @@ int main(int argc, char *argv[]) {
     QString deslogname = deslog.fileName(); 
     deslog.close();
     faudes::ConsoleOut::G()->ToFile(VioStyle::LfnFromQStr(deslogname));
-    FD_WARN("DESTool logfile " << deslogname);
+    FD_WARN("DESTool logfile: " << deslogname);
   }
 #else
   (void) dowincon;
 #endif
-    FD_WARN("DESTool console out OK");
+  FD_WARN("DESTool: console out");
 
 #ifdef Q_OS_WIN32  
 #ifdef FAUDES_IODEVICE_SIMPLENET
@@ -157,12 +157,12 @@ int main(int argc, char *argv[]) {
 
  
   // configure: defaults
+  FD_WARN("DESTool: init viostyle");
   VioStyle::Initialise();
-
-   // configure: try read specified file
+  // configure: try read specified file
   if(cfgname=="") cfgname =  QCoreApplication::applicationDirPath() + "/vioconfig.txt";
   try { 
-    FD_WARN("DESTool: loading config file "<< cfgname);
+    FD_WARN("DESTool: loading config style "<< cfgname);
     VioStyle::ReadFile(cfgname); 
   } catch (faudes::Exception& fexcep) {
     QString err=QString("Details: ")+VioStyle::QStrFromStr(fexcep.What());
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
   // initialise faudes registry 
   QString rtifile = QCoreApplication::applicationDirPath() + "/libfaudes.rti"; 
   try { 
-    FD_WARN("DESTool: loading rti file "<< rtifile);
+    FD_WARN("DESTool: loading run-time interface "<< rtifile);
     faudes::LoadRegistry(VioStyle::LfnFromQStr(rtifile));
   } catch (faudes::Exception& fexcep) {
     QString err=QString("Details: ")+VioStyle::QStrFromStr(fexcep.What());
@@ -266,7 +266,7 @@ int main(int argc, char *argv[]) {
 
   // reset lua state (incl. installation of LuaFunctions from registry
   try { 
-    FD_WARN("DESTool: installing lua functions"); 
+    FD_WARN("DESTool: installing Lus functions"); 
     faudes::LuaState::G()->Reset();
   } catch (faudes::Exception& fexcep) {
     QString err=QString("Details: ")+VioStyle::QStrFromStr(fexcep.What());
