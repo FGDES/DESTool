@@ -50,7 +50,6 @@ events
 <li class="l1">
 <tt>beta_a</tt>, <tt>beta_b</tt>: machine A/B to complete processing a workpiece 
 </li>
-</li>
 <li class="l1">
 <tt>mue_a</tt>, <tt>mue_b</tt>: machine A/B to fail
 </li>
@@ -63,6 +62,7 @@ events
 <p>
 To create one variable of faudes-type <em>System</em> for each machine, 
 you may use the <em>Variables</em> tab of the project browser:
+</p>
 <ol>
 <li>
 use <em>New Variable</em> from the <em>File></em> menu to create a new variable;
@@ -152,7 +152,7 @@ therefore, you should use the context menu to change the type to <em>System</em>
 </p>
 <p><img class="screen" src="images/destool_gimp_parallel.png"></img></p>
 </li>
-<p><li>
+<li><p>
 in <em>InvProject</em>, choose the signature with three arguments, and set them to
 <em>BufferAB</em>, <em>Sigma</em> and <em>FullBufferAB</em>, respectively; the
 specification does not require event attributes, and, hence, type <em>Generator</em>

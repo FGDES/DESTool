@@ -21,7 +21,8 @@ DEFINES += VIODES_VERSION=\\\"$${VIODES_VERSION}\\\"
 # target setting
 unix:!macx { TARGET = ../bin/dstinstall }
 macx:TARGET = ../bin/dstinstall
-win32:TARGET = ../../bin/dstinstall
+win32:TARGET = dstinstall
+win32:DESTDIR = ../release/
 
 TEMPLATE = app
 LANGUAGE = C++

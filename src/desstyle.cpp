@@ -590,16 +590,32 @@ DesAssistant::~DesAssistant() {
 // doit
 void DesAssistant::ShowDocumentation(const QString &page) {
   FD_DS("DesAssistant::ShowDocumentation(" << VioStyle::StrFromQStr(page)<<"}");
+  QString opage=page;
+  // detect section hash
+  QString spage=opage;
+  qsizetype seppos=opage.lastIndexOf(".html#");
+  // strip and insert ?
+  QString secmark;
+  if(seppos >0){
+    spage=opage.left(seppos+5);
+    secmark=opage.mid(seppos+6);
+  }  
+  // test file existence
+  if(!QFileInfo(DocPath()+"/"+spage).isFile()) {
+    spage="destool_intro.html";
+    secmark="";
+  }    
   // use system HTML browser
-  QString path=DocPath()+"/"+page;
-  if(!QFileInfo(path).isFile()) 
-    path=DocPath()+"/destool_intro.html";
+  QString path=DocPath()+"/"+spage;
 #ifdef Q_OS_WIN32
   path="/"+path;
 #endif  
-  QString method="file://";
-  FD_DS("DesAssistant::ShowDocumentation(..): url: " << VioStyle::StrFromQStr(method+path));
-  QDesktopServices::openUrl(method+path);
+  QUrl url;
+  url.setScheme("file");
+  url.setPath(path);
+  if(secmark!="") url.setFragment(secmark);
+  FD_DS("DesAssistant::ShowDocumentation(..): url: " << VioStyle::StrFromQStr(url.toDisplayString()));
+  QDesktopServices::openUrl(url);
 /*
   // ensure process is up
   if(!startProcess()) return;

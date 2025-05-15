@@ -8,19 +8,10 @@
 VIODES_BASE = ../libVIODES
 VIODES_LIBFAUDES = $$VIODES_BASE/libFAUDES_for_VIODES
 
-# retreive version from qmake persistent settings
-VIODES_VERSION_MAJOR = $$[VIODES_VERSION_MAJOR]
-VIODES_VERSION_MINOR = $$[VIODES_VERSION_MINOR]
-isEmpty( VIODES_VERSION_MAJOR ): error("=== error: libVIODES major version not configured")
-isEmpty( VIODES_VERSION_MINOR ): error("=== error: libVIODES minor version not configured")
+# retrieve version
+include($$VIODES_BASE/VERSION)
 VIODES_VERSION = $${VIODES_VERSION_MAJOR}.$${VIODES_VERSION_MINOR}
-
-# say hello
-message("=== building DESTool")
-message("=== libVIODES base at" $${VIODES_BASE})
-message("=== libVIODES version" $${VIODES_VERSION})
-#message("=== using Qt at" $${QMAKE_LIBDIR_QT})   #QT5
-message("=== using Qt at" $$[QT_HOST_LIBS])       #Qt6
+DEFINES += VIODES_VERSION='\\"$${VIODES_VERSION}\\"'
 
 # target setting
 TEMPLATE = app
@@ -32,30 +23,12 @@ unix:TARGET = lib/destool.bin
 macx:TARGET = DESTool
 win32:TARGET = DESTool
 
-
-# platform dependand library names
-unix {
-  VIODES_LIBFAUDES_DSO = -L$${VIODES_LIBFAUDES} -lfaudes
-  VIODES_LIBVIODES_DSO = -L$${VIODES_BASE} -lviodes
-}
-win32-msvc {
-  VIODES_LIBFAUDES_DSO = $${VIODES_LIBFAUDES}\\faudes.lib
-  VIODES_LIBVIODES_DSO = $${VIODES_BASE}\\viodes.lib
-}
-win32-g++ {
-  VIODES_LIBFAUDES_DSO = $${VIODES_LIBFAUDES}\\faudes.lib
-  VIODES_LIBVIODES_DSO = $${VIODES_BASE}\\libviodes.a
-}
-
-
-# link to libviodes and libfaudes
-LIBS += $${VIODES_LIBFAUDES_DSO} 
-LIBS += $${VIODES_LIBVIODES_DSO} 
-
-
-# dll import/export switch
-DEFINES += FAUDES_BUILD_APP
-DEFINES += VIODES_BUILD_APP
+# say hello
+message("=== preparing " $$TARGET)
+message("=== libVIODES base at" $${VIODES_BASE})
+message("=== libVIODES version" $${VIODES_VERSION})
+#message("=== using Qt at" $${QMAKE_LIBDIR_QT})   #QT5
+message("=== using Qt at" $$[QT_HOST_LIBS])       #Qt6
 
 
 # destool debugging
@@ -66,8 +39,27 @@ debug {
 #DEFINES += FAUDES_DEBUG_ITEMS
 }
 
-# pass on version to compiler
-DEFINES += VIODES_VERSION='\\"$${VIODES_VERSION}\\"'
+# platform dependend library linking
+unix {
+  LIBS += -L$${VIODES_LIBFAUDES} -lfaudes
+  LIBS += -L$${VIODES_BASE} -lviodes
+}
+win32-msvc {
+  LIBS += $${VIODES_LIBFAUDES}\\faudes.lib
+  LIBS += $${VIODES_BASE}\\viodes.lib
+}
+win32-g++ {
+  LIBS += $${VIODES_LIBFAUDES}\\faudes.lib
+  LIBS += $${VIODES_BASE}\\libviodes.a
+}
+
+# dll import/export switch
+DEFINES += FAUDES_BUILD_APP
+DEFINES += VIODES_BUILD_APP
+
+# include path
+INCLUDEPATH += $$VIODES_LIBFAUDES/include
+INCLUDEPATH += $$VIODES_BASE/include
 
 # win32 MSVC extra configuration 
 win32-msvc {
@@ -90,9 +82,6 @@ mac {
     LIBS += -framework Cocoa
 }
 
-# include path
-INCLUDEPATH += $$VIODES_LIBFAUDES/include
-INCLUDEPATH += $$VIODES_BASE/include
 
 # build paths
 OBJECTS_DIR = ./obj
@@ -101,7 +90,7 @@ MOC_DIR = ./obj
 # resource file
 #RESOURCES = destool.qrc
 
-
+# DESTool core sources
 HEADERS      += src/desstyle.h  \
                 src/desbrowser.h  \
                 src/destool.h \
@@ -119,8 +108,7 @@ HEADERS      += src/desstyle.h  \
                 src/simtrace.h  \
                 src/simstatistics.h  \
                 src/simeventwidget.h  \
-                src/simdevicewidget.h  
-  
+                src/simdevicewidget.h    
 SOURCES      += src/desstyle.cpp \
                 src/desbrowser.cpp  \
                 src/destool.cpp \
@@ -144,24 +132,33 @@ SOURCES      += src/desstyle.cpp \
 ICON = ./images/icon_osx.icns 
 RC_FILE = ./images/icon_win.rc
 
+
+
 #
 #
-# below this line: copy libraries in place
-#
+# below this line: copy files in place
 #
 #
 
 
-# copy via post link target
-defineTest(viodes_copy) {
-  src = $$1
-  dst = $$2
-  QMAKE_POST_LINK += $$QMAKE_MKDIR  $$shell_path($$dst) &
-  for(file, src) {
-    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dst) $$escape_expand(\\n\\t)
+# copy individual files to a directory
+defineTest(viodes_copy_files) {
+  srcfiles=$$1
+  dstdir=$$2            
+  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$dstdir) &
+  for(file, srcfiles) {
+    QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dstdir/) $$escape_expand(\\n\\t)
   }
   export(QMAKE_POST_LINK)
 }
+
+# copy recursively all files from one dir to another
+defineTest(viodes_copy_dir) {
+  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$2) &
+  QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$shell_path($$1/*) $$shell_path($$2) $$escape_expand(\\n\\t)
+  export(QMAKE_POST_LINK)
+}
+  
 
 # linux: copy libVIODES and libFAUDES
 unix:!macx {
@@ -180,22 +177,14 @@ unix:!macx {
 
   DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*
 
-  INSTCMD = \
-    cp $$VIODES_PLUGINS ./lib/plugins/viotypes && \
-    cp $$DESTOOL_LIBS ./lib && \
-    cp $$DESTOOL_BINS ./bin && \
-    cp $$VIODES_LIBFAUDES/stdflx/*.flx ./lib/plugins/luaextensions && \
-    rm -f ./lib/qt.conf && \
-    rm -f ./bin/luafaudes.flx
-
-  QMAKE_EXTRA_TARGETS += instlibs
-  instlibs.target = instlibs
-  instlibs.commands += $$INSTCMD
-  QMAKE_POST_LINK += make instlibs
-
+  viodes_copy_files($$DESTOOL_LIBS, ./lib)
+  viodes_copy_files($$DESTOOL_BINS, ./bin)
+  viodes_copy_files($$VIODES_PLUGINS, ./lib/plugins/viotypes)
+  viodes_copy_files($$VIODES_LIBFAUDES/stdflx/*.flx, ./lib/plugins/luaextensions)
 }
 
-# mac: copy libFAUDES to bundle 
+
+# mac: copy libFAUDES and libVIODES to bundle 
 macx { 
   ContFiles.files += $$VIODES_LIBFAUDES/include/libfaudes.rti 
   ContFiles.files += $$VIODES_LIBFAUDES/libfaudes.dylib
@@ -204,7 +193,6 @@ macx {
   ContFiles.files += $$VIODES_LIBFAUDES/bin/flxinstall
   ContFiles.files += $$VIODES_LIBFAUDES/bin/simfaudes
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes
-  ContFiles.files += bin/dstinstall
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes.flx
   ContFiles.files += $$VIODES_BASE/libviodes.dylib
   ContFiles.files += $$VIODES_BASE/vioedit/examples/vioconfig.txt 
@@ -224,6 +212,12 @@ macx {
   LuaxFiles.path  = Contents/plugins/luaextensions
   QMAKE_BUNDLE_DATA += LuaxFiles
 }
+
+# mac: copy dstinstall and doc
+macx {
+  viodes_copy_files(bin/dstinstall, $${TARGET}.app/Contents/MacOs)
+  viodes_copy_dir(doc/html, $${TARGET}.app/Contents/Resources/doc/destool_html)
+}  
 
 # mac: fix library paths
 macx { 
@@ -247,12 +241,6 @@ macx {
   QMAKE_POST_LINK += make macfix
 }
 
-# mac: copy doc to bundle 
-macx { 
-  DocFiles.files = doc/html/
-  DocFiles.path = Contents/Resources/doc/destool_html/
-  QMAKE_BUNDLE_DATA += DocFiles
-}
 
 # Windows (both msys and msvc)
 win32 {
@@ -271,11 +259,27 @@ win32 {
 
   DESTOOL_BINS += $$VIODES_LIBFAUDES/bin/*.exe
 
-  viodes_copy($$DESTOOL_LIBS, ./release/)
-  viodes_copy($$DESTOOL_BINS, ./release/)
-  viodes_copy($$VIODES_PLUGINS, ./release/plugins/)
-  viodes_copy($$VIODES_LIBFAUDES/stdflx/*.flx, ./release/plugins/luaextensions/)
+  viodes_copy_files($$DESTOOL_LIBS, ./release/)
+  viodes_copy_files($$DESTOOL_BINS, ./release/)
+  viodes_copy_files($$VIODES_PLUGINS, ./release/plugins/)
+  viodes_copy_files($$VIODES_LIBFAUDES/stdflx/*.flx, ./release/plugins/luaextensions/)
 
 }
 
                 
+# fake submake
+SUBDIRS += dstinstall doc
+for(dir, SUBDIRS) {
+  message("=== qmake for $$dir")
+  res=$$system( $$QMAKE_CD $$dir && $$QMAKE_QMAKE $$dir.pro  )
+  unix:QMAKE_PRE_LINK += make -C $$dir $$escape_expand(\\n\\t)
+  win32-g++:QMAKE_PRE_LINK += make -C $$dir $$escape_expand(\\n\\t)
+}
+
+
+
+# qmake inspection
+#for(var, $$list($$enumerate_vars())) {
+#    message($$var)
+#    message($$eval($$var))
+#}

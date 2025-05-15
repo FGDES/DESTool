@@ -29,10 +29,8 @@ DESTOOL_BASE=$(pwd)
 DESTOOL_LIB=$DESTOOL_BASE/lib
 DESTOOL_BIN=$DESTOOL_BASE/bin
 
-# retrieve version and pass to qmake
+# retrieve version 
 . $VIODES_BASE/VERSION
-qmake -set VIODES_VERSION_MAJOR $VIODES_VERSION_MAJOR 
-qmake -set VIODES_VERSION_MINOR $VIODES_VERSION_MINOR 
 FVERSION=${VIODES_VERSION_MAJOR}_${VIODES_VERSION_MINOR}
 
 # package name
@@ -58,83 +56,25 @@ cd $VIODES_BASE
 if test $CLEAN == true ; then
 . ./copyfaudes.sh    
 . ./distclean.sh
+qmake "CONFIG-=debug" viodes.pro
+make clean
 fi
 qmake "CONFIG-=debug" viodes.pro
 make -j20
 cd $DESTOOL_BASE
 
 
-echo ==================== prepare destool 
-if test $CLEAN == true ; then
-cd $DESTOOL_BASE
-. ./distclean.sh
-fi
-
-
-echo ==================== compile dstinstall
-cd $DESTOOL_BASE/dstinstall
-qmake "CONFIG-=debug" dstinstall.pro
-if test $CLEAN == true ; then
-make clean
-fi    
-make 
-strip -R .debug_aranges -R .debug_pubnames dstinstall/dstinstall
-cp dstinstall $DESTOOL_BASE/bin
-cd $DESTOOL_BASE
-
-
-echo ==================== compile docs 
-cd $DESTOOL_BASE
-if test $CLEAN == true ; then
-make dist-clean
-fi    
-make -C doc
-
-
 echo ==================== compile destool
 cd $DESTOOL_BASE
-qmake "CONFIG-=debug" destool.pro
 if test $CLEAN == true ; then
+. ./distclean.sh
+qmake "CONFIG-=debug" destool.pro
 make clean
-fi    
+fi
+qmake "CONFIG-=debug" destool.pro
 make -j20
 strip -R .debug_aranges -R .debug_pubnames lib/destool.bin
-
-
-echo ==================== copy libraries
-
-#### this is still for qt4 --- keep for reference
-if test $VIOQT != local ; then 
-
-cd $DESTOOL_BASE
-VIOQTLIB=$VIOQT/lib
-VIOQTBIN=$VIOQT/bin
-VIOQTPLUGINS=$VIOQT/plugins
-
-cp src/qt.conf $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtCore.so*   $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtGui.so*    $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtHelp.so*   $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtNetwork.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtSvg.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtSql.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtWebKit.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtXml.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtXmlPatterns.so*  $DESTOOL_LIB
-cp -d $VIOQTLIB/libQtCLucene.so*  $DESTOOL_LIB
-mkdir $DESTOOL_LIB/plugins/sqldrivers
-mkdir $DESTOOL_LIB/plugins/imageformats
-cp -d $VIOQTPLUGINS/sqldrivers/libqsqlite*so   $DESTOOL_LIB/plugins/sqldrivers/
-cp -d $VIOQTPLUGINS/imageformats/libqjpeg*so   $DESTOOL_LIB/plugins/imageformats/
-cp -d $VIOQTPLUGINS/imageformats/libqsvg*so   $DESTOOL_LIB/plugins/imageformats/
-cp -d $VIOQTBIN/qhelpgenerator $DESTOOL_LIB/qhelpgenerator.bin
-cp -d $VIOQTBIN/qcollectiongenerator $DESTOOL_LIB/qcollectiongenerator.bin
-# echo fix rpaths (could also do this for dstinstall etc)
-chrpath -r '$ORIGIN' $DESTOOL_LIB/qhelpgenerator.bin
-chrpath -r '$ORIGIN' $DESTOOL_LIB/qcollectiongenerator.bin
-
-fi
-
+strip -R .debug_aranges -R .debug_pubnames dstinstall/dstinstall
 
 
 echo ==================== prepare destination
@@ -160,6 +100,7 @@ cp -v $DESTOOL_BASE/LICENSE $DEST/LICENSE.txt
 cp -Rv $DESTOOL_BASE/examples/* $DEST/examples/
 cp -v $VIODES_BASE/vioedit/examples/vioconfig.txt  $DEST/examples
 cp -R $DESTOOL_BASE/doc/html/* $DEST/doc
+
 
 ############################################################################
 # some consistency tests
