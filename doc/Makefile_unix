@@ -1,5 +1,10 @@
+# this old Makefile is kept for reference only
+# we moved on to qmake in 2025
+
+
 ################################################################################
 # Makefile for destool html doc, tmoor 2024
+#
 #
 # This is simple script to assemble destool documentation.
 # Sources:
