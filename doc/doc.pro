@@ -3,13 +3,12 @@
 
 # project layout
 LIBFAUDES = ../../libVIODES/libFAUDES_for_VIODES
-unix:DSTINSTALL = ../bin/dstinstall 
-win32:DSTINSTALL = ../bin/dstinstall.exe
-unix:REF2HTML = $$LIBFAUDES/bin/ref2html
+DSTINSTALL = ../bin/dstinstall 
+REF2HTML = $$LIBFAUDES/bin/ref2html
 
 # Windows overwrite
 win32 {
-  DSTINSTALL = ../bin/dstinstall.exe
+  DSTINSTALL = ../release/dstinstall.exe
   REF2HTML = $$LIBFAUDES/bin/ref2html.exe
 }
 
@@ -36,7 +35,6 @@ FREFSRC += \
 
 # fref compiler  
 cfref.name = "Compile FAUDES .fref to HTML"
-#cfref.CONFIG += no_link
 cfref.input = FREFSRC
 cfref.output = ./html/${QMAKE_FILE_BASE}.html
 cfref.commands = \

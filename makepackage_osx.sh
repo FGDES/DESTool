@@ -17,10 +17,8 @@ VIODES_BASE=$(pwd)/../libVIODES
 FAUDES_BASE=$(pwd)/../libVIODES/libFAUDES_for_VIODES
 DESTOOL_BASE=$(pwd)
 
-# retrieve version and pass to qmake
+# retrieve version 
 . $VIODES_BASE/VERSION
-qmake -set VIODES_VERSION_MAJOR $VERSION_VERSION_MAJOR 
-qmake -set VIODES_VERSION_MINOR $VERSION_VERSION_MINOR 
 FVERSION=${VIODES_VERSION_MAJOR}_${VIODES_VERSION_MINOR}
 
 # set destination
@@ -57,61 +55,25 @@ if [ ! -d $DESTOOL_BASE/../libFAUDES ]; then
     return
 fi
 
-echo ==================== compile - prepare
-
-# minimal clean (my binaries)
-rm -rf $DESTOOL_BASE/DESTool.app 
-rm -rf $DESTOOL_BASE/bin/dstinstall
-
-# extensive clean
-if test $CLEAN = true ; then  
-# clean viodes
-echo ===== clean libVIODES in  $VIODES_BASE
+# build libVIODES
+echo ==================== compile libviodes
 cd $VIODES_BASE
-. ./copyfaudes.sh
+if test $CLEAN == true ; then
+. ./copyfaudes.sh    
 . ./distclean.sh
-qmake "CONFIG-=debug" viodes.pro
-make clean
-# clean destool
-echo cd $DESTOOL_BASE
-echo ===== clean DESTool in  $DESTOOL_BASE
-cd $DESTOOL_BASE
-qmake "CONFIG-=debug" destool.pro
-make clean
-# clean dstsintall
-echo ===== clean dstinatll in $DESTOOL_BASE/dstinstall
-cd $DESTOOL_BASE/dstinstall
-qmake "CONFIG-=debug" dstinstall.pro
-make clean
-# clean doc
-echo ===== clean dstinatll in $DESTOOL_BASE/dstinstall
-cd $DESTOOL_BASE
-make -C doc dist-clean
 fi
-
-
-# dstsintall (depends on nothing)
-echo ==================== compile - dstinstall 
-cd $DESTOOL_BASE/dstinstall
-qmake dstinstall.pro
-make
-
-# doc (uses dstinstll to compile frefs, installs to ./ as opposed to DESTool.app)
-echo ==================== compile - doc 
-cd $DESTOOL_BASE
-make -C doc
-
-# viodes (required by destool)
-echo ==================== compile - viodes
-cd $VIODES_BASE
-qmake viodes.pro
+qmake "CONFIG-=debug" viodes.pro
 make -j20
-
-
-# destool (requires viodes to link, copies dstinstall to bundle, copies doc to bundle)
-echo ==================== compile - destool 
 cd $DESTOOL_BASE
-qmake destool.pro     ## tricky build issue
+
+
+# build DESTool
+echo ==================== compile destool
+cd $DESTOOL_BASE
+if test $CLEAN == true ; then
+. ./distclean.sh
+fi
+qmake "CONFIG-=debug" destool.pro
 make -j20
 
 # prepare package
@@ -120,6 +82,7 @@ cd $DESTOOL_BASE
 rm -rf $DEST
 mkdir $DEST
 cp -R DESTool.app $BUNDLE
+
 
 #echo ==================== have qhelp tools 
 #cd $DESTOOL_BASE
@@ -132,7 +95,6 @@ macdeployqt $BUNDLE -executable=$BUNDLEEXE/dstinstall # -executable=$BUNDLEEXE/q
 
 
 echo ==================== fix my plugins
-
 # framework locations 
 CHANGE_CORE="-change @rpath/QtCore.framework/Versions/A/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/A/QtCore"
 CHANGE_SVG="-change @rpath/QtSvg.framework/Versions/A/QtSvg  @executable_path/../Frameworks/QtSvg.framework/Versions/A/QtSvg" 
@@ -142,8 +104,6 @@ CHANGE_SQL="-change @rpath/QtSql.framework/Versions/A/QtSql  @executable_path/..
 CHANGE_XML="-change @rpath/QtXml.framework/Versions/A/QtXml  @executable_path/../Frameworks/QtXml.framework/Versions/A/QtXml" 
 CHANGE_HELP="-change @rpath/QtHelp.framework/Versions/A/QtHelp @executable_path/../Frameworks/QtHelp.framework/Versions/A/QtHelp"
 CHANGE_NET="-change @rpath/QtNetwork.framework/Versions/A/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/A/QtNetwork" 
-
-
 # set frameworks to libvio*
 #install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEEXE/libviodes.dylib
 #install_name_tool $CHANGE_CORE $CHANGE_SVG $CHANGE_GUI $BUNDLEVIO/libviogen.dylib
@@ -193,7 +153,7 @@ CHANGE_NET="-change @rpath/QtNetwork.framework/Versions/A/QtNetwork @executable_
 
 #rm -rf $BUNDLE/Assistant.app
 
-echo ==================== have qhelp tools b fix
+#echo ==================== have qhelp tools b fix
 
 # tell qhelpgenerator where frameworks are
 #install_name_tool $CHANGE_CORE $CHANGE_XML $CHANGE_SQL $CHANGE_HELP $CHANGE_GUI $CHANGE_WIDGET $CHANGE_NET $BUNDLEEXE/qhelpgenerator
