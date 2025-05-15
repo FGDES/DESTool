@@ -22,7 +22,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-# detool reference files  
+# destool reference files  
 FREFSRC += \
   src/destool_project.fref \
   src/destool_animation.fref \			
@@ -32,15 +32,43 @@ FREFSRC += \
   src/destool_variables.fref \
   src/destool_instlx83.fref \
   src/destool_intro.fref \			
-  src/destool_license.fref \	
+  src/destool_license.fref \
 
+# fref compiler  
 cfref.name = "Compile FAUDES .fref to HTML"
 #cfref.CONFIG += no_link
 cfref.input = FREFSRC
 cfref.output = ./html/${QMAKE_FILE_BASE}.html
 cfref.commands = \
     $$REF2HTML -css $$REF2HTML_CSS -cnav $$REF2HTML_CNAV ${QMAKE_FILE_NAME} ${QMAKE_FILE_OUT}
-
 QMAKE_EXTRA_COMPILERS += cfref
+
+
+# copy fref sources
+copyfref.commands = \
+  $$QMAKE_MKDIR ./html/refsrc & \
+  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css ./html/refsrc && \
+  $$QMAKE_COPY src/destool.append_css ./html/refsrc && \
+  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css  ./html/destool.css && \
+  cat src/destool.append_css >> ./html/destool.css && \
+  $$QMAKE_COPY src/*fref ./html/refsrc 
+  
+# copy images
+copyimgs.commands = \
+  $$QMAKE_COPY_DIR  src/images ./html/
+
+# run dstinstall
+dstinst.commands = \
+  $$DSTINSTALL -lib $$LIBFAUDES -b -dst .. && \
+  $$QMAKE_COPY ./html/destool_intro.html ./html/index.html
+
+  
+   
+
+
+# register my copy targets   
+QMAKE_EXTRA_TARGETS += copyfref copyimgs dstinst
+PRE_TARGETDEPS += copyfref copyimgs dstinst
+
 
   
