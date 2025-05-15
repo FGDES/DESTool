@@ -12,6 +12,7 @@ cd ..
 echo ========= remove Makefiles
 rm Makefile
 rm dstinstall/Makefile
+rm dok/Makefile
 
 echo ========= deleting linux lib section
 rm dstinstall/dstinstall

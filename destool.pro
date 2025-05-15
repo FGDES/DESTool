@@ -144,6 +144,8 @@ SOURCES      += src/desstyle.cpp \
 ICON = ./images/icon_osx.icns 
 RC_FILE = ./images/icon_win.rc
 
+
+
 #
 #
 # below this line: copy libraries in place
@@ -272,3 +274,18 @@ win32 {
 }
 
                 
+# fake submake
+SUBDIRS += dstinstall doc
+for(dir, SUBDIRS) {
+  message("=== qmake for $$dir")
+  res=$$system( $$QMAKE_CD $$dir && $$QMAKE_QMAKE $$dir.pro  )
+  unix:QMAKE_PRE_LINK += make -C $$dir $$escape_expand(\\n\\t)
+}
+
+
+
+# qmake inspection
+#for(var, $$list($$enumerate_vars())) {
+#    message($$var)
+#    message($$eval($$var))
+#}

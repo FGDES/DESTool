@@ -46,7 +46,8 @@ QMAKE_EXTRA_COMPILERS += cfref
 
 # copy fref sources
 copyfref.commands = \
-  $$QMAKE_MKDIR ./html/refsrc & \
+  $$QMAKE_MKDIR ./html/refsrc &  \
+  $$QMAKE_MKDIR ./html/reference &  \
   $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css ./html/refsrc && \
   $$QMAKE_COPY src/destool.append_css ./html/refsrc && \
   $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css  ./html/destool.css && \
@@ -64,8 +65,6 @@ dstinst.commands = \
 
   
    
-
-
 # register my copy targets   
 QMAKE_EXTRA_TARGETS += copyfref copyimgs dstinst
 PRE_TARGETDEPS += copyfref copyimgs dstinst
