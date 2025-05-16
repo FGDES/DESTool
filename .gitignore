@@ -25,9 +25,10 @@ faudes_destool*
 # Qt locals
 *.pro.user
 *.pro.user.*
+object_script.*
 *.Debug
 Makefile
-.qmake.stash
+**/.qmake.stash
 .qtc_clangd
 
 # osx irritations
