@@ -56,10 +56,10 @@ cd $VIODES_BASE
 if test $CLEAN == true ; then
 . ./copyfaudes.sh    
 . ./distclean.sh
-qmake "CONFIG-=debug" viodes.pro
+qmake "CONFIG-=debug" libviodes.pro
 make clean
 fi
-qmake "CONFIG-=debug" viodes.pro
+qmake "CONFIG-=debug" libviodes.pro
 make -j20
 cd $DESTOOL_BASE
 

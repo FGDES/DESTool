@@ -47,11 +47,9 @@ int main(int argc, char *argv[]) {
  
   // import default styles
   //QApplication::setDesktopSettingsAware(true);
-
-
  
   // lazy commandline, get filename and options
-  QString  cfgname =  QCoreApplication::applicationDirPath() + "/vioconfig.txt";
+  QString  cfgname ="";
   QString proname="";
   bool doext=false;
   bool dook=true;
@@ -137,7 +135,7 @@ int main(int argc, char *argv[]) {
   }
 
 #ifdef VIO_OSXTRA
-  // fix osx menu for lion and above
+  // fix osx menu for Lion and above
   //OsxDisableXtraMenu();
 #endif
 
@@ -159,10 +157,9 @@ int main(int argc, char *argv[]) {
   // configure: defaults
   FD_WARN("DESTool: init viostyle");
   VioStyle::Initialise();
-  // configure: try read specified file
-  if(cfgname=="") cfgname =  QCoreApplication::applicationDirPath() + "/vioconfig.txt";
+  // configure: try read specified file (defaults)
   try { 
-    FD_WARN("DESTool: loading config style "<< cfgname);
+    FD_WARN("DESTool: loading config style " << cfgname);
     VioStyle::ReadFile(cfgname); 
   } catch (faudes::Exception& fexcep) {
     QString err=QString("Details: ")+VioStyle::QStrFromStr(fexcep.What());
@@ -210,7 +207,7 @@ int main(int argc, char *argv[]) {
 
 
   // initialise faudes registry 
-  QString rtifile = QCoreApplication::applicationDirPath() + "/libfaudes.rti"; 
+  QString rtifile = VioStyle::FaudesRtiFile();
   try { 
     FD_WARN("DESTool: loading run-time interface "<< rtifile);
     faudes::LoadRegistry(VioStyle::LfnFromQStr(rtifile));
@@ -229,12 +226,7 @@ int main(int argc, char *argv[]) {
 
 
   // sense flx file
-  QString flxfile = QCoreApplication::applicationDirPath() + "/luafaudes.flx"; 
-  FD_WARN("DESTool: testing for flx file "<<VioStyle::StrFromQStr(flxfile));
-  if(!QFileInfo(flxfile).exists()) {
-    flxfile = QCoreApplication::applicationDirPath() + "/../bin/luafaudes.flx";
-    FD_WARN("DESTool: testing for flx file "<<VioStyle::StrFromQStr(flxfile));
-  }
+  QString flxfile = VioStyle::FaudesFlxFile();
   // load file
   if(QFileInfo(flxfile).exists()) {
     // catch and report

@@ -61,6 +61,11 @@ DEFINES += VIODES_BUILD_APP
 INCLUDEPATH += $$VIODES_LIBFAUDES/include
 INCLUDEPATH += $$VIODES_BASE/include
 
+# mac os clang relaxed rpath
+macx {
+  LIBS += -rpath @executable_path -rpath @executable_path/../plugins/viotypes
+}
+
 # win32 MSVC extra configuration 
 win32-msvc {
   QMAKE_CXXFLAGS += /EHsc 
@@ -73,15 +78,6 @@ win32-g++ {
   LIBS += -lwsock32
   DEFINES += VIO_WINCONSOLE
 }
-
-# mac extra configuration
-mac { 
-    DEFINES += VIO_OSXTRA
-#    HEADERS += src/osxtras.h
-#    OBJECTIVE_SOURCES += src/osxtras.mm
-    LIBS += -framework Cocoa
-}
-
 
 # build paths
 OBJECTS_DIR = ./obj
@@ -186,18 +182,21 @@ unix:!macx {
 
 # mac: copy libFAUDES and libVIODES to bundle 
 macx { 
-  ContFiles.files += $$VIODES_LIBFAUDES/include/libfaudes.rti 
   ContFiles.files += $$VIODES_LIBFAUDES/libfaudes.dylib
   ContFiles.files += $$VIODES_LIBFAUDES/bin/ref2html
   ContFiles.files += $$VIODES_LIBFAUDES/bin/rti2code
   ContFiles.files += $$VIODES_LIBFAUDES/bin/flxinstall
   ContFiles.files += $$VIODES_LIBFAUDES/bin/simfaudes
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes
-  ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes.flx
   ContFiles.files += $$VIODES_BASE/libviodes.dylib
-  ContFiles.files += $$VIODES_BASE/vioedit/examples/vioconfig.txt 
   ContFiles.path = Contents/MacOS
   QMAKE_BUNDLE_DATA += ContFiles
+
+  ConfFiles.files += $$VIODES_BASE/vioedit/examples/vioconfig.txt 
+  ConfFiles.files += $$VIODES_LIBFAUDES/include/libfaudes.rti   
+  ConfFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes.flx
+  ConfFiles.path = Contents/Resources/vioconf
+  QMAKE_BUNDLE_DATA += ConfFiles
 
   ViopFiles.files +=  $$VIODES_BASE/libviogen.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviohio.dylib
@@ -219,7 +218,7 @@ macx {
   viodes_copy_dir(doc/html, $${TARGET}.app/Contents/Resources/doc/destool_html)
 }  
 
-# mac: fix library paths
+# mac: fix library paths (disabled, now using strategic clang options)
 macx { 
   # install_name_tool replacement commands for all our libraries
   ITF_LIBFAUDES = -change libfaudes.dylib @executable_path/libfaudes.dylib 
@@ -238,7 +237,7 @@ macx {
     install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviosim.dylib && \
     install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviodiag.dylib && \
     install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviolua.dylib
-  QMAKE_POST_LINK += make macfix
+  #QMAKE_POST_LINK += make macfix ### (disabled)
 }
 
 

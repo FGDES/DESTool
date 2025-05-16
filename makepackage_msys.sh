@@ -34,7 +34,7 @@ read
 
 ############################################################################
 # some consistency tests
-if [ ! -f $VIODES_BASE/viodes.pro ]; then
+if [ ! -f $VIODES_BASE/libviodes.pro ]; then
     echo "error: libVIODESA incomplete: abort"
     return
 fi
@@ -58,10 +58,10 @@ cd $VIODES_BASE
 if test $CLEAN == true ; then
 . ./copyfaudes.sh    
 . ./distclean.sh
-qmake "CONFIG-=debug" viodes.pro
+qmake "CONFIG-=debug" libviodes.pro
 make clean
 fi
-qmake "CONFIG-=debug" viodes.pro
+qmake "CONFIG-=debug" libviodes.pro
 make -j20
 
 
