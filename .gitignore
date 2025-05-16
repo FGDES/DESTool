@@ -28,7 +28,7 @@ faudes_destool*
 *.Debug
 Makefile
 .qmake.stash
-
+.qtc_clangd
 
 # osx irritations
 **/.DS_Store
