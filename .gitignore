@@ -17,6 +17,7 @@ DESTool.app
 dstinstall/dstinstall
 dstinstall/Makefile
 doc/html
+doc/Makefile
 
 # ignore packages
 faudes_destool*
