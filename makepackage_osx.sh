@@ -2,8 +2,8 @@ echo ==================== Deployment script DESTool  Mac OS X
 
 
 # build all viodes and destool from scratch
-#CLEAN=false
-CLEAN=true
+CLEAN=false
+#CLEAN=true
 
 # set qt to Qt Project precompiled package
 export QTOOLS=~/Qt/6.6.2/macos/bin
@@ -65,7 +65,7 @@ qmake "CONFIG-=debug" libviodes.pro
 make clean
 fi
 qmake "CONFIG-=debug" libviodes.pro
-make -j20
+make  # -j20 wont do
 cd $DESTOOL_BASE
 
 
