@@ -19,7 +19,7 @@ UsePreviousAppDir=false
 DefaultDirName={sd}\FAUDES\DESTool
 DefaultGroupName=FAUDES
 OutputDir=.\
-OutputBaseFilename=destool-{#VMAJOR}_{#VMINOR}_setup
+OutputBaseFilename=faudes_destool_{#VMAJOR}_{#VMINOR}_setup
 SetupIconFile=images\icon_red_win.ico
 LicenseFile=.\LICENSE
 
