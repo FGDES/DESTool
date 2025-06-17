@@ -21,6 +21,7 @@ QT += core gui svg widgets printsupport
 # target name
 unix:TARGET = lib/destool.bin
 macx:TARGET = DESTool
+macx:QMAKE_TARGET_BUNDLE_PREFIX = org.faudes
 win32:TARGET = DESTool
 
 # say hello
@@ -61,10 +62,10 @@ DEFINES += VIODES_BUILD_APP
 INCLUDEPATH += $$VIODES_LIBFAUDES/include
 INCLUDEPATH += $$VIODES_BASE/include
 
-# mac os clang relaxed rpath
-macx {
-  LIBS += -rpath @executable_path -rpath @executable_path/../plugins/viotypes
-}
+# mac os clang relaxed rpath (alt: trust on deploy tool)
+#macx {
+#  LIBS += -rpath @executable_path -rpath @executable_path/../plugins/viotypes
+#}
 
 # win32 MSVC extra configuration 
 win32-msvc {
@@ -141,7 +142,7 @@ RC_FILE = ./images/icon_win.rc
 defineTest(viodes_copy_files) {
   srcfiles=$$1
   dstdir=$$2            
-  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$dstdir) &
+  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$dstdir) $$escape_expand(\\n\\t)
   for(file, srcfiles) {
     QMAKE_POST_LINK += $$QMAKE_COPY_FILE $$shell_path($$file) $$shell_path($$dstdir/) $$escape_expand(\\n\\t)
   }
@@ -150,7 +151,7 @@ defineTest(viodes_copy_files) {
 
 # copy recursively all files from one dir to another
 defineTest(viodes_copy_dir) {
-  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$2) &
+  QMAKE_POST_LINK += $$QMAKE_MKDIR $$shell_path($$2) $$escape_expand(\\n\\t)
   QMAKE_POST_LINK += $$QMAKE_COPY_DIR $$shell_path($$1/*) $$shell_path($$2) $$escape_expand(\\n\\t)
   export(QMAKE_POST_LINK)
 }
@@ -180,17 +181,22 @@ unix:!macx {
 }
 
 
-# mac: copy libFAUDES and libVIODES to bundle 
-macx { 
-  ContFiles.files += $$VIODES_LIBFAUDES/libfaudes.dylib
+# mac: populayte bundle
+macx {
+
   ContFiles.files += $$VIODES_LIBFAUDES/bin/ref2html
   ContFiles.files += $$VIODES_LIBFAUDES/bin/rti2code
   ContFiles.files += $$VIODES_LIBFAUDES/bin/flxinstall
   ContFiles.files += $$VIODES_LIBFAUDES/bin/simfaudes
   ContFiles.files += $$VIODES_LIBFAUDES/bin/luafaudes
-  ContFiles.files += $$VIODES_BASE/libviodes.dylib
   ContFiles.path = Contents/MacOS
   QMAKE_BUNDLE_DATA += ContFiles
+
+  FrameFiles.files += $$VIODES_LIBFAUDES/libfaudes.dylib
+  FrameFiles.files += $$VIODES_BASE/libviodes.dylib
+  FrameFiles.files +=  $$VIODES_BASE/libviogen.dylib
+  FrameFiles.path = Contents/Frameworks
+  QMAKE_BUNDLE_DATA += FrameFiles
 
   ConfFiles.files += $$VIODES_BASE/vioedit/examples/vioconfig.txt 
   ConfFiles.files += $$VIODES_LIBFAUDES/include/libfaudes.rti   
@@ -198,17 +204,16 @@ macx {
   ConfFiles.path = Contents/Resources/vioconf
   QMAKE_BUNDLE_DATA += ConfFiles
 
-  ViopFiles.files +=  $$VIODES_BASE/libviogen.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviohio.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviomtc.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviosim.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviodiag.dylib
   ViopFiles.files +=  $$VIODES_BASE/libviolua.dylib
-  ViopFiles.path = Contents/plugins/viotypes
+  ViopFiles.path = Contents/PlugIns/viotypes
   QMAKE_BUNDLE_DATA += ViopFiles
 
   LuaxFiles.files = $$VIODES_LIBFAUDES/stdflx/
-  LuaxFiles.path  = Contents/plugins/luaextensions
+  LuaxFiles.path  = Contents/Resources/luaextensions
   QMAKE_BUNDLE_DATA += LuaxFiles
 }
 
@@ -229,13 +234,13 @@ macx {
   QMAKE_EXTRA_TARGETS += macfix
   macfix.target = macfix
   macfix.commands += \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/MacOS/DESTool && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/MacOS/libviodes.dylib && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviogen.dylib && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviohio.dylib && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviomtc.dylib && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviosim.dylib && \
-    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviodiag.dylib && \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/MacOS/DESTool ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/MacOS/libviodes.dylib ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviogen.dylib ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviohio.dylib ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviomtc.dylib ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviosim.dylib ; \
+    install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviodiag.dylib ; \
     install_name_tool $$ITF_ALL DESTool.app/Contents/plugins/viotypes/libviolua.dylib
   #QMAKE_POST_LINK += make macfix ### (disabled)
 }

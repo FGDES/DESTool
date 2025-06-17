@@ -44,12 +44,12 @@ QMAKE_EXTRA_COMPILERS += cfref
 
 # copy fref sources
 copyfref.commands = \
-  $$QMAKE_MKDIR ./html/refsrc &  \
-  $$QMAKE_MKDIR ./html/reference &  \
-  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css ./html/refsrc && \
-  $$QMAKE_COPY src/destool.append_css ./html/refsrc && \
-  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css  ./html/destool.css && \
-  cat src/destool.append_css >> ./html/destool.css && \
+  $$QMAKE_MKDIR ./html/refsrc $$escape_expand(\\n\\t)  \
+  $$QMAKE_MKDIR ./html/reference $$escape_expand(\\n\\t)  \
+  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css ./html/refsrc $$escape_expand(\\n\\t) \
+  $$QMAKE_COPY src/destool.append_css ./html/refsrc $$escape_expand(\\n\\t) \
+  $$QMAKE_COPY $$LIBFAUDES/doc/faudes.css  ./html/destool.css $$escape_expand(\\n\\t) \
+  cat src/destool.append_css >> ./html/destool.css $$escape_expand(\\n\\t) \
   $$QMAKE_COPY src/*fref ./html/refsrc 
   
 # copy images
@@ -58,7 +58,7 @@ copyimgs.commands = \
 
 # run dstinstall
 dstinst.commands = \
-  $$DSTINSTALL -lib $$LIBFAUDES -b -dst .. && \
+  $$DSTINSTALL -lib $$LIBFAUDES -b -dst .. $$escape_expand(\\n\\t) \
   $$QMAKE_COPY ./html/destool_intro.html ./html/index.html
 
   

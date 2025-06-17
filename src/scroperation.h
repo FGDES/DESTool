@@ -69,7 +69,7 @@ public:
 
   // query dynamic configuration
   QString Function(void) const;   // function id within the WspFunctionPool
-  int Variant(void) const;     // current variant (-1 for invalid)
+  int Variant(void) const;        // current variant (-1 for invalid)
 
   // query dimensions
   int VariantCount(void) const;

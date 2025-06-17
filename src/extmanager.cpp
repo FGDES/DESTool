@@ -485,7 +485,7 @@ void ExtensionPool::Initialize(const QString& extdirname) {
     extdir = QDir(qApp->applicationDirPath());
 #ifdef Q_OS_MAC
     extdir.cdUp();  
-    extdir.cd("plugins");
+    extdir.cd("Resources");
     extdir.cd("luaextensions");
 #else
     extdir.cd("plugins");
@@ -646,7 +646,7 @@ void ExtensionPool::Install(void) {
   options
     << "-flx" << BaseDir()
     << "-dst" << "..";
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
   dstinstall=qApp->applicationDirPath();
   dstinstall.append("/dstinstall");
   options.clear();
@@ -654,7 +654,7 @@ void ExtensionPool::Install(void) {
     << "-flx" << BaseDir()
     << "-dst" << "../..";
 #endif
-#ifdef Q_WS_WIN32
+#ifdef Q_OS_WIN32
   dstinstall=qApp->applicationDirPath();
   dstinstall.append("/dstinstall.exe");
   options.clear();

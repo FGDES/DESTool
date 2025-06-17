@@ -184,16 +184,18 @@ void ConfigFromCore(void) {
   // dst structure mac: app bundle
   if(!mOptBuild) {
     mDstDocBase = mDstDestool + "/Contents/Resources/doc/destool_html";
-    mDstLibfaudes = mDstDestool + "/Contents/MacOS";
-    mDstLibfaudesRtiFile = mDstDestool + "/Contents/MacOS/libfaudes.rti";
+    mDstLibfaudes = mDstDestool + "/Contents/Frameworks";
+    mDstLibfaudesRtiFile = mDstDestool + "/Contents/Resources/vioconf/libfaudes.rti";
+    mDstFlxFile = mDstDestool + "/Contents/Resources/vioconf/luafaudes.flx";
     mDstHelper = mDstDestool + "/Contents/MacOS";
-    mDstPluginFlx = mDstDestool + "/Contents/plugins/luaextensions";
+    mDstPluginFlx = mDstDestool + "/Contents/Resources/luaextensions";
   }
   // dst structure mac: build mode
   if(mOptBuild) {
     mDstDocBase = mDstDestool + "/doc/html";
     mDstLibfaudes = mDstDestool + "/lib"; 
     mDstLibfaudesRtiFile = mDstDestool + "/lib/libfaudes.rti"; 
+    mDstFlxFile = mDstDestool + "/bin/luafaudes.flx";
     mDstHelper = mDstDestool +"/bin"; 
     mDstPluginFlx = mDstDestool + "/lib/plugins/luaextensions"; 
   }
@@ -201,7 +203,6 @@ void ConfigFromCore(void) {
   mDstDocRefsrc = mDstDocBase+"/refsrc";
   mDstDocImages = mDstDocBase+"/images";
   mDstDocReference = mDstDocBase+"/reference";
-  mDstFlxFile = mDstHelper + "/luafaudes.flx";
   mDstDocToc = mDstDocRefsrc+"/toc.ftoc";
   mDstDocQhp = mDstDocBase+"/destool.qhp";
   mDstDocQch = mDstDocBase+"/destool.qch";
