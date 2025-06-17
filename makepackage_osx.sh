@@ -2,8 +2,8 @@ echo ==================== Deployment script DESTool  Mac OS X
 
 
 # build all viodes and destool from scratch
-CLEAN=true
-#CLEAN=false
+#CLEAN=true
+CLEAN=false
 
 # sign/notarise bundle for distribution
 OSXSIGN="Developer ID Application"
