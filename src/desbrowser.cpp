@@ -5,7 +5,7 @@
    Gui frontend for FAU Discrete Event Systems Library (libfaudes)
 
    Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
-   Copyright (C) 2024  Thomas Moor
+   Copyright (C) 2010-2025  Thomas Moor
 
 */
 
@@ -170,7 +170,7 @@ DesProjectBrowser::~DesProjectBrowser(void) {
 // default size
 QSize DesProjectBrowser::sizeHint(void) const {
   FD_DP("DesProjectBrowser::sizeHint()");
-  QSize sz(200,800);
+  QSize sz(250,800);
   return sz;
 }
 

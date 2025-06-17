@@ -13,9 +13,9 @@ The code consists of the following components
 Regarding Qt, DESTool was initially developped with a commercial
 license and we switched to the LGPL version around 2015. If you use
 or further develop DESTool in a GPL project you should be fine. If
-you plan to use or distribute DESTool under a different license, you not only need
-to check back with the authors of DESTool but also verify if and how
-you comply with Qt licensing terms.
+you plan to use or distribute DESTool under a different license, you
+not only need to check back with the authors of DESTool but also verify
+if and how you comply with Qt licensing terms.
 
 We state licenses (A) to (D) below.
 
