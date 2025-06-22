@@ -42,4 +42,5 @@ Source: README.md;  DestDir:  {app}\; DestName: ReadMe.txt
 [Icons]
 Name: "{group}\DESTool"; Filename: "{app}\destool.exe"
 Name: "{group}\Uninstall DESTool"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\DESTool"; Filename: "{app}\destool.exe" 
+;Name: "{commondesktop}\DESTool"; Filename: "{app}\destool.exe" 
+Name: "{userdesktop}\DESTool"; Filename: "{app}\destool.exe" 
