@@ -4,7 +4,10 @@
 ;
 
 [Setup]
-MinVersion=10.0.22000
+;Windows 11 first release
+;MinVersion=10.0.22000
+;Windows 10, 2018 upgrade
+MinVersion=10.0.17763
 AppCopyright=Thomas Moor
 AppName=DESTool
 AppVersion={#VMAJOR}.{#VMINOR}
