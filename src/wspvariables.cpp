@@ -1882,37 +1882,47 @@ void WspVariablePool::LuaInstall(void) {
   lua_State* L=faudes::LuaState::G()->LL();
   int top = lua_gettop(L);
   // have empty wsp table
+#if LUA_VERSION_NUM < 502 
+  // tested with Lua 5.1.3
   lua_pushstring(L,"workspace");         // stack: "wsp"
   lua_newtable(L);                       // stack: "wsp",table  
   lua_settable(L, LUA_GLOBALSINDEX);     // stack:
   lua_pushstring(L,"workspace");         // stack: "wsp"
   lua_gettable(L, LUA_GLOBALSINDEX);     // stack: table
-  // register my push function with Lua   
+#else  
+  // tested with Lua 5.4.8, but should be fine back to  5.2.x 
+  lua_newtable(L);                       // stack: table  
+  lua_setglobal(L,"workspace");          // stack:
+  lua_getglobal(L,"workspace");          // stack: table
+#endif  
+  // register my pull function with Lua   
   lua_pushstring(L, ".get_value");
   lua_pushcfunction(L, WspGetValue);
-  lua_settable(L, -3);                   // stack: table
-  // register my pop function with Lua   
+  lua_settable(L, -3);                     // stack: table
+  // register my push function with Lua   
   lua_pushstring(L, ".set_value");
   lua_pushcfunction(L, WspSetValue);
-  lua_settable(L, -3);                   // stack: table
+  lua_settable(L, -3);                     // stack: table
   // register my pool function with Lua   
   lua_pushstring(L, ".pool");
   lua_pushlightuserdata(L, (void*) this);
-  lua_settable(L, -3);                   // stack: table
+  lua_settable(L, -3);                     // stack: table
   // iterate over variables
   for(int pos=0; pos<Size(); pos++) {
     // set up wrapper frunction
     std::stringstream lf;
     std::string lfname=VioStyle::StrFromQStr(At(pos)->Name());
     lf << "function workspace." << lfname << "(...)" << std::endl;
-    lf << "if arg['n']==0 then" << std::endl;
-    lf << "  return workspace['.get_value'](workspace['.pool'],'" << lfname <<"')" << std::endl;
-    lf << "else if arg['n']==1 then" << std::endl;
-    lf << "  workspace['.set_value'](workspace['.pool'],'" << lfname <<"',arg[1])" << std::endl;
+    lf << "  local arg  = {...}" << std::endl; // Lua >= 5.1.x, omitt for earlier versions
+    lf << "  local argn = #arg" << std::endl;  // Lua >= 5.1.x, use "local argn=arg['n']" for earlier versions
+    lf << "  if argn==0 then" << std::endl;
+    lf << "    return workspace['.get_value'](workspace['.pool'],'" << lfname <<"')" << std::endl;
+    lf << "  else if argn==1 then" << std::endl;
+    lf << "    workspace['.set_value'](workspace['.pool'],'" << lfname <<"',arg[1])" << std::endl;
+    lf << "  end" << std::endl;
+    lf << "  end" << std::endl;
     lf << "end" << std::endl;
-    lf << "end" << std::endl;
-    lf << "end" << std::endl;
-    // install (aka run) the wrapper function
+    // install the wrapper function (aka run the function definition)
     int errexec=luaL_dostring(L,lf.str().c_str());	
     if(errexec!=0) {
       FD_WARN("Workspace: could not install access functions");

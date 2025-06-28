@@ -2,12 +2,12 @@ echo ==================== Deployment script DESTool  Mac OS X
 
 
 # build all viodes and destool from scratch
-#CLEAN=true
-CLEAN=false
+CLEAN=true
+#CLEAN=false
 
 # sign/notarise bundle for distribution
-OSXSIGN="Developer ID Application"
-#OSXSIGN=dont
+#OSXSIGN="Developer ID Application"
+OSXSIGN=dont
 
 # set qt to Qt Project precompiled package
 export QTOOLS=~/Qt/6.6.2/macos/bin
@@ -34,7 +34,7 @@ BUNDLEVIO=$BUNDLE/Contents/PlugIns/viotypes
 
 # report configuration
 echo ==================== building version ${VIODES_VERSION_MAJOR}.${VIODES_VERSION_MINOR}
-echo ==================== using viogen $VIODES_BASE
+echo ==================== using viodes $VIODES_BASE
 echo ==================== using destool $DESTOOL_BASE
 echo ==================== using bundle $BUNDLE
 echo ==================== qt  $(which qmake)
@@ -138,7 +138,10 @@ rm $DEST.dmg
 hdiutil create -srcfolder $DEST -volname $DEST $DEST.dmg
 if test "$OSXSIGN" != dont ; then
   codesign -s "$OSXSIGN" --timestamp $DEST.dmg
-  codesign -dvvv $DEST.dmg  
+  codesign -dvvv $DEST.dmg
+  echo you may want to notarize/staple e.g.
+  echo xcrun notarytool submit $DEST.dmg --keychain-profile "notarytool-password" --wait --no-progress
+  echo xcrun stapler staple $DEST.dmg
 fi    
 
 echo ======================================== done

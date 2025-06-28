@@ -2066,9 +2066,6 @@ PlantAB       FullBufferAB  SuperAB
 <Simulator>
 
  +Supervisor+  +Plant+      
-<DevFile>
-"."          
-</DevFile>
 <SimEvents>
 beta_a       
 <Stochastic>
