@@ -4,7 +4,7 @@
 /*
    Visual skripting for FAU Discrete Event Systems Library (libfaudes)
 
-   Copyright (C) 2006, 2007  Thomas Moor, Klaus Schmidt, Sebastian Perk
+   Copyright (C) 2006, 2007-2026 Thomas Moor, Klaus Schmidt, Sebastian Perk
 
 */
 
@@ -676,7 +676,7 @@ ScrOperation::OperationState ScrOperation::ExecuteFaudes(void) {
       if(!cfvar) return setState(Error, "cannot access "+ParameterVar(i));
       // for non-In attribute, have a copy; else use a const cast
       fvar = const_cast<faudes::Type*>(cfvar);
-      if(ParameterAttr(i)!="In") fvar=fvar->Copy();
+      if(ParameterAttr(i)!="In") fvar=fvar->NewCpy();
     }
     // its a vector
     if(fvect) {
@@ -691,7 +691,7 @@ ScrOperation::OperationState ScrOperation::ExecuteFaudes(void) {
         if(!cfvarj) return setState(Error, "cannot access "+ParameterVar(i,j));
         // for non-In attribute, have a copy; else use a const cast
         faudes::Type* fvarj = const_cast<faudes::Type*>(cfvarj);
-        if(ParameterAttr(i)!="In") fvarj=fvarj->Copy();
+        if(ParameterAttr(i)!="In") fvarj=fvarj->NewCpy();
         // append reference to vector (vect does not take ownership)
         fvect->Append(fvarj);
       } 
@@ -782,7 +782,7 @@ ScrOperation::OperationState ScrOperation::ExecutePostA(void) {
       if(mClearNames) {
       FD_DS("ScrOperation::ExecutePostA(): clear names " << VioStyle::StrFromQStr(res->Name()) << 
             " #states " << curgen->Size());
-        faudes::vGenerator* newgen = curgen->Copy();
+        faudes::vGenerator* newgen = curgen->NewCpy();
         newgen->ClearStateNames();
         newgen->StateNamesEnabled(false);
         if(curgen!=orggen) delete curgen;

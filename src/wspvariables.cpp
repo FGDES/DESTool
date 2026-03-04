@@ -146,7 +146,7 @@ void WspVariable::Allocate(void) {
   if(!mVisual) {
     mFaudesObject=faudes::NewFaudesObject(VioStyle::StrFromQStr(mFaudesType));
     pFaudesObject=mFaudesObject;
-    if(pofobject) mFaudesObject->Assign(*pofobject);
+    if(pofobject) mFaudesObject->Copy(*pofobject);
   }
   // not changed yet
   Modified(false);
@@ -170,12 +170,12 @@ void WspVariable::Assign(const WspVariable* pSrc) {
   } 
   if(mVioModel && !pSrc->mVioModel) {
     FD_DI("WspVariable::Assign(): only dst visual");
-    FaudesValue(pSrc->FaudesValue()->Copy());
+    FaudesValue(pSrc->FaudesValue()->NewCpy());
     UpdateVisual();
   } 
   if(!mVioModel) {
     FD_DI("WspVariable::Assign(): faudes only");
-    if(mFaudesObject) mFaudesObject->Assign(*pSrc->FaudesValue());
+    if(mFaudesObject) mFaudesObject->Copy(*pSrc->FaudesValue());
   }
   // fix dynamic tool tip
   ToolTip();
