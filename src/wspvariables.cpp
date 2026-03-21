@@ -4,7 +4,7 @@
   FAU Discrete Event Systems Library (libfaudes)
 
   Copyright (C) 2009 Ruediger Berndt
-  Copyright (C) 2009, 2024 Thomas Moor
+  Copyright (C) 2009, 2024, 2026 Thomas Moor
 */
 
 #include "wspvariables.h"
@@ -144,7 +144,7 @@ void WspVariable::Allocate(void) {
   }
   // allocate data: faudes
   if(!mVisual) {
-    mFaudesObject=faudes::NewFaudesObject(VioStyle::StrFromQStr(mFaudesType));
+    mFaudesObject=faudes::NewObject(VioStyle::StrFromQStr(mFaudesType));
     pFaudesObject=mFaudesObject;
     if(pofobject) mFaudesObject->Copy(*pofobject);
   }
@@ -1865,8 +1865,8 @@ static int WspSetValue(lua_State* L) {
     lua_pushstring(L, "WspSetValue: failed to retrieve value");
     lua_error(L);
   }
-  FD_DS("WspSetValue(): found ftype " << faudes::FaudesTypeName(*fdata));
-  if(faudes::FaudesTypeName(*fdata) != VioStyle::StrFromQStr(vdata->FaudesType())) {
+  FD_DS("WspSetValue(): found ftype " << faudes::TypeName(*fdata));
+  if(faudes::TypeName(*fdata) != VioStyle::StrFromQStr(vdata->FaudesType())) {
     lua_pushstring(L, "WspSetValue: faudes type mismatch");
     lua_error(L);
   }
